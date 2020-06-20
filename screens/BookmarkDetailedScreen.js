@@ -5,18 +5,18 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function BookmarkDetailedScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text>This is the home screen</Text>
+        <Text>This is the bookmarks screen</Text>
       </ScrollView>
     </View>
   );
 }
 
-HomeScreen.navigationOptions = {
-  header: null
+BookmarkDetailedScreen.navigationOptions = {
+  header: null,
 };
 
 const styles = StyleSheet.create({
