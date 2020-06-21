@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View, Dimensions } from 'react-native';
 
 import Colors from '../constants/Colors';
+import * as WebBrowser from 'expo-web-browser'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
@@ -50,7 +52,7 @@ export default function NewsCard(props) {
               <Text style={styles.newsTimestamp}>Jun 19, 2020 at 14:08 UTC</Text>
               <Text style={styles.newsBody}>The token is so new that not even cryptocurrency data sites are using consistent methodologies for deriving COMP’s market value. The website DeFi Market Cap bases the calculation on the 10 million tokens in existence, for a market value of about $2 billion. But CoinGecko bases its figure on a circulating supply of 2.56 million tokens, for a market value of $537 million.</Text>
             </View>
-            <View style={styles.sourceContainer}>
+            <TouchableOpacity style={styles.sourceContainer} onPress={() => WebBrowser.openBrowserAsync('https://www.coindesk.com/kin-community-approves-move-from-stellar-fork-to-solanas-blockchain')}>
               <View style={styles.sourceDescContainer}>
                 <Text style={styles.sourceText}>Read the full story in detail at</Text>
                 <Image style={styles.sourceImage} source={require('../assets/temp/coindesk.png')} />
@@ -63,7 +65,7 @@ export default function NewsCard(props) {
                   color={Colors.tintColor}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
       </ImageBackground>
     </View>
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '200',
     marginTop: 10,
-    textAlign: 'justify',
+    textAlign: 'left',
     lineHeight: 20
   },
   sourceContainer: {
