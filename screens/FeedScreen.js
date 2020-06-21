@@ -1,171 +1,198 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, ImageBackground, rgba, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView, Directions } from 'react-native-gesture-handler';
+import { 
+  Image, 
+  ImageBackground, 
+  StyleSheet, 
+  Text, 
+  View,
+  Dimensions,
+  Animated,
+  PanResponder } from 'react-native';
 
-import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+const SCREEN_HEIGHT = Dimensions.get("window").height
+const SCREEN_WIDTH = Dimensions.get("window").width
 
-export default function FeedScreen() {
+const ARTICLES = [
+    { id: "1", uri: require('./../assets/temp/newsimage1.jpg') },
+    { id: "2", uri: require('./../assets/temp/newsimage2.jpg') },
+    { id: "3", uri: require('./../assets/temp/newsimage3.jpg') },
+    { id: "4", uri: require('./../assets/temp/newsimage4.jpg') }
+]
 
-  const image = { uri: "https://static.coindesk.com/wp-content/uploads/2020/06/generic-price-chart-710x458.jpg" };
+class FeedScreen extends React.Component {
 
-  return (
-    <View style={styles.container}>
-      <ImageBackground 
-        style={styles.imageContainer}
-        source={image}>
-          <View style={styles.menuContainer}>
-            <View style={styles.menuRow}>
-              <View style={styles.menuItem}>
-                <Ionicons
-                  name='md-home'
-                  size={30}
-                  style={{ textAlign: 'center', marginTop: 3 }}
-                  color='#fff'
-                />
-              </View>
-              <View style={styles.secondaryMenuItemsContainer}>
-                <View style={styles.secondaryMenuItem}>
-                  <Ionicons
-                    name='md-bookmark'
-                    size={24}
-                    style={{ textAlign: 'center', marginTop: 6 }}
-                    color='#fff'
-                  />
-                </View>
-                <View style={styles.secondaryMenuItem}>
-                  <Ionicons
-                    name='md-share-alt'
-                    size={28}
-                    style={{ textAlign: 'center', marginTop: 4 }}
-                    color='#fff'
-                  />
-                </View>
-              </View>
+    constructor(props) {
+        super(props)
+
+        this.position = new Animated.ValueXY()
+        this.swipedCardPosition = new Animated.ValueXY({ x: 0, y: -SCREEN_HEIGHT })
+        this.state = {
+            currentIndex: 0
+        }
+
+    }
+
+    componentWillMount() {
+
+        this.PanResponder = PanResponder.create({
+
+            onStartShouldSetPanResponder: (e, gestureState) => true,
+            onPanResponderMove: (evt, gestureState) => {
+
+                if (gestureState.dy > 0 && (this.state.currentIndex > 0)) {
+                    this.swipedCardPosition.setValue({
+                        x: 0, y: -SCREEN_HEIGHT + gestureState.dy
+                    })
+                }
+                else {
+
+                    this.position.setValue({ x: 0, y: gestureState.dy })
+
+                }
+            },
+            onPanResponderRelease: (evt, gestureState) => {
+
+                if (this.state.currentIndex > 0 && gestureState.dy > 50 && gestureState.vy > 0.7) {
+                    Animated.timing(this.swipedCardPosition, {
+                        toValue: ({ x: 0, y: 0 }),
+                        duration: 400
+                    }).start(() => {
+
+                        this.setState({ currentIndex: this.state.currentIndex - 1 })
+                        this.swipedCardPosition.setValue({ x: 0, y: -SCREEN_HEIGHT })
+
+                    })
+                }
+                else if (-gestureState.dy > 50 && -gestureState.vy > 0.7) {
+
+                    Animated.timing(this.position, {
+                        toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
+                        duration: 400
+                    }).start(() => {
+
+                        this.setState({ currentIndex: this.state.currentIndex + 1 })
+                        this.position.setValue({ x: 0, y: 0 })
+
+                    })
+                }
+                else {
+                    Animated.parallel([
+                        Animated.spring(this.position, {
+                            toValue: ({ x: 0, y: 0 })
+                        }),
+                        Animated.spring(this.swipedCardPosition, {
+                            toValue: ({ x: 0, y: -SCREEN_HEIGHT })
+                        })
+
+                    ]).start()
+
+                }
+            }
+        })
+
+    }
+    renderArticles = () => {
+
+        return ARTICLES.map((item, i) => {
+
+            if (i == this.state.currentIndex - 1) {
+
+                return (
+                    <Animated.View key={item.id} style={this.swipedCardPosition.getLayout()}
+                        {...this.PanResponder.panHandlers}
+                    >
+                        <View style={{ flex: 1, position: 'absolute', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor: 'white' }}>
+
+                            <View style={{ flex: 2, backgroundColor: 'black' }}>
+                                <Image source={ARTICLES[i].uri}
+                                    style={{ flex: 1, height: null, width: null, resizeMode: 'center' }}
+                                ></Image>
+                            </View>
+                            <View style={{ flex: 3, padding: 5 }}>
+                                <Text>
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+              </Text>
+                            </View>
+                        </View>
+                    </Animated.View>
+                )
+            }
+            else if (i < this.state.currentIndex) {
+                return null
+            }
+            if (i == this.state.currentIndex) {
+
+                return (
+
+                    <Animated.View key={item.id} style={this.position.getLayout()}
+                        {...this.PanResponder.panHandlers}
+                    >
+                        <View style={{ flex: 1, position: 'absolute', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor: 'white' }}>
+
+                            <View style={{ flex: 2, backgroundColor: 'black' }}>
+                                <Image source={ARTICLES[i].uri}
+                                    style={{ flex: 1, height: null, width: null, resizeMode: 'center' }}
+                                ></Image>
+                            </View>
+                            <View style={{ flex: 3, padding: 5 }}>
+                                <Text>
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+              </Text>
+                            </View>
+                        </View>
+                    </Animated.View>
+                )
+            }
+            else {
+
+                return (
+                    <Animated.View key={item.id}
+
+                    >
+                        <View style={{ flex: 1, position: 'absolute', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor: 'white' }}>
+
+                            <View style={{ flex: 2, backgroundColor: 'black' }}>
+                                <Image source={ARTICLES[i].uri}
+                                    style={{ flex: 1, height: null, width: null, resizeMode: 'center' }}
+                                ></Image>
+                            </View>
+                            <View style={{ flex: 3, padding: 5 }}>
+                                <Text>
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
+              </Text>
+                            </View>
+                        </View>
+                    </Animated.View>
+                )
+
+            }
+        }).reverse()
+
+    }
+
+    render() {
+        return (
+            <View style={{ flex: 1 }}>
+                {this.renderArticles()}
             </View>
-          </View>
-          <View style={styles.newsContainer}>
-            <View style={styles.spaceContainer}></View>
-            <View style={styles.contentContainer}>
-              <Text style={styles.newsTitle}>First Mover: Compound’s COMP Token More Than Doubles in Price Amid DeFi Mania</Text>
-              <Text style={styles.newsTimestamp}>Jun 19, 2020 at 14:08 UTC</Text>
-              <Text style={styles.newsBody}>The token is so new that not even cryptocurrency data sites are using consistent methodologies for deriving COMP’s market value. The website DeFi Market Cap bases the calculation on the 10 million tokens in existence, for a market value of about $2 billion. But CoinGecko bases its figure on a circulating supply of 2.56 million tokens, for a market value of $537 million.</Text>
-            </View>
-            <View style={styles.sourceContainer}>
-              <View style={styles.sourceDescContainer}>
-                <Text style={styles.sourceText}>Read the full story in detail at</Text>
-                <Image style={styles.sourceImage} source={require('../assets/temp/coindesk.png')} />
-              </View>
-              <View style={styles.sourceIconContainer}>
-                <Ionicons
-                  name='md-arrow-round-forward'
-                  size={36}
-                  style={{ textAlign: 'center', marginTop: 10 }}
-                  color={Colors.tintColor}
-                />
-              </View>
-            </View>
-          </View>
-      </ImageBackground>
-    </View>
-  );
+        );
+    }
 }
-
-FeedScreen.navigationOptions = {
-  header: null
-};
+export default FeedScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5F5F5'
-  },
-  imageContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    height: '55%',
-    padding: 20,
-    paddingTop: 50
-  },
-  menuContainer: {
-    flex: 1
-  },
-  menuRow: {
-    height: 50,
-    flexDirection: 'row',
-    flex: 1
-  },
-  secondaryMenuItemsContainer: {
-    height: 50,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    flex: 1
-  },
-  menuItem: {
-    backgroundColor: Colors.tintColor,
-    height: 36,
-    width: 36,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-  },
-  secondaryMenuItem: {
-    backgroundColor: Colors.darkGrey,
-    height: 36,
-    width: 36,
-    borderRadius: 8,
-    marginLeft: 10
-  },
-  newsContainer: {
-    flex: 3,
-    flexDirection: 'column',
-    justifyContent: 'flex-end'
-  },
-  contentContainer: {
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-    padding: 25
-  },
-  newsTitle: {
-    fontSize: 24,
-    fontWeight: 'bold'
-  },
-  newsTimestamp: {
-    fontSize: 12,
-    fontWeight: '100',
-    marginTop: 5
-  },
-  newsBody: {
-    fontSize: 16,
-    fontWeight: '200',
-    marginTop: 10,
-    textAlign: 'justify',
-    lineHeight: 20
-  },
-  sourceContainer: {
-    backgroundColor: 'white',
-    height: 90,
-    marginTop: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  sourceText: {
-    fontSize: 14,
-    fontWeight: '100'
-  },
-  sourceImage: {
-    marginTop: 10
-  }
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 });
