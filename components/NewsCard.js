@@ -1,21 +1,18 @@
-import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
-import { Image, ImageBackground, rgba, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView, Directions } from 'react-native-gesture-handler';
-
-import { MonoText } from '../components/StyledText';
-import Colors from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import * as React from 'react';
+import { Image, ImageBackground, StyleSheet, Text, View, Dimensions } from 'react-native';
 
-export default function FeedScreenOld() {
+import Colors from '../constants/Colors';
 
-  const image = { uri: "https://static.coindesk.com/wp-content/uploads/2020/06/generic-price-chart-710x458.jpg" };
+const SCREEN_HEIGHT = Dimensions.get("window").height
+const SCREEN_WIDTH = Dimensions.get("window").width
 
+export default function NewsCard(props) {
   return (
     <View style={styles.container}>
       <ImageBackground 
         style={styles.imageContainer}
-        source={image}>
+        source={props.image}>
           <View style={styles.menuContainer}>
             <View style={styles.menuRow}>
               <View style={styles.menuItem}>
@@ -73,14 +70,12 @@ export default function FeedScreenOld() {
   );
 }
 
-FeedScreenOld.navigationOptions = {
-  header: null
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5'
+    height: SCREEN_HEIGHT,
+    width: SCREEN_WIDTH,
+    position: 'absolute'
   },
   imageContainer: {
     flex: 1,
@@ -88,7 +83,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: '55%',
     padding: 20,
-    paddingTop: 50
+    paddingTop: 50,
+    
   },
   menuContainer: {
     flex: 1
@@ -123,13 +119,13 @@ const styles = StyleSheet.create({
   newsContainer: {
     flex: 3,
     flexDirection: 'column',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   contentContainer: {
     backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 20,
     padding: 25
   },
@@ -155,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 20,
     padding: 20,
     flexDirection: 'row',
@@ -168,4 +164,4 @@ const styles = StyleSheet.create({
   sourceImage: {
     marginTop: 10
   }
-});
+})

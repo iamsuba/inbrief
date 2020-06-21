@@ -12,6 +12,8 @@ import {
 
 import Colors from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import NewsCard from '../components/NewsCard'
+
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 
@@ -104,21 +106,7 @@ class FeedScreen extends React.Component {
                     <Animated.View key={item.id} style={this.swipedCardPosition.getLayout()}
                         {...this.PanResponder.panHandlers}
                     >
-                        <View style={{ flex: 1, position: 'absolute', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor: 'white' }}>
-
-                            <View style={{ flex: 2, backgroundColor: 'black' }}>
-                                <Image source={ARTICLES[i].uri}
-                                    style={{ flex: 1, height: null, width: null, resizeMode: 'center' }}
-                                ></Image>
-                            </View>
-                            <View style={{ flex: 3, padding: 5 }}>
-                                <Text>
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-              </Text>
-                            </View>
-                        </View>
+                        <NewsCard image={ARTICLES[i].uri} />
                     </Animated.View>
                 )
             }
@@ -132,45 +120,15 @@ class FeedScreen extends React.Component {
                     <Animated.View key={item.id} style={this.position.getLayout()}
                         {...this.PanResponder.panHandlers}
                     >
-                        <View style={{ flex: 1, position: 'absolute', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor: 'white' }}>
-
-                            <View style={{ flex: 2, backgroundColor: 'black' }}>
-                                <Image source={ARTICLES[i].uri}
-                                    style={{ flex: 1, height: null, width: null, resizeMode: 'center' }}
-                                ></Image>
-                            </View>
-                            <View style={{ flex: 3, padding: 5 }}>
-                                <Text>
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-              </Text>
-                            </View>
-                        </View>
+                        <NewsCard image={ARTICLES[i].uri} />
                     </Animated.View>
                 )
             }
             else {
 
                 return (
-                    <Animated.View key={item.id}
-
-                    >
-                        <View style={{ flex: 1, position: 'absolute', height: SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor: 'white' }}>
-
-                            <View style={{ flex: 2, backgroundColor: 'black' }}>
-                                <Image source={ARTICLES[i].uri}
-                                    style={{ flex: 1, height: null, width: null, resizeMode: 'center' }}
-                                ></Image>
-                            </View>
-                            <View style={{ flex: 3, padding: 5 }}>
-                                <Text>
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-                                    Labore irure excepteur deserunt qui. Occaecat do consequat velit adipisicing consequat reprehenderit incididunt duis irure ea consequat ipsum Lorem dolor. Culpa consectetur nisi officia excepteur anim mollit nostrud ut voluptate. Quis velit dolore fugiat veniam eu labore adipisicing ipsum incididunt ad amet. Do veniam adipisicing veniam commodo exercitation officia et commodo Lorem nostrud culpa tempor dolor.
-              </Text>
-                            </View>
-                        </View>
+                    <Animated.View key={item.id}>
+                        <NewsCard image={ARTICLES[i].uri} />
                     </Animated.View>
                 )
 
