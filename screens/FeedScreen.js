@@ -112,27 +112,31 @@ class FeedScreen extends React.Component {
 
                 console.log('This card has been swiped up recently')
 
-                return (
-                    <Animated.View key={item.id} style={this.swipedCardPosition.getLayout()}
-                        {...this.PanResponder.panHandlers}
-                    >
-                        <NewsCard 
-                            image={ImageURL} 
-                            title={item.title}
-                            body={item.body}
-                        />
-                    </Animated.View>
-                )
+                if (this.state.currentIndex == 10) {
+                    console.log('::::::::End of cards detected::::::::::::')
+                    return(
+                        <View style={styles.endCard}>
+                            <Text>You have caught up with all stories.</Text>
+                        </View>
+                    )
+                }
+                else {
+                    return (
+                        <Animated.View key={item.id} style={this.swipedCardPosition.getLayout()}
+                            {...this.PanResponder.panHandlers}
+                        >
+                            <NewsCard 
+                                image={ImageURL} 
+                                title={item.title}
+                                body={item.body}
+                            />
+                        </Animated.View>
+                    )
+                }
             }
             else if (i < this.state.currentIndex) {
                 console.log("before returning null", i, this.state.currentIndex)
                 return null
-            }
-            else if (i == this.state.currentIndex && this.state.currentIndex == 9) {
-                console.log('::::::::End of cards detected::::::::::::')
-                return(
-                    <Text>End of cards</Text>
-                )
             }
             if (i == this.state.currentIndex) {
 
@@ -183,5 +187,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    endCard: {
+        height: 500,
+        width: 500,
+        backgroundColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

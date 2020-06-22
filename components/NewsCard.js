@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
     flex: 1,
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
-    position: 'absolute'
+    position: 'absolute',
+    backgroundColor: '#f5f5f5'
   },
   imageContainer: {
     flex: 1,
