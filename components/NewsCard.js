@@ -48,9 +48,9 @@ export default function NewsCard(props) {
           <View style={styles.newsContainer}>
             <View style={styles.spaceContainer}></View>
             <View style={styles.contentContainer}>
-              <Text style={styles.newsTitle}>First Mover: Compound’s COMP Token More Than Doubles in Price Amid DeFi Mania</Text>
+              <Text style={styles.newsTitle}>{props.title}</Text>
               <Text style={styles.newsTimestamp}>Jun 19, 2020 at 14:08 UTC</Text>
-              <Text style={styles.newsBody}>The token is so new that not even cryptocurrency data sites are using consistent methodologies for deriving COMP’s market value. The website DeFi Market Cap bases the calculation on the 10 million tokens in existence, for a market value of about $2 billion. But CoinGecko bases its figure on a circulating supply of 2.56 million tokens, for a market value of $537 million.</Text>
+              <Text style={styles.newsBody}>{props.body}</Text>
             </View>
             <TouchableOpacity style={styles.sourceContainer} onPress={() => WebBrowser.openBrowserAsync('https://www.coindesk.com/kin-community-approves-move-from-stellar-fork-to-solanas-blockchain')}>
               <View style={styles.sourceDescContainer}>
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     height: '55%',
     padding: 20,
     paddingTop: 50,
-    
   },
   menuContainer: {
     flex: 1
@@ -145,7 +144,7 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     marginTop: 10,
     textAlign: 'left',
-    lineHeight: 20
+    lineHeight: 22
   },
   sourceContainer: {
     backgroundColor: 'white',

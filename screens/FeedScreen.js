@@ -13,16 +13,12 @@ import {
 import Colors from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import NewsCard from '../components/NewsCard'
+import NewsFeedData from '../assets/temp/newsFeedData.json'
+
+const ARTICLES = NewsFeedData
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
-
-const ARTICLES = [
-    { id: "1", uri: require('./../assets/temp/newsimage1.jpg') },
-    { id: "2", uri: require('./../assets/temp/newsimage2.jpg') },
-    { id: "3", uri: require('./../assets/temp/newsimage3.jpg') },
-    { id: "4", uri: require('./../assets/temp/newsimage4.jpg') }
-]
 
 class FeedScreen extends React.Component {
 
@@ -45,12 +41,13 @@ class FeedScreen extends React.Component {
             onPanResponderMove: (evt, gestureState) => {
 
                 if (gestureState.dy > 0 && (this.state.currentIndex > 0)) {
+                    console.log('Swiping down')
                     this.swipedCardPosition.setValue({
                         x: 0, y: -SCREEN_HEIGHT + gestureState.dy
                     })
                 }
                 else {
-
+                    console.log('Swiping Up')
                     this.position.setValue({ x: 0, y: gestureState.dy })
 
                 }
@@ -58,6 +55,9 @@ class FeedScreen extends React.Component {
             onPanResponderRelease: (evt, gestureState) => {
 
                 if (this.state.currentIndex > 0 && gestureState.dy > 50 && gestureState.vy > 0.7) {
+                    
+                    console.log('Successful swipe down release')
+
                     Animated.timing(this.swipedCardPosition, {
                         toValue: ({ x: 0, y: 0 }),
                         duration: 400
@@ -69,6 +69,8 @@ class FeedScreen extends React.Component {
                     })
                 }
                 else if (-gestureState.dy > 50 && -gestureState.vy > 0.7) {
+
+                    console.log('Successful swipe up release')
 
                     Animated.timing(this.position, {
                         toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
@@ -100,27 +102,52 @@ class FeedScreen extends React.Component {
 
         return ARTICLES.map((item, i) => {
 
+
+            const ImageURL = {uri: item.image}
+
+            console.log("i", i, "currentIndex", this.state.currentIndex)
+
+
             if (i == this.state.currentIndex - 1) {
+
+                console.log('This card has been swiped up recently')
 
                 return (
                     <Animated.View key={item.id} style={this.swipedCardPosition.getLayout()}
                         {...this.PanResponder.panHandlers}
                     >
-                        <NewsCard image={ARTICLES[i].uri} />
+                        <NewsCard 
+                            image={ImageURL} 
+                            title={item.title}
+                            body={item.body}
+                        />
                     </Animated.View>
                 )
             }
             else if (i < this.state.currentIndex) {
+                console.log("before returning null", i, this.state.currentIndex)
                 return null
             }
+            else if (i == this.state.currentIndex && this.state.currentIndex == 9) {
+                console.log('::::::::End of cards detected::::::::::::')
+                return(
+                    <Text>End of cards</Text>
+                )
+            }
             if (i == this.state.currentIndex) {
+
+                console.log('This card is the active card on display')
 
                 return (
 
                     <Animated.View key={item.id} style={this.position.getLayout()}
                         {...this.PanResponder.panHandlers}
                     >
-                        <NewsCard image={ARTICLES[i].uri} />
+                        <NewsCard 
+                            image={ImageURL} 
+                            title={item.title}
+                            body={item.body}
+                        />
                     </Animated.View>
                 )
             }
@@ -128,7 +155,11 @@ class FeedScreen extends React.Component {
 
                 return (
                     <Animated.View key={item.id}>
-                        <NewsCard image={ARTICLES[i].uri} />
+                        <NewsCard 
+                            image={ImageURL} 
+                            title={item.title}
+                            body={item.body}
+                        />
                     </Animated.View>
                 )
 
