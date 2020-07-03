@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, Switch } from 'react-native';
 
 import Colors from '../constants/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 export default function SwitchElement(props) {

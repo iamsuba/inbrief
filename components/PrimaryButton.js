@@ -1,9 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import Colors from '../constants/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 export default function PrimaryButton(props) {

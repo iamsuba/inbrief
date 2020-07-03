@@ -1,10 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
-import { Image, ImageBackground, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 
 import Colors from '../constants/Colors';
 import * as WebBrowser from 'expo-web-browser'
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
