@@ -7,7 +7,7 @@ export default {
       path: 'root',
       screens: {
         Home: 'home',
-        Bookmarks: 'Bookmarks',
+        Bookmarks: 'bookmarks',
         Settings: 'settings'
       },
     },

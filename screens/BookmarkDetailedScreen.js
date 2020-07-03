@@ -4,13 +4,24 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
+import NewsCard from '../components/NewsCard';
 
-export default function BookmarkDetailedScreen() {
+export default function BookmarkDetailedScreen(props) {
+
+  const newsItem = props.route.params.newsItem
+  const ImageURL = {uri: newsItem.image}
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text>This is the bookmarks screen</Text>
-      </ScrollView>
+      <NewsCard 
+        image={ImageURL} 
+        title={newsItem.title}
+        body={newsItem.body}
+        onPress={() => props.navigation.navigate('Root', {
+            newsItem: props.route.params.newsItem
+        })}
+        bookmark={true}
+    />
     </View>
   );
 }

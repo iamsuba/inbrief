@@ -7,6 +7,7 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import FeedScreen from './screens/FeedScreen'
 import LinkingConfiguration from './navigation/LinkingConfiguration';
+import BookmarkDetailedScreen from './screens/BookmarkDetailedScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App(props) {
         <NavigationContainer linking={LinkingConfiguration}>
           <Stack.Navigator initialRouteName='FeedScreen' headerMode='none'>
             <Stack.Screen name="Feed" component={FeedScreen} />
+            <Stack.Screen name="BookmarkDetailed" component={BookmarkDetailedScreen} />
             <Stack.Screen name="Root" component={BottomTabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>

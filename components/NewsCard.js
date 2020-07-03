@@ -10,6 +10,10 @@ const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 
 export default function NewsCard(props) {
+
+  console.log('props from news card', props)
+  const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
+
   return (
     <View style={styles.container}>
       <ImageBackground 
@@ -21,7 +25,7 @@ export default function NewsCard(props) {
                 style={styles.menuItem}
                 onPress={() => props.onPress()}>
                 <Ionicons
-                  name='md-home'
+                  name={NavIcon}
                   size={30}
                   style={{ textAlign: 'center', marginTop: 3 }}
                   color='#fff'
