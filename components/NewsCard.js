@@ -11,7 +11,6 @@ const SCREEN_WIDTH = Dimensions.get("window").width
 
 export default function NewsCard(props) {
 
-  console.log('props from news card', props)
   const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
 
   return (
