@@ -16,7 +16,7 @@ export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME} tabBarOptions={{ showLabel: false}}>
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
@@ -24,6 +24,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: 'Home',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
         }}
+        initialParams={route.params}
       />
       <BottomTab.Screen
         name="Bookmarks"

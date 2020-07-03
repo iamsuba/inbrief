@@ -17,14 +17,16 @@ export default function NewsCard(props) {
         source={props.image}>
           <View style={styles.menuContainer}>
             <View style={styles.menuRow}>
-              <View style={styles.menuItem}>
+              <TouchableOpacity 
+                style={styles.menuItem}
+                onPress={() => props.onPress()}>
                 <Ionicons
                   name='md-home'
                   size={30}
                   style={{ textAlign: 'center', marginTop: 3 }}
                   color='#fff'
                 />
-              </View>
+              </TouchableOpacity>
               <View style={styles.secondaryMenuItemsContainer}>
                 <View style={styles.secondaryMenuItem}>
                   <Ionicons
