@@ -1,18 +1,13 @@
-import * as WebBrowser from 'expo-web-browser';
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Image, 
-  ImageBackground, 
   StyleSheet, 
   Text, 
   View,
   Dimensions,
   Animated,
-  PanResponder,
-  Modal } from 'react-native';
+  PanResponder } from 'react-native';
 
-import Colors from '../constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
 import NewsCard from '../components/NewsCard'
 import NewsFeedData from '../assets/temp/newsFeedData.json'
 import PrimaryButton from '../components/PrimaryButton';
@@ -20,136 +15,117 @@ import PrimaryButton from '../components/PrimaryButton';
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 
-class FeedScreen extends React.Component {
 
+export default function FeedScreen(props) {
 
-    constructor(props) {
-        super(props)
+    const [currentIndex, setCurrentIndex] = React.useState(0);
 
-        this.position = new Animated.ValueXY()
-        this.swipedCardPosition = new Animated.ValueXY({ x: 0, y: -SCREEN_HEIGHT })
+    const position = React.useRef(new Animated.ValueXY()).current
+    const swipedCardPosition = React.useRef(new Animated.ValueXY({ x: 0, y: -SCREEN_HEIGHT })).current
 
-        this.state = {
-            currentIndex: 0
-        }
+    console.log(position, swipedCardPosition)
 
-    }
+    //Swiping Gestures Handling
+    const panResponder = PanResponder.create({
 
-    componentWillMount() {
+        onStartShouldSetPanResponder: (e, gestureState) => true,
+        onPanResponderMove: (evt, gestureState) => {
 
-        this.PanResponder = PanResponder.create({
-
-            onStartShouldSetPanResponder: (e, gestureState) => true,
-            onPanResponderMove: (evt, gestureState) => {
-
-                if (gestureState.dy > 0 && (this.state.currentIndex > 0)) {
-                    //console.log('Swiping down')
-                    this.swipedCardPosition.setValue({
-                        x: 0, y: -SCREEN_HEIGHT + gestureState.dy
-                    })
-                }
-                else {
-                    //console.log('Swiping Up')
-                    this.position.setValue({ x: 0, y: gestureState.dy })
-
-                }
-            },
-            onPanResponderRelease: (evt, gestureState) => {
-
-                if (this.state.currentIndex > 0 && gestureState.dy > 50 && gestureState.vy > 0.7) {
-                    
-                    //console.log('Successful swipe down release')
-
-                    Animated.timing(this.swipedCardPosition, {
-                        toValue: ({ x: 0, y: 0 }),
-                        duration: 400
-                    }).start(() => {
-
-                        this.setState({ currentIndex: this.state.currentIndex - 1 })
-                        this.swipedCardPosition.setValue({ x: 0, y: -SCREEN_HEIGHT })
-
-                    })
-                }
-                else if (-gestureState.dy > 50 && -gestureState.vy > 0.7) {
-
-                    //console.log('Successful swipe up release')
-
-                    Animated.timing(this.position, {
-                        toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
-                        duration: 400
-                    }).start(() => {
-
-                        this.setState({ currentIndex: this.state.currentIndex + 1 })
-                        this.position.setValue({ x: 0, y: 0 })
-
-                    })
-                }
-                else {
-                    Animated.parallel([
-                        Animated.spring(this.position, {
-                            toValue: ({ x: 0, y: 0 })
-                        }),
-                        Animated.spring(this.swipedCardPosition, {
-                            toValue: ({ x: 0, y: -SCREEN_HEIGHT })
-                        })
-
-                    ]).start()
-
-                }
+            if (gestureState.dy > 0 && (currentIndex > 0)) {
+                console.log('Swiping down')
+                swipedCardPosition.setValue({
+                    x: 0, y: -SCREEN_HEIGHT + gestureState.dy
+                })
             }
-        })
+            else {
+                console.log('Swiping Up')
+                position.setValue({ x: 0, y: gestureState.dy })
 
+            }
+        },
+        onPanResponderRelease: (evt, gestureState) => {
+
+            if (currentIndex > 0 && gestureState.dy > 50 && gestureState.vy > 0.7) {
+                
+                console.log('Successful swipe down release')
+
+                Animated.timing(swipedCardPosition, {
+                    toValue: ({ x: 0, y: 0 }),
+                    duration: 400
+                }).start(() => {
+
+                    setCurrentIndex(currentIndex - 1)
+                    swipedCardPosition.setValue({ x: 0, y: -SCREEN_HEIGHT })
+
+                })
+            }
+            else if (-gestureState.dy > 50 && -gestureState.vy > 0.7) {
+
+                console.log('Successful swipe up release')
+
+                Animated.timing(position, {
+                    toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
+                    duration: 400
+                }).start(() => {
+
+                    setCurrentIndex(currentIndex + 1)
+                    position.setValue({ x: 0, y: 0 })
+
+                })
+            }
+            else {
+                Animated.parallel([
+                    Animated.spring(position, {
+                        toValue: ({ x: 0, y: 0 })
+                    }),
+                    Animated.spring(swipedCardPosition, {
+                        toValue: ({ x: 0, y: -SCREEN_HEIGHT })
+                    })
+
+                ]).start()
+
+            }
+        }
+    })
+
+    const refreshFeed = () => {
+        position.setValue({ x: 0, y: 0 })
+        swipedCardPosition.setValue({ x: 0, y: -SCREEN_HEIGHT })
+        setCurrentIndex(0)
     }
-    
-    refreshFeed = () => {
-        this.position = new Animated.ValueXY()
-        this.swipedCardPosition = new Animated.ValueXY({ x: 0, y: -SCREEN_HEIGHT })
-        this.setState({ currentIndex: 0 })
-    }
 
-    renderArticles = () => {
 
-        // //console.log('props in feed', this.props)
-        // if(this.props.route.params) {
-        //     this.setState({
-        //         currentIndex: this.props.route.params.currentIndex
-        //     })
-        // }
+    const renderArticles = () => {
+        console.log('Rendering')
 
         return NewsFeedData.map((item, i) => {
 
-
+            console.log('currentIndex', currentIndex)
             const ImageURL = {uri: item.image}
 
-            //console.log("i", i, "currentIndex", this.state.currentIndex)
+            if (i == currentIndex - 1) {
 
-
-            if (i == this.state.currentIndex - 1) {
-
-                //console.log('This card has been swiped up recently')
-
-                if (this.state.currentIndex == 10) {
-                    //console.log('::::::::End of cards detected::::::::::::')
+                if (currentIndex == 10) {
                     return(
                         <View key={'endcard'} style={styles.endCard}>
                             <Image
                                 style={styles.endCardImage}
                                 source={require('./../assets/images/endcard.png')}/>
                             <Text style={styles.endCardMessage}>You have caught up with all stories.</Text>
-                            <PrimaryButton buttonText='Refresh Feed' onPress={() => this.refreshFeed()} />
+                            <PrimaryButton buttonText='Refresh Feed' onPress={() => refreshFeed()} />
                         </View>
                     )
                 }
                 else {
                     return (
-                        <Animated.View key={item.id} style={this.swipedCardPosition.getLayout()}
-                            {...this.PanResponder.panHandlers}
+                        <Animated.View key={item.id} style={swipedCardPosition.getLayout()}
+                            {...panResponder.panHandlers}
                         >
                             <NewsCard 
                                 image={ImageURL} 
                                 title={item.title}
                                 body={item.body}
-                                onPress={() => this.props.navigation.navigate('Root', {
+                                onPress={() => props.navigation.navigate('Root', {
                                     newsItem: {
                                         image: ImageURL,
                                         title: item.title,
@@ -161,24 +137,21 @@ class FeedScreen extends React.Component {
                     )
                 }
             }
-            else if (i < this.state.currentIndex) {
-                //console.log("before returning null", i, this.state.currentIndex)
+            else if (i < currentIndex) {
                 return null
             }
-            if (i == this.state.currentIndex) {
-
-                //console.log('This card is the active card on display')
+            if (i == currentIndex) {
 
                 return (
 
-                    <Animated.View key={item.id} style={this.position.getLayout()}
-                        {...this.PanResponder.panHandlers}
+                    <Animated.View key={item.id} style={position.getLayout()}
+                        {...panResponder.panHandlers}
                     >
                         <NewsCard 
                             image={ImageURL} 
                             title={item.title}
                             body={item.body}
-                            onPress={() => this.props.navigation.navigate('Root', {
+                            onPress={() => props.navigation.navigate('Root', {
                                 image: ImageURL,
                                 title: item.title,
                                 body: item.body
@@ -203,16 +176,15 @@ class FeedScreen extends React.Component {
         }).reverse()
 
     }
-
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                {this.renderArticles()}
-            </View>
-        );
-    }
-}
-export default FeedScreen;
+  
+    return(
+        renderArticles()
+    );
+  }
+  
+  FeedScreen.navigationOptions = {
+    header: null
+  };
 
 const styles = StyleSheet.create({
     container: {
