@@ -12,18 +12,40 @@ import NewsCard from '../components/NewsCard'
 import NewsFeedData from '../assets/temp/newsFeedData.json'
 import PrimaryButton from '../components/PrimaryButton';
 
+import * as firebase from 'firebase'
+
+const firebaseconfig = {
+    apiKey: "AIzaSyCbu1l26CLzY4FsThPOyr_XOMQGiIvzVyY",
+    authDomain: "market-outlines.firebaseapp.com",
+    databaseURL: "https://market-outlines.firebaseio.com",
+    projectId: "market-outlines",
+    storageBucket: "market-outlines.appspot.com",
+    messagingSenderId: "622842250618",
+    appId: "1:622842250618:web:78ba56da7bb126496a02c3",
+    measurementId: "G-C0J0LRM2XV"
+  }
+  
+firebase.initializeApp(firebaseconfig)
+
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 
-
 export default function FeedScreen(props) {
 
-    const [currentIndex, setCurrentIndex] = React.useState(0);
+    const [NewsFeed, setNewsFeed] = React.useState([])
+    const [LoadingComplete, setLoadingComplete] = React.useState(false)
 
+    React.useEffect(updateNewsFeed = () => {
+        firebase.database().ref('LatestNews/').once('value', (snapshot) => {
+            setNewsFeed(snapshot.val())
+            setLoadingComplete(true)
+            renderArticles()
+        });
+    }, [])
+
+    const [currentIndex, setCurrentIndex] = React.useState(0);
     const position = React.useRef(new Animated.ValueXY()).current
     const swipedCardPosition = React.useRef(new Animated.ValueXY({ x: 0, y: -SCREEN_HEIGHT })).current
-
-    //console.log(position, swipedCardPosition)
 
     //Swiping Gestures Handling
     const panResponder = PanResponder.create({
@@ -92,33 +114,62 @@ export default function FeedScreen(props) {
         position.setValue({ x: 0, y: 0 })
         swipedCardPosition.setValue({ x: 0, y: -SCREEN_HEIGHT })
         setCurrentIndex(0)
+        updateNewsFeed()
     }
 
 
     const renderArticles = () => {
-        //console.log('Rendering')
+        
+        if(!LoadingComplete) {
+            return <Text>Loading</Text>
+        } 
+        else {
+            return NewsFeed.map((item, i) => {
 
-        return NewsFeedData.map((item, i) => {
-
-            //console.log('currentIndex', currentIndex)
-            const ImageURL = {uri: item.image}
-
-            if (i == currentIndex - 1) {
-
-                if (currentIndex == 10) {
-                    return(
-                        <View key={'endcard'} style={styles.endCard}>
-                            <Image
-                                style={styles.endCardImage}
-                                source={require('./../assets/images/endcard.png')}/>
-                            <Text style={styles.endCardMessage}>You have caught up with all stories.</Text>
-                            <PrimaryButton buttonText='Refresh Feed' onPress={() => refreshFeed()} />
-                        </View>
-                    )
+                const ImageURL = {uri: item.image}
+    
+                if (i == currentIndex - 1) {
+    
+                    if (currentIndex == 10) {
+                        return(
+                            <View key={'endcard'} style={styles.endCard}>
+                                <Image
+                                    style={styles.endCardImage}
+                                    source={require('./../assets/images/endcard.png')}/>
+                                <Text style={styles.endCardMessage}>You have caught up with all stories.</Text>
+                                <PrimaryButton buttonText='Refresh Feed' onPress={() => refreshFeed()} />
+                            </View>
+                        )
+                    }
+                    else {
+                        return (
+                            <Animated.View key={item.id} style={swipedCardPosition.getLayout()}
+                                {...panResponder.panHandlers}
+                            >
+                                <NewsCard 
+                                    image={ImageURL} 
+                                    title={item.title}
+                                    body={item.body}
+                                    onPress={() => props.navigation.navigate('Root', {
+                                        newsItem: {
+                                            image: ImageURL,
+                                            title: item.title,
+                                            body: item.body
+                                        }
+                                    })}
+                                />
+                            </Animated.View>
+                        )
+                    }
                 }
-                else {
+                else if (i < currentIndex) {
+                    return null
+                }
+                if (i == currentIndex) {
+    
                     return (
-                        <Animated.View key={item.id} style={swipedCardPosition.getLayout()}
+    
+                        <Animated.View key={item.id} style={position.getLayout()}
                             {...panResponder.panHandlers}
                         >
                             <NewsCard 
@@ -126,54 +177,29 @@ export default function FeedScreen(props) {
                                 title={item.title}
                                 body={item.body}
                                 onPress={() => props.navigation.navigate('Root', {
-                                    newsItem: {
-                                        image: ImageURL,
-                                        title: item.title,
-                                        body: item.body
-                                    }
+                                    image: ImageURL,
+                                    title: item.title,
+                                    body: item.body
                                 })}
                             />
                         </Animated.View>
                     )
                 }
-            }
-            else if (i < currentIndex) {
-                return null
-            }
-            if (i == currentIndex) {
-
-                return (
-
-                    <Animated.View key={item.id} style={position.getLayout()}
-                        {...panResponder.panHandlers}
-                    >
-                        <NewsCard 
-                            image={ImageURL} 
-                            title={item.title}
-                            body={item.body}
-                            onPress={() => props.navigation.navigate('Root', {
-                                image: ImageURL,
-                                title: item.title,
-                                body: item.body
-                            })}
-                        />
-                    </Animated.View>
-                )
-            }
-            else {
-
-                return (
-                    <Animated.View key={item.id}>
-                        <NewsCard 
-                            image={ImageURL} 
-                            title={item.title}
-                            body={item.body}
-                        />
-                    </Animated.View>
-                )
-
-            }
-        }).reverse()
+                else {
+    
+                    return (
+                        <Animated.View key={item.id}>
+                            <NewsCard 
+                                image={ImageURL} 
+                                title={item.title}
+                                body={item.body}
+                            />
+                        </Animated.View>
+                    )
+    
+                }
+            }).reverse()
+        }
 
     }
   
