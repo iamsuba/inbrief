@@ -23,7 +23,7 @@ export default function FeedScreen(props) {
     const position = React.useRef(new Animated.ValueXY()).current
     const swipedCardPosition = React.useRef(new Animated.ValueXY({ x: 0, y: -SCREEN_HEIGHT })).current
 
-    console.log(position, swipedCardPosition)
+    //console.log(position, swipedCardPosition)
 
     //Swiping Gestures Handling
     const panResponder = PanResponder.create({
@@ -32,13 +32,13 @@ export default function FeedScreen(props) {
         onPanResponderMove: (evt, gestureState) => {
 
             if (gestureState.dy > 0 && (currentIndex > 0)) {
-                console.log('Swiping down')
+                //console.log('Swiping down')
                 swipedCardPosition.setValue({
                     x: 0, y: -SCREEN_HEIGHT + gestureState.dy
                 })
             }
             else {
-                console.log('Swiping Up')
+                //console.log('Swiping Up')
                 position.setValue({ x: 0, y: gestureState.dy })
 
             }
@@ -47,7 +47,7 @@ export default function FeedScreen(props) {
 
             if (currentIndex > 0 && gestureState.dy > 50 && gestureState.vy > 0.7) {
                 
-                console.log('Successful swipe down release')
+                //console.log('Successful swipe down release')
 
                 Animated.timing(swipedCardPosition, {
                     toValue: ({ x: 0, y: 0 }),
@@ -61,7 +61,7 @@ export default function FeedScreen(props) {
             }
             else if (-gestureState.dy > 50 && -gestureState.vy > 0.7) {
 
-                console.log('Successful swipe up release')
+                //console.log('Successful swipe up release')
 
                 Animated.timing(position, {
                     toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
@@ -96,11 +96,11 @@ export default function FeedScreen(props) {
 
 
     const renderArticles = () => {
-        console.log('Rendering')
+        //console.log('Rendering')
 
         return NewsFeedData.map((item, i) => {
 
-            console.log('currentIndex', currentIndex)
+            //console.log('currentIndex', currentIndex)
             const ImageURL = {uri: item.image}
 
             if (i == currentIndex - 1) {
