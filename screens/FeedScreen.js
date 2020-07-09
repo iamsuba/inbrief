@@ -6,7 +6,8 @@ import {
   View,
   Dimensions,
   Animated,
-  PanResponder } from 'react-native';
+  PanResponder,
+  Share } from 'react-native';
 
 import NewsCard from '../components/NewsCard'
 import NewsFeedData from '../assets/temp/newsFeedData.json'
@@ -24,8 +25,10 @@ const firebaseconfig = {
     appId: "1:622842250618:web:78ba56da7bb126496a02c3",
     measurementId: "G-C0J0LRM2XV"
   }
-  
-firebase.initializeApp(firebaseconfig)
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseconfig)
+  }
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
@@ -36,8 +39,9 @@ export default function FeedScreen(props) {
     const [LoadingComplete, setLoadingComplete] = React.useState(false)
 
     React.useEffect(updateNewsFeed = () => {
+
         firebase.database().ref('LatestNews/').once('value', (snapshot) => {
-            setNewsFeed(snapshot.val())
+            setNewsFeed(snapshot.val().reverse())
             setLoadingComplete(true)
             renderArticles()
         });
@@ -114,19 +118,28 @@ export default function FeedScreen(props) {
         position.setValue({ x: 0, y: 0 })
         swipedCardPosition.setValue({ x: 0, y: -SCREEN_HEIGHT })
         setCurrentIndex(0)
+        setLoadingComplete(false)
         updateNewsFeed()
     }
-
 
     const renderArticles = () => {
         
         if(!LoadingComplete) {
-            return <Text>Loading</Text>
+            return (
+                <View style={styles.loadingContainer}>
+                    <Image
+                        style={styles.loading}
+                        source={require('./../assets/images/loading.gif')}/>
+                        <Text style={styles.loadingText}>Fetching your news feed</Text>
+                </View>
+            )
         } 
         else {
             return NewsFeed.map((item, i) => {
 
                 const ImageURL = {uri: item.image}
+                const Timestamp = new Date(item.timestamp)
+                const localTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
     
                 if (i == currentIndex - 1) {
     
@@ -150,6 +163,8 @@ export default function FeedScreen(props) {
                                     image={ImageURL} 
                                     title={item.title}
                                     body={item.body}
+                                    timestamp={localTimestamp}
+                                    sourceArticleURL={item.sourceArticleURL}
                                     onPress={() => props.navigation.navigate('Root', {
                                         newsItem: {
                                             image: ImageURL,
@@ -176,6 +191,8 @@ export default function FeedScreen(props) {
                                 image={ImageURL} 
                                 title={item.title}
                                 body={item.body}
+                                timestamp={localTimestamp}
+                                sourceArticleURL={item.sourceArticleURL}
                                 onPress={() => props.navigation.navigate('Root', {
                                     image: ImageURL,
                                     title: item.title,
@@ -193,6 +210,13 @@ export default function FeedScreen(props) {
                                 image={ImageURL} 
                                 title={item.title}
                                 body={item.body}
+                                timestamp={localTimestamp}
+                                sourceArticleURL={item.sourceArticleURL}
+                                onPress={() => props.navigation.navigate('Root', {
+                                    image: ImageURL,
+                                    title: item.title,
+                                    body: item.body
+                                })}
                             />
                         </Animated.View>
                     )
@@ -217,6 +241,19 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    loadingContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    loading: {
+        height: 72,
+        width: 72
+    },
+    loadingText: {
+        fontSize: 22,
+        marginTop: 15
     },
     endCard: {
         backgroundColor: '#f7f7f7',

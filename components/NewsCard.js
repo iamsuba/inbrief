@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
-import { Image, ImageBackground, StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, View, Dimensions, TouchableOpacity, Share } from 'react-native';
 
 import Colors from '../constants/Colors';
 import * as WebBrowser from 'expo-web-browser'
@@ -11,6 +11,20 @@ const SCREEN_WIDTH = Dimensions.get("window").width
 export default function NewsCard(props) {
 
   const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
+
+  const shareNews = async() => {
+    try {
+        const result = await Share.share({
+            message: '"' + props.title + '."'
+                + '\n\n' 
+                + props.body 
+                + '\n\n\nRead blockchain news curated and summarized by AI with MarketOutlines. Get the app at http://www.marketoutlines.com',
+        });
+    } catch(e) {
+        console.log(e)
+    }
+  }
+
 
   return (
     <View style={styles.container}>
@@ -38,14 +52,16 @@ export default function NewsCard(props) {
                     color='#fff'
                   />
                 </View>
-                <View style={styles.secondaryMenuItem}>
+                <TouchableOpacity 
+                  style={styles.secondaryMenuItem}
+                  onPress={() => shareNews()}>
                   <Ionicons
                     name='md-share-alt'
                     size={28}
                     style={{ textAlign: 'center', marginTop: 4 }}
                     color='#fff'
                   />
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -53,10 +69,10 @@ export default function NewsCard(props) {
             <View style={styles.spaceContainer}></View>
             <View style={styles.contentContainer}>
               <Text style={styles.newsTitle}>{props.title}</Text>
-              <Text style={styles.newsTimestamp}>Jun 19, 2020 at 14:08 UTC</Text>
+              <Text style={styles.newsTimestamp}>{props.timestamp}</Text>
               <Text style={styles.newsBody}>{props.body}</Text>
             </View>
-            <TouchableOpacity style={styles.sourceContainer} onPress={() => WebBrowser.openBrowserAsync('https://www.coindesk.com/kin-community-approves-move-from-stellar-fork-to-solanas-blockchain')}>
+            <TouchableOpacity style={styles.sourceContainer} onPress={() => WebBrowser.openBrowserAsync(props.sourceArticleURL)}>
               <View style={styles.sourceDescContainer}>
                 <Text style={styles.sourceText}>Read the full story in detail at</Text>
                 <Image style={styles.sourceImage} source={require('../assets/temp/coindesk.png')} />

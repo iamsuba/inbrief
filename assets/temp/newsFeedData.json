@@ -1,62 +1,94 @@
-[
-    { 
-        "id": "1",
-        "title": "Bitmain Co-Founder Offers Share Buyback at $4B Valuation to End Power Struggle",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2019/11/df2f-ihuuxut4664633-710x458.jpg"
-    },
-    { 
-        "id": "2",
-        "title": "Crypto Long & Short: What Changed My Mind About Bitcoin Narratives",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2020/06/price-up-710x458.jpg"
-    },
-    { 
-        "id": "3",
-        "title": "Compound Tops MakerDAO, Now Has the Most Value Staked in DeFi",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://blockonomi-9fcd.kxcdn.com/wp-content/uploads/2019/08/compound.jpg"
-    },
-    { 
-        "id": "4",
-        "title": "New Zealand Police Seize $90M Linked to Alleged BTC-e Exchange Operator",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2020/01/shutterstock_1041989590-710x458.jpg"
-    },
-    { 
-        "id": "5",
-        "title": "UK Financial Watchdog Warns Crypto Firms to Register Before End of June",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2020/06/shutterstock_276810404-e1592827644963-710x458.jpg"
-    },
-    { 
-        "id": "6",
-        "title": "Nomura-Backed Crypto Custody Venture Launches After 2 Years in the Works",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2020/06/Komainu_Shutterstock-710x458.jpg"
-    },
-    { 
-        "id": "7",
-        "title": "Trump Told Treasury Secretary to ‘Go After’ Bitcoin, Bolton Book Reportedly Claims",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2020/06/Donald-Trump-710x458.jpg"
-    },
-    { 
-        "id": "8",
-        "title": "Mauritius Releases Guidance for Regulated Security Token Offerings",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2020/06/shutterstock_514019905-710x458.jpg"
-    },
-    { 
-        "id": "9",
-        "title": "In the Wildcat Era of Stablecoins, Commercial Banks Have New Rails to Ride",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2020/06/shutterstock_691234237-710x458.jpg"
-    },
-    { 
-        "id": "10",
-        "title": "Fireblocks Adds Crypto-Tracing Tool to Guard Against Money Laundering",
-        "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
-        "image": "https://static.coindesk.com/wp-content/uploads/2019/11/chainalysis-710x458.jpg"
-    }
-]
+{
+    "News": [
+        { 
+            "id": "1",
+            "title": "Bitmain Co-Founder Offers Share Buyback at $4B Valuation to End Power Struggle",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2019/11/df2f-ihuuxut4664633-710x458.jpg"
+        },
+        { 
+            "id": "2",
+            "title": "Crypto Long & Short: What Changed My Mind About Bitcoin Narratives",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/06/price-up-710x458.jpg"
+        },
+        { 
+            "id": "3",
+            "title": "Compound Tops MakerDAO, Now Has the Most Value Staked in DeFi",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://blockonomi-9fcd.kxcdn.com/wp-content/uploads/2019/08/compound.jpg"
+        },
+        { 
+            "id": "4",
+            "title": "New Zealand Police Seize $90M Linked to Alleged BTC-e Exchange Operator",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/01/shutterstock_1041989590-710x458.jpg"
+        },
+        { 
+            "id": "5",
+            "title": "UK Financial Watchdog Warns Crypto Firms to Register Before End of June",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/06/shutterstock_276810404-e1592827644963-710x458.jpg"
+        },
+        { 
+            "id": "6",
+            "title": "Nomura-Backed Crypto Custody Venture Launches After 2 Years in the Works",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/06/Komainu_Shutterstock-710x458.jpg"
+        },
+        { 
+            "id": "7",
+            "title": "Trump Told Treasury Secretary to ‘Go After’ Bitcoin, Bolton Book Reportedly Claims",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/06/Donald-Trump-710x458.jpg"
+        },
+        { 
+            "id": "8",
+            "title": "Mauritius Releases Guidance for Regulated Security Token Offerings",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/06/shutterstock_514019905-710x458.jpg"
+        },
+        { 
+            "id": "9",
+            "title": "In the Wildcat Era of Stablecoins, Commercial Banks Have New Rails to Ride",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/06/shutterstock_691234237-710x458.jpg"
+        },
+        { 
+            "id": "10",
+            "title": "Fireblocks Adds Crypto-Tracing Tool to Guard Against Money Laundering",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2019/11/chainalysis-710x458.jpg"
+        },
+        { 
+            "id": "11",
+            "title": "Singapore Man Fined $72K for Promoting Crypto Ponzi OneCoin",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2019/06/Cloudy-Singapore-710x458.jpg"
+        },
+        { 
+            "id": "12",
+            "title": "There Are More DAI on Compound Now Than There Are DAI in the World",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/07/joshua-earle-Hn8N4I4eHA0-unsplash-710x458.jpg"
+        },
+        { 
+            "id": "13",
+            "title": "Cardano Developer IOHK Launches $20M Fund for Ecosystem Startups",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2019/07/charles-hoskinson-710x458.jpg"
+        },
+        { 
+            "id": "14",
+            "title": "Market Wrap: Bitcoin Briefly Breaks Below $9K, but Markets Remain Comatose",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/07/Screen-Shot-2020-07-02-at-3.35.19-PM-710x458.png"
+        },
+        { 
+            "id": "15",
+            "title": "DeFi Insurer Nexus Mutual Maxed Out by Yield-Farming Boom",
+            "body": "In a letter Sunday, Zhan, who as Bitmain’s biggest shareholder owns 36% of its stock, offered to buy back shares possessed by his rival co-founder Wu Jihan, several founding members and some of Bitmain employees, at a company valuation of $4 billion. Wu alone controls about 20% of Bitmain and three other founding members own about 15% in total.",
+            "image": "https://static.coindesk.com/wp-content/uploads/2020/07/lukas-juhas-2JJz3u_R_Ik-unsplash-710x458.jpg"
+        }
+    ]
+}
