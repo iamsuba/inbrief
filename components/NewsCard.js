@@ -4,6 +4,7 @@ import { Image, ImageBackground, StyleSheet, Text, View, Dimensions, TouchableOp
 
 import Colors from '../constants/Colors';
 import * as WebBrowser from 'expo-web-browser'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
@@ -11,13 +12,19 @@ const SCREEN_WIDTH = Dimensions.get("window").width
 export default function NewsCard(props) {
 
   const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
+  const newsItem =  props.newsItem
+  const ImageURL = {uri: newsItem.image}
+  const Timestamp = new Date(newsItem.timestamp)
+  const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
+
+  const [BookmarkStatus, setBookmarkStatus] = React.useState(false)
 
   const shareNews = async() => {
     try {
         const result = await Share.share({
-            message: '"' + props.title + '."'
+            message: '"' + newsItem.title + '."'
                 + '\n\n' 
-                + props.body 
+                + newsItem.body 
                 + '\n\n\nRead blockchain news curated and summarized by AI with MarketOutlines. Get the app at http://www.marketoutlines.com',
         });
     } catch(e) {
@@ -25,12 +32,60 @@ export default function NewsCard(props) {
     }
   }
 
+  //AsyncStorage.clear()
+
+  const getBookmarks = async() => {
+    try{
+      const bookmarksJSON = await AsyncStorage.getItem('@Bookmarks');
+      return bookmarksJSON != null ? JSON.parse(bookmarksJSON) : null
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  const addBookmark = async() => {
+    try{
+      const bookmarkItem = {}
+      bookmarkItem[newsItem.id] = newsItem
+      await AsyncStorage.mergeItem('@Bookmarks', JSON.stringify(bookmarkItem))
+      setBookmarkStatus(true)
+
+      //getBookmarks().then(value => console.log('\n\n\nAfter Add \n\n\n', value))
+
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  const removeBookmark = async() => {
+    try{
+      await getBookmarks()
+      .then(async(bookmarks) => {
+        if(delete bookmarks[newsItem.id]) {
+          await AsyncStorage.setItem('@Bookmarks', JSON.stringify(bookmarks))
+        }
+        setBookmarkStatus(false)
+        //getBookmarks().then(value => console.log('\n\n\nAfter Remove \n\n\n', value))
+      })
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  getBookmarks()
+  .then((bookmarks) => {
+    if(bookmarks[newsItem.id] == undefined) {
+      setBookmarkStatus(false)
+    } else {
+      setBookmarkStatus(true)
+    }
+  })
 
   return (
     <View style={styles.container}>
       <ImageBackground 
         style={styles.imageContainer}
-        source={props.image}>
+        source={ImageURL}>
           <View style={styles.menuContainer}>
             <View style={styles.menuRow}>
               <TouchableOpacity 
@@ -44,14 +99,16 @@ export default function NewsCard(props) {
                 />
               </TouchableOpacity>
               <View style={styles.secondaryMenuItemsContainer}>
-                <View style={styles.secondaryMenuItem}>
+                <TouchableOpacity 
+                  style={BookmarkStatus ? styles.secondaryMenuItemSelected : styles.secondaryMenuItem}
+                  onPress={() => (BookmarkStatus ? removeBookmark() : addBookmark())}>
                   <Ionicons
-                    name='md-bookmark'
+                    name={'md-bookmark'}
                     size={24}
                     style={{ textAlign: 'center', marginTop: 6 }}
                     color='#fff'
                   />
-                </View>
+                </TouchableOpacity>
                 <TouchableOpacity 
                   style={styles.secondaryMenuItem}
                   onPress={() => shareNews()}>
@@ -68,11 +125,11 @@ export default function NewsCard(props) {
           <View style={styles.newsContainer}>
             <View style={styles.spaceContainer}></View>
             <View style={styles.contentContainer}>
-              <Text style={styles.newsTitle}>{props.title}</Text>
-              <Text style={styles.newsTimestamp}>{props.timestamp}</Text>
-              <Text style={styles.newsBody}>{props.body}</Text>
+              <Text style={styles.newsTitle}>{newsItem.title}</Text>
+              <Text style={styles.newsTimestamp}>{LocalTimestamp}</Text>
+              <Text style={styles.newsBody}>{newsItem.body}</Text>
             </View>
-            <TouchableOpacity style={styles.sourceContainer} onPress={() => WebBrowser.openBrowserAsync(props.sourceArticleURL)}>
+            <TouchableOpacity style={styles.sourceContainer} onPress={() => WebBrowser.openBrowserAsync(newsItem.sourceArticleURL)}>
               <View style={styles.sourceDescContainer}>
                 <Text style={styles.sourceText}>Read the full story in detail at</Text>
                 <Image style={styles.sourceImage} source={require('../assets/temp/coindesk.png')} />
@@ -133,6 +190,13 @@ const styles = StyleSheet.create({
   },
   secondaryMenuItem: {
     backgroundColor: Colors.darkGrey,
+    height: 36,
+    width: 36,
+    borderRadius: 8,
+    marginLeft: 10
+  },
+  secondaryMenuItemSelected: {
+    backgroundColor: Colors.tintColor,
     height: 36,
     width: 36,
     borderRadius: 8,

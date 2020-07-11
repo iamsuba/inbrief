@@ -1,16 +1,12 @@
-import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-
-import { MonoText } from '../components/StyledText';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { useLinkProps } from '@react-navigation/native';
-import FeedScreen from './FeedScreen';
 
 export default function HomeScreen(props) {
 
-  const newsItem =  props.route.params
+  const newsItem =  props.route.params.newsItem
+  const ImageURL = {uri: newsItem.image}
+  const Timestamp = new Date(newsItem.timestamp)
+  const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
 
   return (
     <View style={styles.container}>
@@ -23,11 +19,11 @@ export default function HomeScreen(props) {
         onPress={() => props.navigation.navigate('Feed')}>
         <ImageBackground
           style={styles.newsImage}
-          source={newsItem.image}>
+          source={ImageURL}>
         </ImageBackground>
         <View style={styles.newsContentContainer}>
           <Text style={styles.newsTitle}>{newsItem.title}</Text>
-          <Text style={styles.newsTimestamp}>Jun 19, 2020 at 14:08 UTC</Text>
+          <Text style={styles.newsTimestamp}>{LocalTimestamp}</Text>
           <Text style={styles.newsBody}>{newsItem.body}</Text>
         </View>
       </TouchableOpacity>

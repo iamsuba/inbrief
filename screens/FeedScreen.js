@@ -136,10 +136,6 @@ export default function FeedScreen(props) {
         } 
         else {
             return NewsFeed.map((item, i) => {
-
-                const ImageURL = {uri: item.image}
-                const Timestamp = new Date(item.timestamp)
-                const localTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
     
                 if (i == currentIndex - 1) {
     
@@ -160,17 +156,9 @@ export default function FeedScreen(props) {
                                 {...panResponder.panHandlers}
                             >
                                 <NewsCard 
-                                    image={ImageURL} 
-                                    title={item.title}
-                                    body={item.body}
-                                    timestamp={localTimestamp}
-                                    sourceArticleURL={item.sourceArticleURL}
+                                    newsItem={item}
                                     onPress={() => props.navigation.navigate('Root', {
-                                        newsItem: {
-                                            image: ImageURL,
-                                            title: item.title,
-                                            body: item.body
-                                        }
+                                        newsItem: item
                                     })}
                                 />
                             </Animated.View>
@@ -188,15 +176,9 @@ export default function FeedScreen(props) {
                             {...panResponder.panHandlers}
                         >
                             <NewsCard 
-                                image={ImageURL} 
-                                title={item.title}
-                                body={item.body}
-                                timestamp={localTimestamp}
-                                sourceArticleURL={item.sourceArticleURL}
+                                newsItem={item}
                                 onPress={() => props.navigation.navigate('Root', {
-                                    image: ImageURL,
-                                    title: item.title,
-                                    body: item.body
+                                    newsItem: item
                                 })}
                             />
                         </Animated.View>
@@ -207,15 +189,9 @@ export default function FeedScreen(props) {
                     return (
                         <Animated.View key={item.id}>
                             <NewsCard 
-                                image={ImageURL} 
-                                title={item.title}
-                                body={item.body}
-                                timestamp={localTimestamp}
-                                sourceArticleURL={item.sourceArticleURL}
+                                newsItem={item}
                                 onPress={() => props.navigation.navigate('Root', {
-                                    image: ImageURL,
-                                    title: item.title,
-                                    body: item.body
+                                    newsItem: item
                                 })}
                             />
                         </Animated.View>
