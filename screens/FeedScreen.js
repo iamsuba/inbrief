@@ -6,11 +6,9 @@ import {
   View,
   Dimensions,
   Animated,
-  PanResponder,
-  Share } from 'react-native';
+  PanResponder } from 'react-native';
 
 import NewsCard from '../components/NewsCard'
-import NewsFeedData from '../assets/temp/newsFeedData.json'
 import PrimaryButton from '../components/PrimaryButton';
 
 import * as firebase from 'firebase'
