@@ -8,6 +8,8 @@ import {
   Animated,
   PanResponder } from 'react-native';
 
+import { useColorScheme } from 'react-native-appearance';
+import Colors from './../constants/Colors'
 import NewsCard from '../components/NewsCard'
 import PrimaryButton from '../components/PrimaryButton';
 
@@ -32,6 +34,9 @@ const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 
 export default function FeedScreen(props) {
+
+    const colorScheme = useColorScheme();
+    const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
 
     const [NewsFeed, setNewsFeed] = React.useState([])
     const [LoadingComplete, setLoadingComplete] = React.useState(false)
@@ -124,11 +129,11 @@ export default function FeedScreen(props) {
         
         if(!LoadingComplete) {
             return (
-                <View style={styles.loadingContainer}>
+                <View style={[styles.loadingContainer, {backgroundColor: Theme.fetchingBg}]}>
                     <Image
                         style={styles.loading}
-                        source={require('./../assets/images/loading.gif')}/>
-                        <Text style={styles.loadingText}>Fetching your news feed</Text>
+                        source={ colorScheme === 'light' ? require('./../assets/images/loading.gif') : require('./../assets/images/loadingdark.gif')}/>
+                        <Text style={[styles.loadingText, {color: Theme.foregroundColor}]}>Fetching your news feed</Text>
                 </View>
             )
         } 
@@ -139,11 +144,11 @@ export default function FeedScreen(props) {
     
                     if (currentIndex == 10) {
                         return(
-                            <View key={'endcard'} style={styles.endCard}>
+                            <View key={'endcard'} style={[styles.endCard, {backgroundColor: Theme.backgroundColor}]}>
                                 <Image
                                     style={styles.endCardImage}
                                     source={require('./../assets/images/endcard.png')}/>
-                                <Text style={styles.endCardMessage}>You have caught up with all stories.</Text>
+                                <Text style={[styles.endCardMessage, {color: Theme.foregroundColor}]}>You have caught up with all stories.</Text>
                                 <PrimaryButton buttonText='Refresh Feed' onPress={() => refreshFeed()} />
                             </View>
                         )
@@ -230,7 +235,6 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     endCard: {
-        backgroundColor: '#f7f7f7',
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',

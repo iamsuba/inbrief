@@ -2,10 +2,14 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { StyleSheet, Text, Switch } from 'react-native';
 
-import Colors from '../constants/Colors';
+import { useColorScheme } from 'react-native-appearance';
+import Colors from './../constants/Colors'
 
 
 export default function SwitchElement(props) {
+
+  const colorScheme = useColorScheme();
+  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
 
   const [isEnabled, setIsEnabled] = useState(props.default);
   const toggleSwitch = () => {
@@ -14,9 +18,9 @@ export default function SwitchElement(props) {
 
   return (
     <Switch
-      trackColor={{ false: "#c6c6c6", true: Colors.tintColor }}
-      thumbColor={isEnabled ? "#fff" : "#fff"}
-      ios_backgroundColor="#c6c6c6"
+      trackColor={{ false: Theme.backgroundColor, true: Theme.tintColor }}
+      thumbColor={Theme.icon}
+      ios_backgroundColor={Theme.backgroundColor}
       onValueChange={toggleSwitch}
       value={isEnabled}
     />

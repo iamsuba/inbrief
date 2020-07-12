@@ -2,8 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View, Dimensions, TouchableOpacity, Share } from 'react-native';
 import { useColorScheme } from 'react-native-appearance';
-
-import Colors from '../constants/Colors';
+import Colors from './../constants/Colors'
 import * as WebBrowser from 'expo-web-browser'
 import AsyncStorage from '@react-native-community/async-storage'
 

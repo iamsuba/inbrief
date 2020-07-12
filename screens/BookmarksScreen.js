@@ -2,6 +2,8 @@ import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useColorScheme } from 'react-native-appearance';
+import Colors from './../constants/Colors'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -9,8 +11,10 @@ const SCREEN_HEIGHT = Dimensions.get("window").height
 
 export default function BookmarksScreen(props) {
 
+  const colorScheme = useColorScheme();
+  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+
   const [Bookmarks, setBookmarks] = React.useState([])
-  const [LoadingComplete, setLoadingComplete] = React.useState(false)
 
   const getBookmarks = async() => {
     const BookmarksArr = []
@@ -26,7 +30,6 @@ export default function BookmarksScreen(props) {
   React.useEffect(() => {  
     getBookmarks().then(response => {
       setBookmarks(response)
-      setLoadingComplete(true)
     })
   }, [props.route.params])
 
@@ -40,13 +43,13 @@ export default function BookmarksScreen(props) {
       return(
         Bookmarks.map((newsItem) => 
           <TouchableOpacity
-            style={styles.newsItemContainer} 
+            style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]} 
             key={newsItem.id} 
             onPress={() => props.navigation.navigate('BookmarkDetailed', {
               newsItem: newsItem
             })}>
-            <Text style={styles.newsTitle}>{newsItem.title}</Text>
-            <Text style={styles.newsTimestamp}>{getLocalTimestamp(newsItem.timestamp)}</Text>
+            <Text style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
+            <Text style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{getLocalTimestamp(newsItem.timestamp)}</Text>
           </TouchableOpacity>
         )
       )
@@ -56,16 +59,18 @@ export default function BookmarksScreen(props) {
           <Image
               style={styles.emptyBookmarksImage}
               source={require('./../assets/images/emptybookmarks.png')}/>
-          <Text style={styles.emptyBookmarksMessage}>You do not have any bookmarks saved at the moment</Text>
+          <Text style={[styles.emptyBookmarksMessage, {color: Theme.foregroundColor}]}>You do not have any bookmarks saved at the moment</Text>
         </View>
       )
     }
   }
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.pageTitle}>Bookmarks</Text>
+    <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
+      <ScrollView 
+        style={[styles.container, {backgroundColor: Theme.backgroundColor}]} 
+        contentContainerStyle={styles.contentContainer}>
+        <Text style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Bookmarks</Text>
         {BookmarksList()}
       </ScrollView>
     </View>
@@ -79,7 +84,6 @@ BookmarksScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f7f7',
     padding: 15,
   },
   contentContainer: {
@@ -112,7 +116,6 @@ const styles = StyleSheet.create({
   newsItemContainer: {
     paddingVertical: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#d7d7d7',
   },
   newsTitle: {
     fontSize: 20,
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
   },
   newsTimestamp: {
     fontSize: 14,
-    color: '#c3c3c3',
-    marginTop: 10
+    marginTop: 10,
+    fontWeight: '200'
   }
 });

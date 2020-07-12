@@ -1,17 +1,6 @@
 const tintColor = '#1654F0';
 
 export default {
-  tintColor,
-  tabIconDefault: '#ccc',
-  tabIconSelected: tintColor,
-  tabBar: '#fff',
-  errorBackground: 'red',
-  errorText: '#fff',
-  warningBackground: '#EAEB5E',
-  warningText: '#666804',
-  noticeBackground: tintColor,
-  noticeText: '#fff',
-  darkGrey: '#333333',
   "light": {
     theme: 'light',
     tintColor: tintColor,
@@ -22,10 +11,11 @@ export default {
     icon: '#fff',
     backgroundColor: '#f7f7f7',
     tileColor: '#fff',
-    grey: '#d7d7d7',
+    border: '#d7d7d7',
     darkGrey: '#333',
     buttonText: '#fff',
-    foregroundColor: '#000'
+    foregroundColor: '#000',
+    fetchingBg: '#f7f7f7'
   },
   "dark": {
     theme: 'dark',
@@ -37,9 +27,10 @@ export default {
     icon: '#fff',
     backgroundColor: '#2c2c2c',
     tileColor: '#222222',
-    grey: '#d7d7d7',
+    border: '#444',
     darkGrey: '#222',
     buttonText: '#fff',
-    foregroundColor: '#fff'
+    foregroundColor: '#fff',
+    fetchingBg: '#1c1c1c'
   }
 };
