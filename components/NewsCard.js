@@ -5,6 +5,7 @@ import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
 import * as WebBrowser from 'expo-web-browser'
 import AsyncStorage from '@react-native-community/async-storage'
+import SourceLogos from './../constants/SourceLogos'
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
@@ -17,6 +18,7 @@ export default function NewsCard(props) {
   const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
   const newsItem =  props.newsItem
   const ImageURL = {uri: newsItem.image}
+  const SourceLogo = SourceLogos[colorScheme][newsItem.source]
   const Timestamp = new Date(newsItem.timestamp)
   const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
 
@@ -135,7 +137,7 @@ export default function NewsCard(props) {
             <TouchableOpacity style={[styles.sourceContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]} onPress={() => WebBrowser.openBrowserAsync(newsItem.sourceArticleURL)}>
               <View style={styles.sourceDescContainer}>
                 <Text style={[styles.sourceText, {color: Theme.foregroundColor}]}>Read the full story in detail at</Text>
-                <Image style={styles.sourceImage} source={require('../assets/temp/coindesk.png')} />
+                <Image style={styles.sourceImage} source={SourceLogo} />
               </View>
               <View style={styles.sourceIconContainer}>
                 <Ionicons
