@@ -1,17 +1,21 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-
-import Colors from '../constants/Colors';
+import { useColorScheme } from 'react-native-appearance';
+import Colors from './../constants/Colors'
 
 
 export default function PrimaryButton(props) {
+
+  const colorScheme = useColorScheme();
+  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+
   return (
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, {backgroundColor: Theme.tintColor}]}
         onPress={() => props.onPress()}
         >
-          <Text style={styles.buttonText}>{props.buttonText}</Text>
+          <Text style={[styles.buttonText, {color: Theme.buttonText}]}>{props.buttonText}</Text>
       </TouchableOpacity>
   );
 }
@@ -19,7 +23,6 @@ export default function PrimaryButton(props) {
 const styles = StyleSheet.create({
   button: {
     height: 50,
-    backgroundColor: Colors.tintColor,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -27,7 +30,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30
   },
   buttonText: {
-    color: '#fff',
     fontSize: 18,
     textAlign: 'center',
     fontWeight: '400'

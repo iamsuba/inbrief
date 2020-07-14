@@ -28,7 +28,7 @@ export default function NewsCard(props) {
             message: '"' + newsItem.title + '."'
                 + '\n\n' 
                 + newsItem.body 
-                + '\n\n\nRead blockchain news curated and summarized by AI with MarketOutlines. Get the app at http://www.marketoutlines.com',
+                + '\n\n\nRead blockchain news curated and summarized by AI with InBrief. Get the app at http://www.InBrief.app',
         });
     } catch(e) {
         console.log(e)
@@ -77,7 +77,7 @@ export default function NewsCard(props) {
 
   getBookmarks()
   .then((bookmarks) => {
-    if(bookmarks[newsItem.id] == undefined) {
+    if(bookmarks == null || bookmarks[newsItem.id] == undefined) {
       setBookmarkStatus(false)
     } else {
       setBookmarkStatus(true)

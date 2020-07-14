@@ -1,12 +1,13 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
 import SwitchElement from '../components/SwitchElement';
+import { Ionicons } from '@expo/vector-icons';
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }) {
 
   const colorScheme = useColorScheme();
   const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
@@ -18,17 +19,42 @@ export default function SettingsScreen() {
       <ScrollView style={[styles.container, {backgroundColor: Theme.backgroundColor}]} contentContainerStyle={styles.contentContainer}>
         <Text style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Settings</Text>
         <View style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}>
-          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Dark Mode</Text>
-          <SwitchElement default={false}/>
-        </View>
-        <View style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}>
-          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Swipe Sound</Text>
-          <SwitchElement default={false}/>
-        </View>
-        <View style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}>
           <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Notifications</Text>
           <SwitchElement default={true}/>
         </View>
+        <TouchableOpacity 
+          style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
+          onPress={() => navigation.navigate('About')}>
+          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>About</Text>
+          <Ionicons
+            name='ios-arrow-forward'
+            size={28}
+            style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
+            color={Theme.foregroundColor}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
+          onPress={() => WebBrowser.openBrowserAsync('https://www.inbrief.app/privacy')}>
+          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Privacy Policy</Text>
+          <Ionicons
+            name='ios-link'
+            size={28}
+            style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
+            color={Theme.tintColor}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
+          onPress={() => WebBrowser.openBrowserAsync('https://www.inbrief.app/terms')}>
+          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Terms of Use</Text>
+          <Ionicons
+            name='ios-link'
+            size={28}
+            style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
+            color={Theme.tintColor}
+          />
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

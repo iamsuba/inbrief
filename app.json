@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "market-outlines",
-    "slug": "market-outlines",
+    "name": "inbrief",
+    "slug": "inbrief",
     "platforms": [
       "ios",
       "android",
@@ -14,8 +14,8 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#1654F0"
+      "resizeMode": "cover",
+      "backgroundColor": "#1843DF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
