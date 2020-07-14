@@ -142,7 +142,7 @@ export default function FeedScreen(props) {
     
                 if (i == currentIndex - 1) {
     
-                    if (currentIndex == 10) {
+                    if (currentIndex == NewsFeed.length) {
                         return(
                             <View key={'endcard'} style={[styles.endCard, {backgroundColor: Theme.backgroundColor}]}>
                                 <Image
