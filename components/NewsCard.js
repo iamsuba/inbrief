@@ -246,6 +246,8 @@ const styles = StyleSheet.create({
     fontWeight: '100'
   },
   sourceImage: {
-    marginTop: 10
+    marginTop: 10,
+    height: 25,
+    width: 125
   }
 })
