@@ -6,7 +6,8 @@ import {
   View,
   Dimensions,
   Animated,
-  PanResponder } from 'react-native';
+  PanResponder,
+  Modal } from 'react-native';
 
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
@@ -14,6 +15,7 @@ import NewsCard from '../components/NewsCard'
 import PrimaryButton from '../components/PrimaryButton';
 
 import * as firebase from 'firebase'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const firebaseconfig = {
     apiKey: "AIzaSyCbu1l26CLzY4FsThPOyr_XOMQGiIvzVyY",
@@ -42,13 +44,27 @@ export default function FeedScreen(props) {
     const [LoadingComplete, setLoadingComplete] = React.useState(false)
 
     React.useEffect(updateNewsFeed = () => {
-
         firebase.database().ref('LatestNews/').once('value', (snapshot) => {
             setNewsFeed(snapshot.val().reverse())
             setLoadingComplete(true)
+            checkVirgin()
             renderArticles()
         });
     }, [])
+
+    const [modalVisible, setModalVisible] = React.useState(false);
+
+    const checkVirgin = async() => {
+        const virginStatus = await AsyncStorage.getItem('@virgin')
+        if(virginStatus == null) {
+            setModalVisible(true)
+        }
+    }
+
+    const updateVirgin = async() => {
+        await AsyncStorage.setItem('@virgin', 'true')
+        setModalVisible(false)
+    }
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
     const position = React.useRef(new Animated.ValueXY()).current
@@ -178,6 +194,40 @@ export default function FeedScreen(props) {
                         <Animated.View key={item.id} style={position.getLayout()}
                             {...panResponder.panHandlers}
                         >
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={modalVisible}
+                                onRequestClose={() => {
+                                Alert.alert("Modal has been closed.");
+                                }}>
+                                <View style={styles.centeredView}>
+                                <View style={[styles.modalView, {backgroundColor: Theme.tileColor}]}>
+                                    <Text style={[styles.modalTitle, {color: Theme.foregroundColor}]}>Get Started</Text>
+                                    <View style={styles.modalItem}>
+                                        <Image
+                                            source={require('./../assets/images/swipeup.png')}
+                                            style={styles.modalItemImage}
+                                        />
+                                        <View style={styles.modalItemTextContainer}>
+                                            <Text style={[styles.modalItemText, {color: Theme.foregroundColor}]}>Swipe up for next article</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.modalItem}>
+                                        <Image
+                                            source={require('./../assets/images/swipedown.png')}
+                                            style={styles.modalItemImage}
+                                        />
+                                        <View style={styles.modalItemTextContainer}>
+                                            <Text style={[styles.modalItemText, {color: Theme.foregroundColor}]}>Swipe down for previous article</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.buttonContainer}>
+                                    <PrimaryButton buttonText='Okay' onPress={() => updateVirgin()} />
+                                    </View>
+                                </View>
+                                </View>
+                            </Modal>
                             <NewsCard 
                                 newsItem={item}
                                 onPress={() => props.navigation.navigate('Root', {
@@ -249,5 +299,43 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         marginTop: 15,
         marginBottom: 25
+    },
+    centeredView: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'background: rgba(0, 0, 0, 0.7)'
+    },
+    modalView: {
+        height: 300,
+        width: 300,
+        padding: 25,
+    },
+    modalTitle: {
+        fontSize: 30,
+        fontWeight: 'bold'
+    },
+    modalItem: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginTop: 20,
+        width: 250,
+    },
+    modalItemImage: {
+        height: 48,
+        width: 48
+    },
+    modalItemTextContainer: {
+        marginLeft: 10,
+        flex: 1
+    },
+    modalItemText: {
+        fontSize: 16,
+        fontWeight: '200',
+    },
+    buttonContainer: {
+        marginTop: 20
     }
 });
