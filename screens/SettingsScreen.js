@@ -7,12 +7,31 @@ import Colors from './../constants/Colors'
 import SwitchElement from '../components/SwitchElement';
 import { Ionicons } from '@expo/vector-icons';
 
+import * as firebase from 'firebase'
+
+const firebaseconfig = {
+    apiKey: "AIzaSyCbu1l26CLzY4FsThPOyr_XOMQGiIvzVyY",
+    authDomain: "market-outlines.firebaseapp.com",
+    databaseURL: "https://market-outlines.firebaseio.com",
+    projectId: "market-outlines",
+    storageBucket: "market-outlines.appspot.com",
+    messagingSenderId: "622842250618",
+    appId: "1:622842250618:web:78ba56da7bb126496a02c3",
+    measurementId: "G-C0J0LRM2XV"
+  }
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseconfig)
+}
+
 export default function SettingsScreen({ navigation }) {
 
   const colorScheme = useColorScheme();
   const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
 
-  const isEnabled = true
+  const toggleNotifications = async() => {
+    firebase.database().ref('/UserData/')
+  }
 
   return (
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
@@ -20,7 +39,7 @@ export default function SettingsScreen({ navigation }) {
         <Text style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Settings</Text>
         <View style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}>
           <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Notifications</Text>
-          <SwitchElement default={true}/>
+          <SwitchElement default={true} onValueChange={() => console.log('working')} />
         </View>
         <TouchableOpacity 
           style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}

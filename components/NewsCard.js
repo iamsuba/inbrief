@@ -10,6 +10,24 @@ import SourceLogos from './../constants/SourceLogos'
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 
+import * as firebase from 'firebase'
+
+const firebaseconfig = {
+    apiKey: "AIzaSyCbu1l26CLzY4FsThPOyr_XOMQGiIvzVyY",
+    authDomain: "market-outlines.firebaseapp.com",
+    databaseURL: "https://market-outlines.firebaseio.com",
+    projectId: "market-outlines",
+    storageBucket: "market-outlines.appspot.com",
+    messagingSenderId: "622842250618",
+    appId: "1:622842250618:web:78ba56da7bb126496a02c3",
+    measurementId: "G-C0J0LRM2XV"
+  }
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseconfig)
+  }
+
+
 export default function NewsCard(props) {
 
   const colorScheme = useColorScheme();
@@ -17,10 +35,11 @@ export default function NewsCard(props) {
 
   const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
   const newsItem =  props.newsItem
-  const ImageURL = {uri: newsItem.image}
-  const SourceLogo = SourceLogos[colorScheme][newsItem.source]
+
+  const SourceLogo = SourceLogos[Theme.theme][newsItem.source]
   const Timestamp = new Date(newsItem.timestamp)
   const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
+  //const LocalTimestamp = Timestamp
 
   const [BookmarkStatus, setBookmarkStatus] = React.useState(false)
 
@@ -90,7 +109,9 @@ export default function NewsCard(props) {
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
       <ImageBackground 
         style={styles.imageContainer}
-        source={ImageURL}>
+        resizeMethod="scale"
+        resizeMode="cover"
+        source={newsItem.imageFile}>
           <View style={styles.menuContainer}>
             <View style={styles.menuRow}>
               <TouchableOpacity 

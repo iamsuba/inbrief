@@ -9,6 +9,8 @@ import {
   PanResponder,
   Modal } from 'react-native';
 
+import { Notifications } from 'expo'
+import * as Permissions from 'expo-permissions';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
 import NewsCard from '../components/NewsCard'
@@ -37,21 +39,12 @@ const SCREEN_WIDTH = Dimensions.get("window").width
 
 export default function FeedScreen(props) {
 
+    //Theme setup beings here
     const colorScheme = useColorScheme();
     const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+    //Theme setup ends here
 
-    const [NewsFeed, setNewsFeed] = React.useState([])
-    const [LoadingComplete, setLoadingComplete] = React.useState(false)
-
-    React.useEffect(updateNewsFeed = () => {
-        firebase.database().ref('LatestNews/').once('value', (snapshot) => {
-            setNewsFeed(snapshot.val().reverse())
-            setLoadingComplete(true)
-            checkVirgin()
-            renderArticles()
-        });
-    }, [])
-
+    //Guidance Popup beings here
     const [modalVisible, setModalVisible] = React.useState(false);
 
     const checkVirgin = async() => {
@@ -65,6 +58,31 @@ export default function FeedScreen(props) {
         await AsyncStorage.setItem('@virgin', 'true')
         setModalVisible(false)
     }
+    //Guidance Popup ends here
+
+    //News feed preparation begins here
+    const [NewsFeed, setNewsFeed] = React.useState([])
+    const [LoadingComplete, setLoadingComplete] = React.useState(false)
+
+    const prepareNewsFeed = (newsFeed) => {
+        newsFeed.map(item => {
+            console.log('fetching image:', item.image)
+            item.imageFile = {uri: item.image}
+        })
+        console.log(newsFeed)
+        return newsFeed
+    }
+
+    React.useEffect(updateNewsFeed = () => {
+        firebase.database().ref('LatestNews/').once('value', async(snapshot) => {
+            const newsFeedWithImages = await prepareNewsFeed(snapshot.val().reverse())
+            setNewsFeed(newsFeedWithImages)
+            setLoadingComplete(true)
+            checkVirgin()
+            registerForPushNotifications()
+            renderArticles()
+        });
+    }, [])
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
     const position = React.useRef(new Animated.ValueXY()).current
@@ -255,6 +273,38 @@ export default function FeedScreen(props) {
         }
 
     }
+    //News feed preparation begins here
+
+    //push notification setup begins here
+    registerForPushNotifications = async() => {
+        const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+        let finalStatus = existingStatus;
+
+        if (existingStatus !== 'granted') {
+            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+            finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            return;
+        }
+        const token = await Notifications.getExpoPushTokenAsync();
+
+        const userData = {
+            "expoToken": token,
+            "notificationEnabled": true
+        }
+
+        firebase.auth().signInAnonymously().catch(function(error) {});
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              let uid = user.uid
+              console.log(uid)
+              firebase.database().ref("UserData/"+uid).update(userData)
+            }
+          });
+
+    }
+    //push notification setup ends here
   
     return(
         renderArticles()
