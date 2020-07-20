@@ -296,7 +296,12 @@ export default function FeedScreen(props) {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
               let uid = user.uid
-              firebase.database().ref("UserData/"+uid).update(userData)
+              firebase.database().ref('UserData/'+uid).once('value', async(snapshot) => {
+                if(snapshot.val() == null) {
+                    console.log('updateing from feed')
+                    firebase.database().ref("UserData/"+uid).update(userData)
+                }
+              });
             }
           });
 

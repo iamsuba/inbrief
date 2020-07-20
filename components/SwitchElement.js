@@ -13,8 +13,8 @@ export default function SwitchElement(props) {
 
   const [isEnabled, setIsEnabled] = useState(props.default);
   const toggleSwitch = () => {
+    props.onValueChange(!isEnabled);
     setIsEnabled(previousState => !previousState);
-    props.onValueChange();
   }
 
   return (

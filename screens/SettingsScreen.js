@@ -1,11 +1,12 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity, Switch } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
-import SwitchElement from '../components/SwitchElement';
 import { Ionicons } from '@expo/vector-icons';
+import { Notifications } from 'expo'
+import * as Permissions from 'expo-permissions';
 
 import * as firebase from 'firebase'
 
@@ -29,8 +30,39 @@ export default function SettingsScreen({ navigation }) {
   const colorScheme = useColorScheme();
   const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
 
-  const toggleNotifications = async() => {
-    firebase.database().ref('/UserData/')
+  const [isNotificationsEnabled, setIsNotificationsEnabled] = React.useState(false)
+  const [existingStatus, setExistingStatus] = React.useState(Permissions.getAsync(Permissions.NOTIFICATIONS))
+
+  React.useEffect(() => {
+    firebase.auth().signInAnonymously().catch(function(error) {});
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          let uid = user.uid
+          firebase.database().ref('UserData/'+uid).once('value', async(snapshot) => {
+            if(snapshot.val() !== null) {
+              setIsNotificationsEnabled(snapshot.val().notificationEnabled)
+            }
+          });
+        }
+      });
+}, [])
+
+  const toggleNotifications = async(value) => {
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      setExistingStatus(status)
+      if (status !== 'granted') {
+        return;
+      }
+    }
+    setIsNotificationsEnabled(value)
+    firebase.auth().signInAnonymously().catch(function(error) {});
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          let uid = user.uid
+          firebase.database().ref("UserData/"+uid+"/notificationEnabled/").set(value)
+        }
+      });
   }
 
   return (
@@ -38,8 +70,14 @@ export default function SettingsScreen({ navigation }) {
       <ScrollView style={[styles.container, {backgroundColor: Theme.backgroundColor}]} contentContainerStyle={styles.contentContainer}>
         <Text style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Settings</Text>
         <View style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}>
-          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Notifications</Text>
-          <SwitchElement default={true} onValueChange={() => console.log('working')} />
+  <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Notifications</Text>
+      <Switch
+          trackColor={{ false: Theme.backgroundColor, true: Theme.tintColor }}
+          thumbColor={Theme.icon}
+          ios_backgroundColor={Theme.backgroundColor}
+          onValueChange={(value) => toggleNotifications(value)}
+          value={isNotificationsEnabled}
+        />
         </View>
         <TouchableOpacity 
           style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
