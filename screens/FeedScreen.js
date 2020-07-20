@@ -66,10 +66,8 @@ export default function FeedScreen(props) {
 
     const prepareNewsFeed = (newsFeed) => {
         newsFeed.map(item => {
-            console.log('fetching image:', item.image)
             item.imageFile = {uri: item.image}
         })
-        console.log(newsFeed)
         return newsFeed
     }
 
@@ -298,7 +296,6 @@ export default function FeedScreen(props) {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
               let uid = user.uid
-              console.log(uid)
               firebase.database().ref("UserData/"+uid).update(userData)
             }
           });

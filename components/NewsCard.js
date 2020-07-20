@@ -32,10 +32,8 @@ export default function NewsCard(props) {
 
   const colorScheme = useColorScheme();
   const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
-
   const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
   const newsItem =  props.newsItem
-
   const SourceLogo = SourceLogos[Theme.theme][newsItem.source]
   const Timestamp = new Date(newsItem.timestamp)
   const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
@@ -105,6 +103,8 @@ export default function NewsCard(props) {
     }
   })
 
+const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sourceImage} source={SourceLogo} /> : <Text style={styles.sourceName}>{newsItem.source}</Text>
+
   return (
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
       <ImageBackground 
@@ -158,7 +158,7 @@ export default function NewsCard(props) {
             <TouchableOpacity style={[styles.sourceContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]} onPress={() => WebBrowser.openBrowserAsync(newsItem.sourceArticleURL)}>
               <View style={styles.sourceDescContainer}>
                 <Text style={[styles.sourceText, {color: Theme.foregroundColor}]}>Read the full story in detail at</Text>
-                <Image style={styles.sourceImage} source={SourceLogo} />
+                {SourceLogoContainer}
               </View>
               <View style={styles.sourceIconContainer}>
                 <Ionicons
@@ -270,5 +270,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 25,
     width: 125
+  },
+  sourceName: {
+    fontSize: 24
   }
 })
