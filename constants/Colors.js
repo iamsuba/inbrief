@@ -15,7 +15,8 @@ export default {
     darkGrey: '#333',
     buttonText: '#fff',
     foregroundColor: '#000',
-    fetchingBg: '#f7f7f7'
+    fetchingBg: '#f7f7f7',
+    grey: '#777'
   },
   "dark": {
     theme: 'dark',
@@ -31,6 +32,7 @@ export default {
     darkGrey: '#222',
     buttonText: '#fff',
     foregroundColor: '#fff',
-    fetchingBg: '#1c1c1c'
+    fetchingBg: '#1c1c1c',
+    grey: '#777'
   }
 };

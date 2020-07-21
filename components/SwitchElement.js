@@ -9,7 +9,7 @@ import Colors from './../constants/Colors'
 export default function SwitchElement(props) {
 
   const colorScheme = useColorScheme();
-  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+  const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
   const [isEnabled, setIsEnabled] = useState(props.default);
   const toggleSwitch = () => {

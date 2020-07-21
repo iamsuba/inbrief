@@ -4,6 +4,8 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'rea
 import { ScrollView } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
+import moment from 'moment-timezone';
+import * as Localization from 'expo-localization'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -12,7 +14,7 @@ const SCREEN_HEIGHT = Dimensions.get("window").height
 export default function BookmarksScreen(props) {
 
   const colorScheme = useColorScheme();
-  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+  const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
   const [Bookmarks, setBookmarks] = React.useState([])
 
@@ -35,7 +37,7 @@ export default function BookmarksScreen(props) {
 
   const getLocalTimestamp = (timestamp) => {
     const Timestamp = new Date(timestamp)
-    return new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
+    return moment(Timestamp).tz(Localization.timezone).format('MMMM Do YYYY, h:mm a')
   }
 
   const BookmarksList = () => {

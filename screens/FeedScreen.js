@@ -41,7 +41,7 @@ export default function FeedScreen(props) {
 
     //Theme setup beings here
     const colorScheme = useColorScheme();
-    const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+    const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
     //Theme setup ends here
 
     //Guidance Popup beings here
@@ -164,7 +164,7 @@ export default function FeedScreen(props) {
                 <View style={[styles.loadingContainer, {backgroundColor: Theme.fetchingBg}]}>
                     <Image
                         style={styles.loading}
-                        source={ colorScheme === 'light' ? require('./../assets/images/loading.gif') : require('./../assets/images/loadingdark.gif')}/>
+                        source={ colorScheme === 'dark' ? require('./../assets/images/loadingdark.gif') : require('./../assets/images/loading.gif')}/>
                         <Text style={[styles.loadingText, {color: Theme.foregroundColor}]}>Fetching your news feed</Text>
                 </View>
             )

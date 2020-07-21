@@ -28,7 +28,7 @@ if (!firebase.apps.length) {
 export default function SettingsScreen({ navigation }) {
 
   const colorScheme = useColorScheme();
-  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+  const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
   const [isNotificationsEnabled, setIsNotificationsEnabled] = React.useState(false)
   const [existingStatus, setExistingStatus] = React.useState(Permissions.getAsync(Permissions.NOTIFICATIONS))
@@ -72,7 +72,7 @@ export default function SettingsScreen({ navigation }) {
         <View style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}>
   <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Notifications</Text>
       <Switch
-          trackColor={{ false: Theme.backgroundColor, true: Theme.tintColor }}
+          trackColor={{ false: Theme.grey, true: Theme.tintColor }}
           thumbColor={Theme.icon}
           ios_backgroundColor={Theme.backgroundColor}
           onValueChange={(value) => toggleNotifications(value)}

@@ -2,16 +2,19 @@ import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
+import moment from 'moment-timezone';
+import * as Localization from 'expo-localization'
 
 export default function HomeScreen(props) {
 
   const colorScheme = useColorScheme();
-  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+  const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
   const newsItem =  props.route.params.newsItem
   const ImageURL = {uri: newsItem.image}
   const Timestamp = new Date(newsItem.timestamp)
-  const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
+  //const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
+  const LocalTimestamp = moment(Timestamp).tz(Localization.timezone).format('MMMM Do YYYY, h:mm a')
 
   return (
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>

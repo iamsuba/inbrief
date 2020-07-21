@@ -14,7 +14,7 @@ const INITIAL_ROUTE_NAME = 'Home';
 export default function BottomTabNavigator({ navigation, route }) {
 
   const colorScheme = useColorScheme();
-  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+  const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:

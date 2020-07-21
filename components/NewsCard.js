@@ -6,6 +6,11 @@ import Colors from './../constants/Colors'
 import * as WebBrowser from 'expo-web-browser'
 import AsyncStorage from '@react-native-community/async-storage'
 import SourceLogos from './../constants/SourceLogos'
+import moment from 'moment-timezone';
+import * as Localization from 'expo-localization'
+//import * as Device from 'expo-device';
+//const DeviceType = Device.getDeviceTypeAsync().then(value => { return(Device.DeviceType[value]) })
+//const ImageHeight = (DeviceType == 'TABLET') ? '80%' : '55%'
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
@@ -31,13 +36,13 @@ const firebaseconfig = {
 export default function NewsCard(props) {
 
   const colorScheme = useColorScheme();
-  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+  const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
   const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
   const newsItem =  props.newsItem
   const SourceLogo = SourceLogos[Theme.theme][newsItem.source]
   const Timestamp = new Date(newsItem.timestamp)
-  const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
-  //const LocalTimestamp = Timestamp
+  //const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
+  const LocalTimestamp = moment(Timestamp).tz(Localization.timezone).format('MMMM Do YYYY, h:mm a')
 
   const [BookmarkStatus, setBookmarkStatus] = React.useState(false)
 
@@ -103,14 +108,12 @@ export default function NewsCard(props) {
     }
   })
 
-const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sourceImage} source={SourceLogo} /> : <Text style={styles.sourceName}>{newsItem.source}</Text>
+const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sourceImage} source={SourceLogo} /> : <Text style={[styles.sourceName, {color: Theme.foregroundColor}]}>{newsItem.source}</Text>
 
   return (
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
       <ImageBackground 
         style={styles.imageContainer}
-        resizeMethod="scale"
-        resizeMode="cover"
         source={newsItem.imageFile}>
           <View style={styles.menuContainer}>
             <View style={styles.menuRow}>
@@ -186,17 +189,19 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
+    alignItems: 'center',
     height: '55%',
     padding: 20,
-    paddingTop: 50,
+    paddingTop: 50
   },
   menuContainer: {
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   menuRow: {
     height: 50,
     flexDirection: 'row',
-    flex: 1
+    flex: 1,
   },
   secondaryMenuItemsContainer: {
     height: 50,
@@ -227,9 +232,9 @@ const styles = StyleSheet.create({
     flex: 3,
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    maxWidth: 500
   },
   contentContainer: {
-    backgroundColor: 'white',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 20,
@@ -272,6 +277,7 @@ const styles = StyleSheet.create({
     width: 125
   },
   sourceName: {
-    fontSize: 24
+    fontSize: 24,
+    marginTop: 5
   }
 })

@@ -8,7 +8,7 @@ import Colors from './../constants/Colors'
 export default function PrimaryButton(props) {
 
   const colorScheme = useColorScheme();
-  const Theme = colorScheme === 'light' ? Colors.light : Colors.dark
+  const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
   return (
       <TouchableOpacity
