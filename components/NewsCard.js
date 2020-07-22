@@ -109,7 +109,7 @@ export default function NewsCard(props) {
     }
   })
 
-const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sourceImage} source={SourceLogo} /> : <Text style={[styles.sourceName, {color: Theme.foregroundColor}]}>{newsItem.source}</Text>
+const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sourceImage} source={SourceLogo} /> : <Text allowFontScaling={false} style={[styles.sourceName, {color: Theme.foregroundColor}]}>{newsItem.source}</Text>
 
   return (
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
@@ -154,13 +154,13 @@ const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sour
           </View>
           <View style={styles.newsContainer}>
             <View style={[styles.contentContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]}>
-              <Text style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
-              <Text style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{LocalTimestamp}</Text>
+              <Text allowFontScaling={false} style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
+              <Text allowFontScaling={false} style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{LocalTimestamp}</Text>
               <Text allowFontScaling={false} style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
             </View>
             <TouchableOpacity style={[styles.sourceContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]} onPress={() => WebBrowser.openBrowserAsync(newsItem.sourceArticleURL)}>
               <View style={styles.sourceDescContainer}>
-                <Text style={[styles.sourceText, {color: Theme.foregroundColor}]}>Read the full story in detail at</Text>
+                <Text allowFontScaling={false} allowFontScaling={false} style={[styles.sourceText, {color: Theme.foregroundColor}]}>Read the full story in detail at</Text>
                 {SourceLogoContainer}
               </View>
               <View style={styles.sourceIconContainer}>

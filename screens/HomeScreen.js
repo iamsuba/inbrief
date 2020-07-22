@@ -21,7 +21,7 @@ export default function HomeScreen(props) {
       <Image 
         style={styles.logo}
         source={require('./../assets/images/logo.png')}/>
-      <Text style={[styles.welcomeText, {color: Theme.foregroundColor}]}>Your news feed briefed</Text>
+      <Text allowFontScaling={false} style={[styles.welcomeText, {color: Theme.foregroundColor}]}>Your news feed briefed</Text>
       <TouchableOpacity 
         style={[styles.newsContainer, {backgroundColor: Theme.tileColor, shadowColor: Theme.shadowColor}]}
         onPress={() => props.navigation.navigate('Feed')}>
@@ -30,9 +30,9 @@ export default function HomeScreen(props) {
           source={ImageURL}>
         </ImageBackground>
         <View style={styles.newsContentContainer}>
-          <Text style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
-          <Text style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{LocalTimestamp}</Text>
-          <Text style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
+          <Text allowFontScaling={false} style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
+          <Text allowFontScaling={false} style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{LocalTimestamp}</Text>
+          <Text allowFontScaling={false} style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
         </View>
       </TouchableOpacity>
     </View>

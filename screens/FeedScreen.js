@@ -165,7 +165,7 @@ export default function FeedScreen(props) {
                     <Image
                         style={styles.loading}
                         source={ colorScheme === 'dark' ? require('./../assets/images/loadingdark.gif') : require('./../assets/images/loading.gif')}/>
-                        <Text style={[styles.loadingText, {color: Theme.foregroundColor}]}>Fetching your news feed</Text>
+                        <Text allowFontScaling={false} style={[styles.loadingText, {color: Theme.foregroundColor}]}>Fetching your news feed</Text>
                 </View>
             )
         } 
@@ -180,7 +180,7 @@ export default function FeedScreen(props) {
                                 <Image
                                     style={styles.endCardImage}
                                     source={require('./../assets/images/endcard.png')}/>
-                                <Text style={[styles.endCardMessage, {color: Theme.foregroundColor}]}>You have caught up with all stories.</Text>
+                                <Text allowFontScaling={false} style={[styles.endCardMessage, {color: Theme.foregroundColor}]}>You have caught up with all stories.</Text>
                                 <PrimaryButton buttonText='Refresh Feed' onPress={() => refreshFeed()} />
                             </View>
                         )
@@ -219,14 +219,14 @@ export default function FeedScreen(props) {
                                 }}>
                                 <View style={styles.centeredView}>
                                 <View style={[styles.modalView, {backgroundColor: Theme.tileColor}]}>
-                                    <Text style={[styles.modalTitle, {color: Theme.foregroundColor}]}>Get Started</Text>
+                                    <Text allowFontScaling={false} style={[styles.modalTitle, {color: Theme.foregroundColor}]}>Get Started</Text>
                                     <View style={styles.modalItem}>
                                         <Image
                                             source={require('./../assets/images/swipeup.png')}
                                             style={styles.modalItemImage}
                                         />
                                         <View style={styles.modalItemTextContainer}>
-                                            <Text style={[styles.modalItemText, {color: Theme.foregroundColor}]}>Swipe up for next article</Text>
+                                            <Text allowFontScaling={false} style={[styles.modalItemText, {color: Theme.foregroundColor}]}>Swipe up for next article</Text>
                                         </View>
                                     </View>
                                     <View style={styles.modalItem}>
@@ -235,7 +235,7 @@ export default function FeedScreen(props) {
                                             style={styles.modalItemImage}
                                         />
                                         <View style={styles.modalItemTextContainer}>
-                                            <Text style={[styles.modalItemText, {color: Theme.foregroundColor}]}>Swipe down for previous article</Text>
+                                            <Text allowFontScaling={false} style={[styles.modalItemText, {color: Theme.foregroundColor}]}>Swipe down for previous article</Text>
                                         </View>
                                     </View>
                                     <View style={styles.buttonContainer}>

@@ -17,9 +17,9 @@ export default function AboutScreen({ navigation }) {
         style={styles.logo}
         source={require('./../assets/images/logo.png')}
       />
-      <Text style={[styles.pageTitle, {color: Theme.foregroundColor}]}>About</Text>
-      <Text style={[styles.pageBody, {color: Theme.foregroundColor}]}>CryptoInBrief is a product of InChain Corp. CryptoInBrief aims are providing curated crypto news content from select reputed publishers summarized into less than 70 words powered by Artificial Intelligence.</Text>
-      <Text style={[styles.pageBody, {color: Theme.foregroundColor}]}>
+      <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.foregroundColor}]}>About</Text>
+      <Text allowFontScaling={false} style={[styles.pageBody, {color: Theme.foregroundColor}]}>CryptoInBrief is a product of InChain Corp. CryptoInBrief aims are providing curated crypto news content from select reputed publishers summarized into less than 70 words powered by Artificial Intelligence.</Text>
+      <Text allowFontScaling={false} style={[styles.pageBody, {color: Theme.foregroundColor}]}>
       CryptoInBrief collects news from reputated blockchain news publishing websites. We do not copy or use thier entire news content. Our AI platform summarizes the news and we publish then in-brief. CryptoInBrief also provides credit to the original publisher and provides a link back to the original source of the article.
       </Text>
       <View style={styles.buttonContainer}>

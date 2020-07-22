@@ -15,7 +15,7 @@ export default function PrimaryButton(props) {
         style={[styles.button, {backgroundColor: Theme.tintColor}]}
         onPress={() => props.onPress()}
         >
-          <Text style={[styles.buttonText, {color: Theme.buttonText}]}>{props.buttonText}</Text>
+          <Text allowFontScaling={false} style={[styles.buttonText, {color: Theme.buttonText}]}>{props.buttonText}</Text>
       </TouchableOpacity>
   );
 }

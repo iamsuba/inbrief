@@ -68,9 +68,9 @@ export default function SettingsScreen({ navigation }) {
   return (
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
       <ScrollView style={[styles.container, {backgroundColor: Theme.backgroundColor}]} contentContainerStyle={styles.contentContainer}>
-        <Text style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Settings</Text>
+        <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Settings</Text>
         <View style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}>
-  <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Notifications</Text>
+  <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Notifications</Text>
       <Switch
           trackColor={{ false: Theme.grey, true: Theme.tintColor }}
           thumbColor={Theme.icon}
@@ -82,7 +82,7 @@ export default function SettingsScreen({ navigation }) {
         <TouchableOpacity 
           style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
           onPress={() => navigation.navigate('About')}>
-          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>About</Text>
+          <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>About</Text>
           <Ionicons
             name='ios-arrow-forward'
             size={28}
@@ -93,7 +93,7 @@ export default function SettingsScreen({ navigation }) {
         <TouchableOpacity 
           style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
           onPress={() => WebBrowser.openBrowserAsync('https://www.inbrief.app/privacy')}>
-          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Privacy Policy</Text>
+          <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Privacy Policy</Text>
           <Ionicons
             name='ios-link'
             size={28}
@@ -104,7 +104,7 @@ export default function SettingsScreen({ navigation }) {
         <TouchableOpacity 
           style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
           onPress={() => WebBrowser.openBrowserAsync('https://www.inbrief.app/terms')}>
-          <Text style={[styles.settingName, {color: Theme.foregroundColor}]}>Terms of Use</Text>
+          <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Terms of Use</Text>
           <Ionicons
             name='ios-link'
             size={28}

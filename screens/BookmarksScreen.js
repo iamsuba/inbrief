@@ -50,8 +50,8 @@ export default function BookmarksScreen(props) {
             onPress={() => props.navigation.navigate('BookmarkDetailed', {
               newsItem: newsItem
             })}>
-            <Text style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
-            <Text style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{getLocalTimestamp(newsItem.timestamp)}</Text>
+            <Text allowFontScaling={false} style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
+            <Text allowFontScaling={false} style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{getLocalTimestamp(newsItem.timestamp)}</Text>
           </TouchableOpacity>
         )
       )
@@ -61,7 +61,7 @@ export default function BookmarksScreen(props) {
           <Image
               style={styles.emptyBookmarksImage}
               source={require('./../assets/images/emptybookmarks.png')}/>
-          <Text style={[styles.emptyBookmarksMessage, {color: Theme.foregroundColor}]}>You do not have any bookmarks saved at the moment</Text>
+          <Text allowFontScaling={false} style={[styles.emptyBookmarksMessage, {color: Theme.foregroundColor}]}>You do not have any bookmarks saved at the moment</Text>
         </View>
       )
     }
@@ -72,7 +72,7 @@ export default function BookmarksScreen(props) {
       <ScrollView 
         style={[styles.container, {backgroundColor: Theme.backgroundColor}]} 
         contentContainerStyle={styles.contentContainer}>
-        <Text style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Bookmarks</Text>
+        <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Bookmarks</Text>
         {BookmarksList()}
       </ScrollView>
     </View>
