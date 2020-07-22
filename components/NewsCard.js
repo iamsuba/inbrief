@@ -254,7 +254,8 @@ const styles = StyleSheet.create({
     fontSize: Layout.fontSize.newsBody,
     fontWeight: '300',
     marginTop: 10,
-    textAlign: 'left'
+    textAlign: 'left',
+    lineHeight: Layout.fontSize.newsBodyLineHeight
   },
   sourceContainer: {
     backgroundColor: 'white',
