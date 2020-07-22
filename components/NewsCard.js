@@ -167,8 +167,8 @@ const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sour
               <View style={styles.sourceIconContainer}>
                 <Ionicons
                   name='md-arrow-round-forward'
-                  size={36}
-                  style={{ textAlign: 'center', marginTop: 10 }}
+                  size={30}
+                  style={{ textAlign: 'center', marginTop: 6 }}
                   color={Theme.tintColor}
                 />
               </View>
@@ -258,12 +258,13 @@ const styles = StyleSheet.create({
   },
   sourceContainer: {
     backgroundColor: 'white',
-    height: 90,
+    height: 65,
     marginTop: 10,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 20,
-    padding: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
@@ -272,7 +273,7 @@ const styles = StyleSheet.create({
     fontWeight: '100'
   },
   sourceImage: {
-    marginTop: 10,
+    marginTop: 5,
     height: 25,
     width: 125
   },
