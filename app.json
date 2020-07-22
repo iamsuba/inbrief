@@ -29,7 +29,8 @@
     },
     "android": {
       "package": "app.inbrief.www",
-      "versionCode": 1
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json"
     },
     "description": ""
   }

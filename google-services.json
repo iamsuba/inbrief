@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "622842250618",
+    "firebase_url": "https://market-outlines.firebaseio.com",
+    "project_id": "market-outlines",
+    "storage_bucket": "market-outlines.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622842250618:android:5ddf037c6a110e9d6a02c3",
+        "android_client_info": {
+          "package_name": "app.inbrief.www"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622842250618-haoktc7r0dl29er0lql19bo41u0m0n78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsb-TTNucvghs05DoJPWyhG3p4VYvUjMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622842250618-haoktc7r0dl29er0lql19bo41u0m0n78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
