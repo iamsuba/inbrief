@@ -153,11 +153,10 @@ const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sour
             </View>
           </View>
           <View style={styles.newsContainer}>
-            <View style={styles.spaceContainer}></View>
             <View style={[styles.contentContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]}>
               <Text style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
               <Text style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{LocalTimestamp}</Text>
-              <Text allowFontScaling={false} style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
+              <Text style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
             </View>
             <TouchableOpacity style={[styles.sourceContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]} onPress={() => WebBrowser.openBrowserAsync(newsItem.sourceArticleURL)}>
               <View style={styles.sourceDescContainer}>
@@ -233,13 +232,14 @@ const styles = StyleSheet.create({
     flex: 3,
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    maxWidth: 500
+    maxWidth: 500,
   },
   contentContainer: {
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 20,
     padding: 25,
+    backgroundColor: 'red',
   },
   newsTitle: {
     fontSize: Layout.fontSize.newsTitle,
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   },
   sourceContainer: {
     backgroundColor: 'white',
-    height: 65,
+    height: 70,
     marginTop: 10,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.05,
