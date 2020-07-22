@@ -277,15 +277,18 @@ export default function FeedScreen(props) {
     registerForPushNotifications = async() => {
         const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
         let finalStatus = existingStatus;
+        console.log("existingStatus: ", existingStatus)
 
         if (existingStatus !== 'granted') {
             const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
             finalStatus = status;
+            console.log("status: ", status)
         }
         if (finalStatus !== 'granted') {
             return;
         }
         const token = await Notifications.getExpoPushTokenAsync();
+        console.log("token: ", token)
 
         const userData = {
             "expoToken": token,
@@ -296,6 +299,7 @@ export default function FeedScreen(props) {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
               let uid = user.uid
+              console.log('uid', uid)
               firebase.database().ref('UserData/'+uid).once('value', async(snapshot) => {
                 if(snapshot.val() == null) {
                     console.log('updateing from feed')
