@@ -5,7 +5,7 @@ const height = Dimensions.get('window').height;
 
 //console.log(width, height, PixelRatio.getFontScale())
 
-const isSmallDevice = width < 3400 ? true : false
+const isSmallDevice = width < 400 ? true : false
 
 export default {
   window: {

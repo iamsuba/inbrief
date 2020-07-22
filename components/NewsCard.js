@@ -239,7 +239,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 20,
     padding: 25,
-    backgroundColor: 'red',
   },
   newsTitle: {
     fontSize: Layout.fontSize.newsTitle,
@@ -258,7 +257,6 @@ const styles = StyleSheet.create({
     lineHeight: Layout.fontSize.newsBodyLineHeight
   },
   sourceContainer: {
-    backgroundColor: 'white',
     height: 70,
     marginTop: 10,
     shadowOffset: { width: 0, height: 0 },
