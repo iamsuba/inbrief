@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Image, Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Button, StyleSheet, Text, TouchableOpacity, View, ScrollView, SafeAreaView } from 'react-native';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from '../constants/Colors'
 
 import PrimaryButton from '../components/PrimaryButton'
-import { ScrollView } from 'react-native-gesture-handler';
 
 
 export default function AboutScreen({ navigation }) {
@@ -40,11 +39,16 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     padding: 25,
   },
+  logo: {
+    height: 72,
+    width: 72
+  },
   contentContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'flex-start'
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginTop: 50
   },
   pageTitle: {
     fontSize: 36,
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   pageBody: {
-    fontSize: 20,
+    fontSize: 16,
     marginTop: 15,
     fontWeight: '200',
   },
