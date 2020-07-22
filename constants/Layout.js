@@ -14,7 +14,7 @@ export default {
   },
   isSmallDevice: isSmallDevice,
   fontSize: {
-    newsTitle: PixelRatio.get()*9,
-    newsBody: isSmallDevice ? PixelRatio.get()*7 : 16
+    newsTitle: isSmallDevice ? 18 : 22,
+    newsBody: isSmallDevice ? 14 : 16
   }
 };
