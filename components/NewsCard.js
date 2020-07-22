@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import SourceLogos from './../constants/SourceLogos'
 import moment from 'moment-timezone';
 import * as Localization from 'expo-localization'
+import Layout from './../constants/Layout'
 //import * as Device from 'expo-device';
 //const DeviceType = Device.getDeviceTypeAsync().then(value => { return(Device.DeviceType[value]) })
 //const ImageHeight = (DeviceType == 'TABLET') ? '80%' : '55%'
@@ -156,7 +157,7 @@ const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sour
             <View style={[styles.contentContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]}>
               <Text style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
               <Text style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{LocalTimestamp}</Text>
-              <Text style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
+              <Text allowFontScaling={false} style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
             </View>
             <TouchableOpacity style={[styles.sourceContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]} onPress={() => WebBrowser.openBrowserAsync(newsItem.sourceArticleURL)}>
               <View style={styles.sourceDescContainer}>
@@ -238,10 +239,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 20,
-    padding: 25
+    padding: 25,
   },
   newsTitle: {
-    fontSize: 24,
+    fontSize: Layout.fontSize.newsTitle,
     fontWeight: 'bold'
   },
   newsTimestamp: {
@@ -250,11 +251,10 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   newsBody: {
-    fontSize: 16,
-    fontWeight: '200',
+    fontSize: Layout.fontSize.newsBody,
+    fontWeight: '300',
     marginTop: 10,
-    textAlign: 'left',
-    lineHeight: 22
+    textAlign: 'left'
   },
   sourceContainer: {
     backgroundColor: 'white',

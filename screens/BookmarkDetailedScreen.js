@@ -6,6 +6,7 @@ import NewsCard from '../components/NewsCard';
 export default function BookmarkDetailedScreen(props) {
 
   const newsItem = props.route.params.newsItem
+  console.log(newsItem)
 
   return (
     <View style={styles.container}>
