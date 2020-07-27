@@ -6,8 +6,18 @@ export default {
     Root: {
       path: 'root',
       screens: {
-        Home: 'home',
-        Bookmarks: 'bookmarks',
+        Home: {
+          path: 'home',
+          screens: {
+            OfficialUpdates: 'officialUpdates',
+            PriceMovements: 'priceMovements'
+          }
+        },
+        Calendar: 'calendar',
+        Bookmarks: {
+          path: 'home',
+          BookmarkDetailed: 'bookmarkDetailed'
+        },
         Settings: 'settings'
       },
     },

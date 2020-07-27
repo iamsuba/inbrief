@@ -1,41 +1,72 @@
 import * as React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View, ImageBackground, ScrollView } from 'react-native';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
 import moment from 'moment-timezone';
 import * as Localization from 'expo-localization'
+import Layout from '../constants/Layout';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen(props) {
 
   const colorScheme = useColorScheme();
   const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
-  const newsItem =  props.route.params.newsItem
-  const ImageURL = {uri: newsItem.image}
-  const Timestamp = new Date(newsItem.timestamp)
-  //const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
-  const LocalTimestamp = moment(Timestamp).tz(Localization.timezone).format('MMMM Do YYYY, h:mm a')
-
   return (
-    <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
-      <Image 
-        style={styles.logo}
-        source={require('./../assets/images/logo.png')}/>
-      <Text allowFontScaling={false} style={[styles.welcomeText, {color: Theme.foregroundColor}]}>Your news feed briefed</Text>
-      <TouchableOpacity 
-        style={[styles.newsContainer, {backgroundColor: Theme.tileColor, shadowColor: Theme.shadowColor}]}
-        onPress={() => props.navigation.navigate('Feed')}>
+    // <View style={styles.container}>
+     <ScrollView 
+      style={[styles.scrollContainer, {backgroundColor: Theme.tintColor}]} 
+      contentContainerStyle={[styles.contentContainer, {backgroundColor: Theme.backgroundColor}]}
+      showsVerticalScrollIndicator={false}>
         <ImageBackground
-          style={styles.newsImage}
-          source={ImageURL}>
+          style={[styles.imageContainer]}
+          source={require('../assets/images/homebg.png')}>
+          <Image style={styles.logo} source={require('./../assets/images/homelogo.png')}/>
+          <View style={[styles.wideTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow}]}>
+            <Text style={[styles.tileTitle, {color: Theme.icon}]}>Go to News Feed</Text>
+            <Ionicons
+              name='md-arrow-forward'
+              size={28}
+              style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
+              color={Theme.icon}
+            />
+          </View>
+          <View style={styles.newsCategoriesContainer}>
+            <View style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginRight: 7.5}]}>
+              <Image style={styles.newsCategoryIcon} source={require('./../assets/images/pricemovements.png')}/>
+              <Text style={[styles.tileTitle, {color: Theme.icon}]}>Price Movements</Text>
+            </View>
+            <View style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginLeft: 7.5}]}>
+              <Image style={styles.newsCategoryIcon} source={require('./../assets/images/officialupdates.png')}/>
+              <Text style={[styles.tileTitle, {color: Theme.icon}]}>Official Announcements</Text>
+            </View>
+          </View>
         </ImageBackground>
-        <View style={styles.newsContentContainer}>
-          <Text allowFontScaling={false} style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
-          <Text allowFontScaling={false} style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{LocalTimestamp}</Text>
-          <Text allowFontScaling={false} style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
+        <View style={styles.highlightsContainer}>
+          <Text style={styles.highlightsTitle}>Today's Highlights</Text>
+          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
+            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
+            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
+          </View>
+          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
+            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
+            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
+          </View>
+          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
+            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
+            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
+          </View>
+          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
+            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
+            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
+          </View>
+          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
+            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
+            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
+          </View>
         </View>
-      </TouchableOpacity>
-    </View>
+      </ScrollView>
+    // </View>
   );
 }
 
@@ -46,48 +77,75 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15
+  },
+  scrollContainer: {
+    flex: 1
+  },
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: 'flex-start'
+  },
+  imageContainer: {
+    padding: 20,
+    width: Layout.width
   },
   logo: {
-    height: 48,
-    width: 48,
+    height: 58,
+    width: 157,
     marginTop: 50
   },
-  welcomeText: {
-    fontSize: 42,
-    fontWeight: 'bold',
-    marginTop: 10
-  },
-  newsContainer: {
-    flex: 1,
-    marginTop: 20,
+  wideTileContainer: {
+    padding: 20,
+    borderRadius: 10,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.1,
     shadowRadius: 20,
+    marginTop: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
-  newsImage: {
-    flex: 2
+  newsCategoriesContainer: {
+    marginTop: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
-  newsContentContainer: {
-    flex: 3,
+  squareTileContainer: {
+    padding: 20,
+    borderRadius: 10,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    flex: 1,
+    flexDirection: 'column',
+  },
+  tileTitle: {
+    fontSize: 18
+  },
+  newsCategoryIcon: {
+    height: 36,
+    width: 36,
+    marginBottom: 10,
+    alignSelf: 'flex-end'
+  },
+  highlightsContainer: {
     padding: 20
   },
-  newsTitle: {
-    fontSize: 24,
+  highlightsTitle: {
+    fontSize: 30,
     fontWeight: 'bold'
   },
-  newsTimestamp: {
+  newsItemContainer: {
+    paddingVertical: 20,
+    borderBottomWidth: 1
+  },
+  newsItemTitle: {
+    fontSize: 20,
+    fontWeight: '300'
+  },
+  newsItemTimestamp: {
     fontSize: 12,
-    fontWeight: '100',
+    fontWeight: '400',
     marginTop: 5
-  },
-  newsBody: {
-    fontSize: 16,
-    fontWeight: '200',
-    marginTop: 10,
-    textAlign: 'left',
-    lineHeight: 22,
-    flexShrink: 1
-  },
-
+  }
 });

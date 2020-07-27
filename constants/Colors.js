@@ -16,7 +16,8 @@ export default {
     buttonText: '#fff',
     foregroundColor: '#000',
     fetchingBg: '#f7f7f7',
-    grey: '#777'
+    grey: '#777',
+    cardTile: '#1347CA'
   },
   "dark": {
     theme: 'dark',
@@ -33,6 +34,7 @@ export default {
     buttonText: '#fff',
     foregroundColor: '#fff',
     fetchingBg: '#1c1c1c',
-    grey: '#777'
+    grey: '#777',
+    cardTile: '#1347CA'
   }
 };

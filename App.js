@@ -26,8 +26,6 @@ export default function App(props) {
           <NavigationContainer linking={LinkingConfiguration}>
             <Stack.Navigator initialRouteName='FeedScreen' headerMode='none'>
               <Stack.Screen name="Feed" component={FeedScreen} />
-              <Stack.Screen name="BookmarkDetailed" component={BookmarkDetailedScreen} />
-              <Stack.Screen name="About" component={AboutScreen} />
               <Stack.Screen name="Root" component={BottomTabNavigator} />
             </Stack.Navigator>
           </NavigationContainer>
