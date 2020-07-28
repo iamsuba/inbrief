@@ -80,6 +80,11 @@ export default function FeedScreen(props) {
             registerForPushNotifications()
             renderArticles()
         });
+
+        // cleanup this component
+        return () => {
+            firebase.database().ref.off();
+        };
     }, [])
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
