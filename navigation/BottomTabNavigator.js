@@ -16,6 +16,45 @@ import AboutScreen from '../screens/AboutScreen'
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
+const HomeStack = () => {
+  const Stack = createStackNavigator();
+  return (
+   <Stack.Navigator initialRouteName='HomeScreen'>
+     <Stack.Screen name="Home" component={HomeScreen} options={{header: () => null}}/>
+   </Stack.Navigator>
+  )
+}
+
+const CalendarStack = () => {
+ const Stack = createStackNavigator();
+ return (
+  <Stack.Navigator initialRouteName='CalendarScreen'>
+    <Stack.Screen name="Calendar" component={CalendarScreen} options={{header: () => null}}/>
+    <Stack.Screen name="CalendarDetailed" component={CalendarDetailedScreen} />
+  </Stack.Navigator>
+ )
+}
+
+const BookmarksStack = () => {
+ const Stack = createStackNavigator();
+ return (
+  <Stack.Navigator initialRouteName='BookmarksScreen'>
+    <Stack.Screen name="Bookmarks" component={BookmarksScreen} options={{header: () => null}}/>
+    <Stack.Screen name="BookmarkDetailed" component={BookmarkDetailedScreen} options={{header: () => null}}/>
+  </Stack.Navigator>
+ )
+}
+
+const SettingsStack = () => {
+ const Stack = createStackNavigator();
+ return (
+  <Stack.Navigator initialRouteName='SettingsScreen'>
+    <Stack.Screen name="Settings" component={SettingsScreen} options={{header: () => null}}/>
+    <Stack.Screen name="About" component={AboutScreen} />
+  </Stack.Navigator>
+ )
+}
+
 export default function BottomTabNavigator({ navigation, route }) {
 
   const colorScheme = useColorScheme();
@@ -25,45 +64,6 @@ export default function BottomTabNavigator({ navigation, route }) {
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
-
- const HomeStack = () => {
-   const Stack = createStackNavigator();
-   return (
-    <Stack.Navigator initialRouteName='HomeScreen'>
-      <Stack.Screen name="Home" component={HomeScreen} initialParams={route.params} options={{header: () => null}}/>
-    </Stack.Navigator>
-   )
- }
-
- const CalendarStack = () => {
-  const Stack = createStackNavigator();
-  return (
-   <Stack.Navigator initialRouteName='CalendarScreen'>
-     <Stack.Screen name="Calendar" component={CalendarScreen} options={{header: () => null}}/>
-     <Stack.Screen name="CalendarDetailed" component={CalendarDetailedScreen} />
-   </Stack.Navigator>
-  )
- }
-
- const BookmarksStack = () => {
-  const Stack = createStackNavigator();
-  return (
-   <Stack.Navigator initialRouteName='BookmarksScreen'>
-     <Stack.Screen name="Bookmarks" component={BookmarksScreen} options={{header: () => null}}/>
-     <Stack.Screen name="BookmarkDetailed" component={BookmarkDetailedScreen} options={{header: () => null}}/>
-   </Stack.Navigator>
-  )
- }
-
- const SettingsStack = () => {
-  const Stack = createStackNavigator();
-  return (
-   <Stack.Navigator initialRouteName='SettingsScreen'>
-     <Stack.Screen name="Settings" component={SettingsScreen} options={{header: () => null}}/>
-     <Stack.Screen name="About" component={AboutScreen} />
-   </Stack.Navigator>
-  )
- }
 
   return (
     <BottomTab.Navigator 

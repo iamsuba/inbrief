@@ -22,7 +22,9 @@ export default function HomeScreen(props) {
           style={[styles.imageContainer]}
           source={require('../assets/images/homebg.png')}>
           <Image style={styles.logo} source={require('./../assets/images/homelogo.png')}/>
-          <View style={[styles.wideTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow}]}>
+          <TouchableOpacity 
+            style={[styles.wideTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow}]}
+            onPress={() => props.navigation.navigate('Feed')}>
             <Text style={[styles.tileTitle, {color: Theme.icon}]}>Go to News Feed</Text>
             <Ionicons
               name='md-arrow-forward'
@@ -30,7 +32,7 @@ export default function HomeScreen(props) {
               style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
               color={Theme.icon}
             />
-          </View>
+          </TouchableOpacity>
           <View style={styles.newsCategoriesContainer}>
             <View style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginRight: 7.5}]}>
               <Image style={styles.newsCategoryIcon} source={require('./../assets/images/pricemovements.png')}/>
