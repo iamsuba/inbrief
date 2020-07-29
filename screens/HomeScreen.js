@@ -4,7 +4,6 @@ import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
 import Layout from '../constants/Layout';
 import { Ionicons } from '@expo/vector-icons';
-import _ from 'lodash'
 import GetLocalTime from '../utilities/GetLocalTime'
 
 import * as firebase from 'firebase'
@@ -32,8 +31,8 @@ export default function HomeScreen(props) {
   const [HighlightsFeed, setHighlightsFeed] = React.useState([])
 
   React.useEffect(updateNewsFeed = () => {
-    firebase.database().ref('LatestNews/').once('value', async(snapshot) => {
-          const highlightsWithImages = await prepareHighlights(_.filter(snapshot.val(), function(o) { return o.category.highlights }).reverse())
+    firebase.database().ref('Highlights/').once('value', async(snapshot) => {
+          const highlightsWithImages = await prepareHighlights(snapshot.val().reverse())
           setHighlightsFeed(highlightsWithImages)
       });
   }, [])

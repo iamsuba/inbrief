@@ -3,7 +3,6 @@ import { Image, Button, StyleSheet, Text, TouchableOpacity, View, ScrollView, Sa
 import { useColorScheme } from 'react-native-appearance';
 import Colors from '../constants/Colors'
 import GetLocalTime from '../utilities/GetLocalTime';
-import _ from 'lodash'
 
 import * as firebase from 'firebase'
 
@@ -30,8 +29,8 @@ export default function PriceMovementsScreen({ navigation }) {
   const [PriceMovementsFeed, setPriceMovementsFeed] = React.useState([])
 
   React.useEffect(updateNewsFeed = () => {
-    firebase.database().ref('LatestNews/').once('value', async(snapshot) => {
-          const priceMovementsWithImages = await preparePriceMovements(_.filter(snapshot.val(), function(o) { return o.category.priceMovements }).reverse())
+    firebase.database().ref('PriceMovements/').once('value', async(snapshot) => {
+          const priceMovementsWithImages = await preparePriceMovements(snapshot.val().reverse())
           setPriceMovementsFeed(priceMovementsWithImages)
       });
   }, [])
