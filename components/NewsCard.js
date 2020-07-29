@@ -6,17 +6,14 @@ import Colors from './../constants/Colors'
 import * as WebBrowser from 'expo-web-browser'
 import AsyncStorage from '@react-native-community/async-storage'
 import SourceLogos from './../constants/SourceLogos'
-import moment from 'moment-timezone';
-import * as Localization from 'expo-localization'
 import Layout from './../constants/Layout'
-//import * as Device from 'expo-device';
-//const DeviceType = Device.getDeviceTypeAsync().then(value => { return(Device.DeviceType[value]) })
-//const ImageHeight = (DeviceType == 'TABLET') ? '80%' : '55%'
+import GetLocalTime from '../utilities/GetLocalTime'
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 
 import * as firebase from 'firebase'
+import getLocalTime from '../utilities/GetLocalTime';
 
 const firebaseconfig = {
     apiKey: "AIzaSyCbu1l26CLzY4FsThPOyr_XOMQGiIvzVyY",
@@ -41,9 +38,6 @@ export default function NewsCard(props) {
   const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
   const newsItem =  props.newsItem
   const SourceLogo = SourceLogos[Theme.theme][newsItem.source]
-  const Timestamp = new Date(newsItem.timestamp)
-  //const LocalTimestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(Timestamp)
-  const LocalTimestamp = moment(Timestamp).tz(Localization.timezone).format('MMMM Do YYYY, h:mm a')
 
   const [BookmarkStatus, setBookmarkStatus] = React.useState(false)
 
@@ -155,7 +149,7 @@ const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sour
           <View style={styles.newsContainer}>
             <View style={[styles.contentContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]}>
               <Text allowFontScaling={false} style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>
-              <Text allowFontScaling={false} style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{LocalTimestamp}</Text>
+              <Text allowFontScaling={false} style={[styles.newsTimestamp, {color: Theme.foregroundColor}]}>{GetLocalTime(newsItem.timestamp)}</Text>
               <Text allowFontScaling={false} style={[styles.newsBody, {color: Theme.foregroundColor}]}>{newsItem.body}</Text>
             </View>
             <TouchableOpacity style={[styles.sourceContainer, {shadowColor: Theme.shadowColor, backgroundColor: Theme.tileColor}]} onPress={() => WebBrowser.openBrowserAsync(newsItem.sourceArticleURL)}>

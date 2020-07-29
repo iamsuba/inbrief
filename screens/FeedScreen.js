@@ -72,19 +72,14 @@ export default function FeedScreen(props) {
     }
 
     React.useEffect(updateNewsFeed = () => {
-        firebase.database().ref('LatestNews/').once('value', async(snapshot) => {
+        const LatestNewsRef = firebase.database().ref('LatestNews/')
+        LatestNewsRef.once('value', async(snapshot) => {
             const newsFeedWithImages = await prepareNewsFeed(snapshot.val().reverse())
             setNewsFeed(newsFeedWithImages)
             setLoadingComplete(true)
             checkVirgin()
             registerForPushNotifications()
-            renderArticles()
         });
-
-        // cleanup this component
-        return () => {
-            firebase.database().ref.off();
-        };
     }, [])
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -117,7 +112,8 @@ export default function FeedScreen(props) {
 
                 Animated.timing(swipedCardPosition, {
                     toValue: ({ x: 0, y: 0 }),
-                    duration: 400
+                    duration: 400,
+                    useNativeDriver: false
                 }).start(() => {
 
                     setCurrentIndex(currentIndex - 1)
@@ -131,7 +127,8 @@ export default function FeedScreen(props) {
 
                 Animated.timing(position, {
                     toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
-                    duration: 400
+                    duration: 400,
+                    useNativeDriver: false
                 }).start(() => {
 
                     setCurrentIndex(currentIndex + 1)
@@ -142,10 +139,12 @@ export default function FeedScreen(props) {
             else {
                 Animated.parallel([
                     Animated.spring(position, {
-                        toValue: ({ x: 0, y: 0 })
+                        toValue: ({ x: 0, y: 0 }),
+                        useNativeDriver: false
                     }),
                     Animated.spring(swipedCardPosition, {
-                        toValue: ({ x: 0, y: -SCREEN_HEIGHT })
+                        toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
+                        useNativeDriver: false
                     })
 
                 ]).start()

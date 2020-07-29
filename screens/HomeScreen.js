@@ -2,18 +2,68 @@ import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ImageBackground, ScrollView } from 'react-native';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
-import moment from 'moment-timezone';
-import * as Localization from 'expo-localization'
 import Layout from '../constants/Layout';
 import { Ionicons } from '@expo/vector-icons';
+import _ from 'lodash'
+import GetLocalTime from '../utilities/GetLocalTime'
+
+import * as firebase from 'firebase'
+
+const firebaseconfig = {
+  apiKey: "AIzaSyCbu1l26CLzY4FsThPOyr_XOMQGiIvzVyY",
+  authDomain: "market-outlines.firebaseapp.com",
+  databaseURL: "https://market-outlines.firebaseio.com",
+  projectId: "market-outlines",
+  storageBucket: "market-outlines.appspot.com",
+  messagingSenderId: "622842250618",
+  appId: "1:622842250618:web:78ba56da7bb126496a02c3",
+  measurementId: "G-C0J0LRM2XV"
+}
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseconfig)
+}
 
 export default function HomeScreen(props) {
 
   const colorScheme = useColorScheme();
   const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
+  const [HighlightsFeed, setHighlightsFeed] = React.useState([])
+
+  React.useEffect(updateNewsFeed = () => {
+    firebase.database().ref('LatestNews/').once('value', async(snapshot) => {
+          const highlightsWithImages = await prepareHighlights(_.filter(snapshot.val(), function(o) { return o.category.highlights }).reverse())
+          setHighlightsFeed(highlightsWithImages)
+      });
+  }, [])
+
+  const prepareHighlights = (highlights) => {
+    highlights.map(item => {
+        item.imageFile = {uri: item.image}
+    })
+    return highlights
+  }
+
+
+  const renderHighlights = () => {
+    return HighlightsFeed.map(item => {
+      return (
+        <TouchableOpacity 
+          style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}
+          key={item.id}
+          onPress={() => props.navigation.navigate('HighlightsDetailed', {
+            newsItem: item
+          })}>
+          <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>{item.title}</Text>
+          <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>{GetLocalTime(item.timestamp)}</Text>
+        </TouchableOpacity>
+      )
+    })
+  }
+
+
   return (
-    // <View style={styles.container}>
      <ScrollView 
       style={[styles.scrollContainer, {backgroundColor: Theme.tintColor}]} 
       contentContainerStyle={[styles.contentContainer, {backgroundColor: Theme.backgroundColor}]}
@@ -34,41 +84,25 @@ export default function HomeScreen(props) {
             />
           </TouchableOpacity>
           <View style={styles.newsCategoriesContainer}>
-            <View style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginRight: 7.5}]}>
+            <TouchableOpacity 
+              style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginRight: 7.5}]}
+              onPress={() => props.navigation.navigate('PriceMovements')}>
               <Image style={styles.newsCategoryIcon} source={require('./../assets/images/pricemovements.png')}/>
-              <Text style={[styles.tileTitle, {color: Theme.icon}]}>Price Movements</Text>
-            </View>
-            <View style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginLeft: 7.5}]}>
+              <Text style={[styles.tileTitle, {color: Theme.icon}]}>Price{'\n'}Movements</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginLeft: 7.5}]}
+              onPress={() => props.navigation.navigate('OfficialUpdates')}>
               <Image style={styles.newsCategoryIcon} source={require('./../assets/images/officialupdates.png')}/>
-              <Text style={[styles.tileTitle, {color: Theme.icon}]}>Official Announcements</Text>
-            </View>
+              <Text style={[styles.tileTitle, {color: Theme.icon}]}>Official{'\n'}Updates</Text>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
         <View style={styles.highlightsContainer}>
-          <Text style={styles.highlightsTitle}>Today's Highlights</Text>
-          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
-            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
-            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
-          </View>
-          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
-            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
-            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
-          </View>
-          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
-            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
-            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
-          </View>
-          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
-            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
-            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
-          </View>
-          <View style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}>
-            <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>3 Reasons Bitcoin’s Price Could Soon Rise to $10K</Text>
-            <Text style={[styles.newsItemTimestamp, {color: Theme.grey}]}>Jul 23, 2020 at 11:55</Text>
-          </View>
+          <Text style={styles.highlightsTitle}>Highlights</Text>
+          {renderHighlights()}
         </View>
       </ScrollView>
-    // </View>
   );
 }
 
@@ -119,6 +153,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 20,
     flex: 1,
+    flexGrow: 1,
     flexDirection: 'column',
   },
   tileTitle: {

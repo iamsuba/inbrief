@@ -6,6 +6,11 @@ import Colors from './../constants/Colors'
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import HighlightsDetailedScreen from '../screens/HighlightsDetailedScreen'
+import PriceMovementsScreen from './../screens/PriceMovementsScreen'
+import PriceMovementsDetailedScreen from './../screens/PriceMovementsDetailedScreen'
+import OfficialUpdatesScreen from './../screens/OfficialUpdatesScreen'
+import OfficialUpdatesDetailedScreen from './../screens/OfficialUpdatesDetailedScreen'
 import CalendarScreen from '../screens/CalendarScreen'
 import CalendarDetailedScreen from '../screens/CalendarDetailedScreen'
 import BookmarksScreen from '../screens/BookmarksScreen';
@@ -21,6 +26,11 @@ const HomeStack = () => {
   return (
    <Stack.Navigator initialRouteName='HomeScreen'>
      <Stack.Screen name="Home" component={HomeScreen} options={{header: () => null}}/>
+     <Stack.Screen name="HighlightsDetailed" component={HighlightsDetailedScreen} options={{header: () => null}}/>
+     <Stack.Screen name="PriceMovements" component={PriceMovementsScreen} options={{ title: 'Price Movements' }}/>
+     <Stack.Screen name="PriceMovementsDetailed" component={PriceMovementsDetailedScreen} options={{header: () => null}}/>
+     <Stack.Screen name="OfficialUpdates" component={OfficialUpdatesScreen} options={{ title: 'Official Updates' }}/>
+     <Stack.Screen name="OfficialUpdatesDetailed" component={OfficialUpdatesDetailedScreen} options={{header: () => null}}/>
    </Stack.Navigator>
   )
 }
