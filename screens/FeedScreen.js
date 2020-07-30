@@ -199,6 +199,7 @@ export default function FeedScreen(props) {
                                     onPress={() => props.navigation.navigate('Root', {
                                         newsItem: item
                                     })}
+                                    refreshFeed={() => refreshFeed()}
                                 />
                             </Animated.View>
                         )
@@ -253,6 +254,7 @@ export default function FeedScreen(props) {
                                 onPress={() => props.navigation.navigate('Root', {
                                     newsItem: item
                                 })}
+                                refreshFeed={() => refreshFeed()}
                             />
                         </Animated.View>
                     )
@@ -266,6 +268,7 @@ export default function FeedScreen(props) {
                                 onPress={() => props.navigation.navigate('Root', {
                                     newsItem: item
                                 })}
+                                refreshFeed={() => refreshFeed()}
                             />
                         </Animated.View>
                     )
