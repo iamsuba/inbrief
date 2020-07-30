@@ -74,7 +74,7 @@ export default function BookmarksScreen(props) {
         style={styles.imageContainer}
         resizeMethod='resize'
         resizeMode='cover'
-        source={require('./../assets/images/calendarbg.png')}>
+        source={require('./../assets/images/bookmarksbg.png')}>
           <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.icon}]}>Bookmarks</Text>
           <ScrollView 
             style={styles.container} 

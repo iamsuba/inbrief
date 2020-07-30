@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import NewsCard from '../components/NewsCard';
 
@@ -18,8 +18,11 @@ export default function HighlightsDetailedScreen(props) {
   );
 }
 
-HighlightsDetailedScreen.navigationOptions = {
-  header: null,
+HighlightsDetailedScreen.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = false;
+  return {
+    tabBarVisible
+  }
 };
 
 const styles = StyleSheet.create({

@@ -37,7 +37,6 @@ export default function CalendarScreen(props) {
     firebase.database().ref('Calendar/').once('value', async(snapshot) => {
           setEvents(Object.values(snapshot.val()))
           setIsLoading(false)
-          console.log('redndered')
       });
   }, [])
 
@@ -53,7 +52,7 @@ export default function CalendarScreen(props) {
     if(isToday) {
       return event.map((item, key) => {
         return (
-          <View style={[styles.eventItemContainer, {borderBottomColor: key==(event.length-1) ? 'transparent' : Theme.tintColor}]}>
+          <View key={key} style={[styles.eventItemContainer, {borderBottomColor: key==(event.length-1) ? 'transparent' : Theme.tintColor}]}>
             <Text style={[styles.eventItemTitle, {color: Theme.icon}]}>{item.title}</Text>
             <Text style={[styles.eventItemToken, {color: Theme.icon}]}>{item.tokenName} ({item.tokenSymbol})</Text>
           </View>
@@ -62,7 +61,7 @@ export default function CalendarScreen(props) {
     } else {
       return event.map((item, key) => {
         return (
-          <View style={[styles.eventItemContainer, {borderBottomColor: key==(event.length-1) ? 'transparent' : Theme.border}]}>
+          <View key={key} style={[styles.eventItemContainer, {borderBottomColor: key==(event.length-1) ? 'transparent' : Theme.border}]}>
             <Text style={[styles.eventItemTitle, {color: Theme.foregroundColor}]}>{item.title}</Text>
             <Text style={[styles.eventItemToken, {color: Theme.grey}]}>{item.tokenName} ({item.tokenSymbol})</Text>
           </View>
@@ -84,7 +83,11 @@ export default function CalendarScreen(props) {
     } else {
       return Events.map((item, key) => {
         const cardSchedule = Object.values(item)[0].date
-        if((moment().format('YYYY-MM-DD')) == cardSchedule) {
+        const currentDate = moment().format('YYYY-MM-DD')
+        if(moment(currentDate).isAfter(cardSchedule)) {
+          return;
+        }
+        else if(currentDate == cardSchedule) {
           return (
             <View key={key} style={[styles.eventCard, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow}]}>
               <View style={styles.eventHeader}>

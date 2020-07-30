@@ -12,7 +12,6 @@ import PriceMovementsDetailedScreen from './../screens/PriceMovementsDetailedScr
 import OfficialUpdatesScreen from './../screens/OfficialUpdatesScreen'
 import OfficialUpdatesDetailedScreen from './../screens/OfficialUpdatesDetailedScreen'
 import CalendarScreen from '../screens/CalendarScreen'
-import CalendarDetailedScreen from '../screens/CalendarDetailedScreen'
 import BookmarksScreen from '../screens/BookmarksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import BookmarkDetailedScreen from '../screens/BookmarkDetailedScreen';
@@ -40,7 +39,6 @@ const CalendarStack = () => {
  return (
   <Stack.Navigator initialRouteName='CalendarScreen'>
     <Stack.Screen name="Calendar" component={CalendarScreen} options={{header: () => null}}/>
-    <Stack.Screen name="CalendarDetailed" component={CalendarDetailedScreen} />
   </Stack.Navigator>
  )
 }
@@ -75,6 +73,18 @@ export default function BottomTabNavigator({ navigation, route }) {
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
+  const getTabBarVisibility = (route) => {
+    const routeName = route.state
+      ? route.state.routes[route.state.index].name
+      : '';
+  
+    if (routeName == 'HighlightsDetailed' || routeName == 'BookmarkDetailed' || routeName == 'About') {
+      return false;
+    }
+  
+    return true;
+  }
+
   return (
     <BottomTab.Navigator 
       initialRouteName={INITIAL_ROUTE_NAME} 
@@ -90,10 +100,11 @@ export default function BottomTabNavigator({ navigation, route }) {
       <BottomTab.Screen
         name="Home"
         component={HomeStack}
-        options={{
+        options={({ route }) => ({
           title: 'Home',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
-        }}
+          tabBarVisible: getTabBarVisibility(route)
+        })}
       />
       <BottomTab.Screen
         name="Calendar"
@@ -106,18 +117,20 @@ export default function BottomTabNavigator({ navigation, route }) {
       <BottomTab.Screen
         name="Bookmarks"
         component={BookmarksStack}
-        options={{
+        options={({ route }) => ({
           title: 'Bookmarks',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-bookmark" />,
-        }}
+          tabBarVisible: getTabBarVisibility(route)
+        })}
       />
       <BottomTab.Screen
         name="Settings"
         component={SettingsStack}
-        options={{
+        options={({ route }) => ({
           title: 'Settings',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-settings" />,
-        }}
+          tabBarVisible: getTabBarVisibility(route)
+        })}
       />
     </BottomTab.Navigator>
   );
