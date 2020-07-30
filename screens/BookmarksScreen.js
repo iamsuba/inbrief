@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     marginTop: 70,
-    marginBottom: 20,
+    marginBottom: 40,
     marginHorizontal: 20
   },
   emptyBookmarksContainer: {
