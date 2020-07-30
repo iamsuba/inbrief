@@ -17,9 +17,9 @@ export default function AboutScreen({ navigation }) {
         style={styles.logo}
         source={require('./../assets/images/logo.png')}
       />
-      <Text allowFontScaling={false} style={[styles.pageBody, {color: Theme.foregroundColor}]}>CryptoInBrief is a product of InChain Corp. CryptoInBrief aims are providing curated crypto news content from select reputed publishers summarized into less than 70 words powered by Artificial Intelligence.</Text>
+      <Text allowFontScaling={false} style={[styles.pageBody, {color: Theme.foregroundColor}]}>InBrief is a product of InChain Corp. InBrief aims are providing curated crypto news content from select reputed publishers summarized into less than 70 words powered by Artificial Intelligence.</Text>
       <Text allowFontScaling={false} style={[styles.pageBody, {color: Theme.foregroundColor}]}>
-      CryptoInBrief collects news from reputated blockchain news publishing websites. We do not copy or use thier entire news content. Our AI platform summarizes the news and we publish then in-brief. CryptoInBrief also provides credit to the original publisher and provides a link back to the original source of the article.
+      InBrief collects news from reputated blockchain news publishing websites. We do not copy or use thier entire news content. Our AI platform summarizes the news and we publish then in-brief. InBrief also provides credit to the original publisher and provides a link back to the original source of the article.
       </Text>
     </ScrollView>
   );
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     width: 72
   },
   contentContainer: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -51,10 +51,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   pageBody: {
-    fontSize: 16,
+    fontSize: 18,
     marginTop: 15,
     fontWeight: '200',
-    textAlign: 'center'
+    textAlign: 'justify',
+    lineHeight: 30
   },
   buttonContainer: {
     marginTop: 20

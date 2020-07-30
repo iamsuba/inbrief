@@ -1,11 +1,12 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ImageBackground } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
 import moment from 'moment-timezone';
 import * as Localization from 'expo-localization'
+import Layout from './../constants/Layout'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -45,7 +46,7 @@ export default function BookmarksScreen(props) {
       return(
         Bookmarks.map((newsItem) => 
           <TouchableOpacity
-            style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]} 
+            style={[styles.newsItemContainer, {backgroundColor: Theme.backgroundColor, shadowColor: Theme.shadow}]} 
             key={newsItem.id} 
             onPress={() => props.navigation.navigate('BookmarkDetailed', {
               newsItem: newsItem
@@ -69,12 +70,18 @@ export default function BookmarksScreen(props) {
 
   return (
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
-      <ScrollView 
-        style={[styles.container, {backgroundColor: Theme.backgroundColor}]} 
-        contentContainerStyle={styles.contentContainer}>
-        <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Bookmarks</Text>
-        {BookmarksList()}
-      </ScrollView>
+      <ImageBackground
+        style={styles.imageContainer}
+        resizeMethod='resize'
+        resizeMode='cover'
+        source={require('./../assets/images/calendarbg.png')}>
+          <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.icon}]}>Bookmarks</Text>
+          <ScrollView 
+            style={styles.container} 
+            contentContainerStyle={styles.contentContainer}>
+            {BookmarksList()}
+          </ScrollView>
+      </ImageBackground>
     </View>
   );
 }
@@ -85,24 +92,32 @@ BookmarksScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 15,
+    flex: 1
+  },
+  imageContainer: {
+    width: Layout.width,
+    flex: 1
+  },
+  scrollContainer: {
+    flex: 1
   },
   contentContainer: {
-    flex: 1,
-    flexDirection: 'column',
+    flexGrow: 1,
+    flexDirection: 'column'
   },
   pageTitle: {
     fontSize: 36,
     fontWeight: 'bold',
-    marginTop: 50,
-    marginBottom: 20
+    marginTop: 70,
+    marginBottom: 20,
+    marginHorizontal: 20
   },
   emptyBookmarksContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal: 20
   },
   emptyBookmarksImage: {
     height: 96,
@@ -117,7 +132,14 @@ const styles = StyleSheet.create({
   },
   newsItemContainer: {
     paddingVertical: 20,
-    borderBottomWidth: 1,
+    borderRadius: 10,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 25,
+    marginVertical: 5,
+    marginHorizontal: 20
   },
   newsTitle: {
     fontSize: 20,
