@@ -57,15 +57,16 @@ export default function FeedbackScreen({ navigation }) {
     <ScrollView 
       style={[styles.container, {backgroundColor: Theme.backgroundColor}]} 
       contentContainerStyle={[styles.contentContainer, {backgroundColor: Theme.backgroundColor}]}>
-      <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.grey}]}>Let us know what we can improve. You like something please let us know that too.</Text>
+      <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.foregroundColor}]}>Let us know what you like or dislike about this app</Text>
       <View style={[styles.textInputContainer, {backgroundColor: Theme.tileColor}]}>
         <TextInput
-          placeholder="enter your feedback here"
           onChangeText={(value) => setFeedbackText(value)}
           style={[styles.textInput, {color: Theme.foregroundColor}]}
           numberOfLines={5}
           multiline
-          value={FeedbackText} />
+          value={FeedbackText}
+          placeholder="enter your feedback here"
+          placeholderTextColor={Theme.grey} />
       </View>
       <View style={styles.buttonContainer}>
         <PrimaryButton buttonText='Submit' onPress={() => submitFeedback()} />
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     fontSize: 22,
-    fontWeight: '600'
+    fontWeight: '300'
   },
   pageTitle: {
     fontSize: 18,
