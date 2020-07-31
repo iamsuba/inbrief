@@ -101,6 +101,17 @@ export default function SettingsScreen({ navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity 
                   style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
+                  onPress={() => navigation.navigate('Feedback')}>
+                  <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Feedback</Text>
+                  <Ionicons
+                    name='ios-arrow-forward'
+                    size={28}
+                    style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
+                    color={Theme.foregroundColor}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity 
+                  style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
                   onPress={() => WebBrowser.openBrowserAsync('https://www.inbrief.app/privacy')}>
                   <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Privacy Policy</Text>
                   <Ionicons

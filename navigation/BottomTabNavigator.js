@@ -16,6 +16,7 @@ import BookmarksScreen from '../screens/BookmarksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import BookmarkDetailedScreen from '../screens/BookmarkDetailedScreen';
 import AboutScreen from '../screens/AboutScreen'
+import FeedbackScreen from '../screens/FeedbackScreen'
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -86,7 +87,23 @@ const SettingsStack = () => {
  return (
   <Stack.Navigator initialRouteName='SettingsScreen'>
     <Stack.Screen name="Settings" component={SettingsScreen} options={{header: () => null}}/>
-    <Stack.Screen name="About" component={AboutScreen} />
+    <Stack.Screen name="About"
+      component={AboutScreen}
+      options={{ 
+        title: 'About',
+        headerStyle: headerStyle,
+        headerTintColor: headerTintColor,
+        headerTitleStyle: headerTitleStyle 
+      }} />
+    <Stack.Screen
+      name="Feedback"
+      component={FeedbackScreen}
+      options={{ 
+        title: 'Feedback',
+        headerStyle: headerStyle,
+        headerTintColor: headerTintColor,
+        headerTitleStyle: headerTitleStyle 
+      }} />
   </Stack.Navigator>
  )
 }
