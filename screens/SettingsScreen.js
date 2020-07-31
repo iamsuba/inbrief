@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Share } from 'react-native';
 import { ScrollView, TouchableOpacity, Switch } from 'react-native-gesture-handler';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
@@ -66,6 +66,16 @@ export default function SettingsScreen({ navigation }) {
       });
   }
 
+  const sendInvite = async() => {
+    try {
+      const result = await Share.share({
+          message: 'Crypto news summarized to less than 60 words and delivered to you daily.\n\nGet the app at http://www.InBrief.app'
+      });
+    } catch(e) {
+        console.log(e)
+    }
+  }
+
   return (
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
       <ImageBackground
@@ -84,6 +94,7 @@ export default function SettingsScreen({ navigation }) {
                     ios_backgroundColor={Theme.backgroundColor}
                     onValueChange={(value) => toggleNotifications(value)}
                     value={isNotificationsEnabled}
+                    style={[{marginBottom: 5}]}
                   />
                 </View>
                 <TouchableOpacity 
@@ -92,7 +103,7 @@ export default function SettingsScreen({ navigation }) {
                   <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>About</Text>
                   <Ionicons
                     name='ios-arrow-forward'
-                    size={28}
+                    size={24}
                     style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
                     color={Theme.foregroundColor}
                   />
@@ -103,7 +114,18 @@ export default function SettingsScreen({ navigation }) {
                   <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Feedback</Text>
                   <Ionicons
                     name='ios-arrow-forward'
-                    size={28}
+                    size={24}
+                    style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
+                    color={Theme.foregroundColor}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity 
+                  style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}
+                  onPress={() => sendInvite()}>
+                  <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Invite</Text>
+                  <Ionicons
+                    name='ios-arrow-forward'
+                    size={24}
                     style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
                     color={Theme.foregroundColor}
                   />
@@ -114,7 +136,7 @@ export default function SettingsScreen({ navigation }) {
                   <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Privacy Policy</Text>
                   <Ionicons
                     name='ios-link'
-                    size={28}
+                    size={24}
                     style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
                     color={Theme.tintColor}
                   />
@@ -125,7 +147,7 @@ export default function SettingsScreen({ navigation }) {
                   <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Terms of Use</Text>
                   <Ionicons
                     name='ios-link'
-                    size={28}
+                    size={24}
                     style={{ textAlign: 'center', marginTop: 4, marginRight: 15 }}
                     color={Theme.tintColor}
                   />
@@ -165,7 +187,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   },
   settingsListContainer: {
-    padding: 20,
+    padding: 25,
     borderRadius: 10,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.1,
@@ -175,13 +197,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   settingsItemContainer: {
-    paddingVertical: 20,
+    paddingVertical: 15,
     borderBottomWidth: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   settingName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '300'
   }
 });
