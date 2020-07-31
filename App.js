@@ -8,8 +8,6 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import FeedScreen from './screens/FeedScreen'
 import LinkingConfiguration from './navigation/LinkingConfiguration';
-import BookmarkDetailedScreen from './screens/BookmarkDetailedScreen';
-import AboutScreen from './screens/AboutScreen'
 
 const Stack = createStackNavigator();
 

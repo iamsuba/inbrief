@@ -15,9 +15,10 @@ import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
 import NewsCard from '../components/NewsCard'
 import PrimaryButton from '../components/PrimaryButton';
+import AsyncStorage from '@react-native-community/async-storage';
+import { _ } from 'lodash'
 
 import * as firebase from 'firebase'
-import AsyncStorage from '@react-native-community/async-storage';
 
 const firebaseconfig = {
     apiKey: "AIzaSyCbu1l26CLzY4FsThPOyr_XOMQGiIvzVyY",
@@ -36,6 +37,7 @@ const firebaseconfig = {
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
+let readNewsList = []
 
 export default function FeedScreen(props) {
 
@@ -56,7 +58,7 @@ export default function FeedScreen(props) {
 
     const updateVirgin = async() => {
         await AsyncStorage.setItem('@virgin', 'true')
-        setModalVisible(false)
+        setModalVisible(false);
     }
     //Guidance Popup ends here
 
@@ -64,22 +66,48 @@ export default function FeedScreen(props) {
     const [NewsFeed, setNewsFeed] = React.useState([])
     const [LoadingComplete, setLoadingComplete] = React.useState(false)
 
+    const checkIfRead = (newsId) => {
+        const matchingList = _.filter(readNewsList, function(o) { return o == newsId })
+        if(matchingList.length > 0) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     const prepareNewsFeed = (newsFeed) => {
-        newsFeed.map(item => {
+
+        return newsFeed.map((item, key) => {
+            if(checkIfRead(item.id)) {
+                item.read = true
+            }
             item.imageFile = {uri: item.image}
+            return item
         })
-        return newsFeed
+    }
+
+    const filterNewsFeed = (newsFeed) => {
+        return _.filter(newsFeed, function(o) { return o.read === undefined })
     }
 
     React.useEffect(updateNewsFeed = () => {
+        let mounted = true
         const LatestNewsRef = firebase.database().ref('LatestNews/')
         LatestNewsRef.once('value', async(snapshot) => {
-            const newsFeedWithImages = await prepareNewsFeed(snapshot.val().reverse())
-            setNewsFeed(newsFeedWithImages)
-            setLoadingComplete(true)
-            checkVirgin()
-            registerForPushNotifications()
+            if(mounted) {
+                const readNewsStr = await AsyncStorage.getItem('@ReadNews')
+                readNewsList = (JSON.parse(readNewsStr))
+                const newsFeedWithImages = await prepareNewsFeed(snapshot.val().reverse())
+                setNewsFeed(filterNewsFeed(newsFeedWithImages))
+                setLoadingComplete(true)
+                checkVirgin()
+                registerForPushNotifications()
+            }
         });
+
+        return () => {
+            mounted = false
+        }
     }, [])
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -129,8 +157,15 @@ export default function FeedScreen(props) {
                     toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
                     duration: 400,
                     useNativeDriver: false
-                }).start(() => {
+                }).start(async() => {
 
+                    if(!checkIfRead(NewsFeed[currentIndex].id)) {
+                        readNewsList.push(NewsFeed[currentIndex].id)
+                        if(readNewsList.length > 50) {
+                            readNewsList.shift()
+                        }
+                        await AsyncStorage.setItem('@ReadNews', JSON.stringify(readNewsList))
+                    } 
                     setCurrentIndex(currentIndex + 1)
                     position.setValue({ x: 0, y: 0 })
 
@@ -153,7 +188,11 @@ export default function FeedScreen(props) {
         }
     })
 
-    const refreshFeed = () => {
+    const refreshFeed = async(resetRead) => {
+        if(resetRead) {
+            readNewsList = []
+            await AsyncStorage.setItem('@ReadNews', JSON.stringify(readNewsList))
+        }
         position.setValue({ x: 0, y: 0 })
         swipedCardPosition.setValue({ x: 0, y: -SCREEN_HEIGHT })
         setCurrentIndex(0)
@@ -174,37 +213,36 @@ export default function FeedScreen(props) {
             )
         } 
         else {
+            if (currentIndex == NewsFeed.length || NewsFeed.length == 0) {
+                return(
+                    <View key={'endcard'} style={[styles.endCard, {backgroundColor: Theme.backgroundColor}]}>
+                        <Image
+                            style={styles.endCardImage}
+                            source={require('./../assets/images/endcard.png')}/>
+                        <Text allowFontScaling={false} style={[styles.endCardMessage, {color: Theme.foregroundColor}]}>You have caught up with all stories.</Text>
+                        <PrimaryButton buttonText='Refresh Feed' onPress={() => refreshFeed(true)} />
+                    </View>
+                )
+            }
+
             return NewsFeed.map((item, i) => {
     
                 if (i == currentIndex - 1) {
     
-                    if (currentIndex == NewsFeed.length) {
-                        return(
-                            <View key={'endcard'} style={[styles.endCard, {backgroundColor: Theme.backgroundColor}]}>
-                                <Image
-                                    style={styles.endCardImage}
-                                    source={require('./../assets/images/endcard.png')}/>
-                                <Text allowFontScaling={false} style={[styles.endCardMessage, {color: Theme.foregroundColor}]}>You have caught up with all stories.</Text>
-                                <PrimaryButton buttonText='Refresh Feed' onPress={() => refreshFeed()} />
-                            </View>
-                        )
-                    }
-                    else {
-                        return (
-                            <Animated.View key={item.id} style={swipedCardPosition.getLayout()}
-                                {...panResponder.panHandlers}
-                            >
-                                <NewsCard 
-                                    newsItem={item}
-                                    onPress={() => props.navigation.navigate('Root', {
-                                        newsItem: item
-                                    })}
-                                    refreshFeed={() => refreshFeed()}
-                                    feed={true}
-                                />
-                            </Animated.View>
-                        )
-                    }
+                    return (
+                        <Animated.View key={item.id} style={swipedCardPosition.getLayout()}
+                            {...panResponder.panHandlers}
+                        >
+                            <NewsCard 
+                                newsItem={item}
+                                onPress={() => props.navigation.navigate('Root', {
+                                    newsItem: item
+                                })}
+                                refreshFeed={() => refreshFeed()}
+                                feed={true}
+                            />
+                        </Animated.View>
+                    )
                 }
                 else if (i < currentIndex) {
                     return null

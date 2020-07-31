@@ -31,10 +31,15 @@ export default function HomeScreen(props) {
   const [HighlightsFeed, setHighlightsFeed] = React.useState([])
 
   React.useEffect(updateNewsFeed = () => {
+    let mounted = true
     firebase.database().ref('Highlights/').once('value', async(snapshot) => {
           const highlightsWithImages = await prepareHighlights(snapshot.val().reverse())
-          setHighlightsFeed(highlightsWithImages)
+          if(mounted) { setHighlightsFeed(highlightsWithImages) }
       });
+
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const prepareHighlights = (highlights) => {
@@ -73,7 +78,7 @@ export default function HomeScreen(props) {
           <Image style={styles.logo} source={require('./../assets/images/homelogo.png')}/>
           <TouchableOpacity 
             style={[styles.wideTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow}]}
-            onPress={() => props.navigation.navigate('Feed')}>
+            onPress={() => props.navigation.push('Feed')}>
             <Text style={[styles.tileTitle, {color: Theme.icon}]}>Go to News Feed</Text>
             <Ionicons
               name='md-arrow-forward'
