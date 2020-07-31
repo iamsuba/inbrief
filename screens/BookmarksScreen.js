@@ -46,7 +46,7 @@ export default function BookmarksScreen(props) {
       return(
         Bookmarks.map((newsItem) => 
           <TouchableOpacity
-            style={[styles.newsItemContainer, {backgroundColor: Theme.backgroundColor, shadowColor: Theme.shadow}]} 
+            style={[styles.newsItemContainer, {backgroundColor: Theme.tileColor, shadowColor: Theme.shadow}]} 
             key={newsItem.id} 
             onPress={() => props.navigation.navigate('BookmarkDetailed', {
               newsItem: newsItem

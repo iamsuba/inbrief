@@ -35,7 +35,7 @@ export default function NewsCard(props) {
 
   const colorScheme = useColorScheme();
   const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
-  const NavIcon = (props.bookmark) ? 'md-arrow-round-back' : 'md-home'
+  const NavIcon = (props.feed) ? 'md-home' : 'md-arrow-round-back'
   const newsItem =  props.newsItem
   const SourceLogo = SourceLogos[Theme.theme][newsItem.source]
 
@@ -107,6 +107,25 @@ export default function NewsCard(props) {
     props.refreshFeed();
   }
 
+  const renderRefreshButton = () => {
+    if(props.feed) {
+      return (
+        <TouchableOpacity 
+          style={BookmarkStatus ? [styles.secondaryMenuItemSelected, {backgroundColor: Theme.tintColor}] : [styles.secondaryMenuItem, {backgroundColor: Theme.darkGrey}]}
+          onPress={() => refreshFeed()}>
+          <Ionicons
+            name={'md-refresh'}
+            size={24}
+            style={{ textAlign: 'center', marginTop: 6 }}
+            color={Theme.icon}
+          />
+        </TouchableOpacity>
+      )
+    } else {
+      return
+    }
+  }
+
 const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sourceImage} source={SourceLogo} /> : <Text allowFontScaling={false} style={[styles.sourceName, {color: Theme.foregroundColor}]}>{newsItem.source}</Text>
 
   return (
@@ -127,16 +146,7 @@ const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sour
                 />
               </TouchableOpacity>
               <View style={styles.secondaryMenuItemsContainer}>
-              <TouchableOpacity 
-                  style={BookmarkStatus ? [styles.secondaryMenuItemSelected, {backgroundColor: Theme.tintColor}] : [styles.secondaryMenuItem, {backgroundColor: Theme.darkGrey}]}
-                  onPress={() => refreshFeed()}>
-                  <Ionicons
-                    name={'md-refresh'}
-                    size={24}
-                    style={{ textAlign: 'center', marginTop: 6 }}
-                    color={Theme.icon}
-                  />
-                </TouchableOpacity>
+                {renderRefreshButton()}
                 <TouchableOpacity 
                   style={BookmarkStatus ? [styles.secondaryMenuItemSelected, {backgroundColor: Theme.tintColor}] : [styles.secondaryMenuItem, {backgroundColor: Theme.darkGrey}]}
                   onPress={() => (BookmarkStatus ? removeBookmark() : addBookmark())}>

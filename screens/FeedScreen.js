@@ -200,6 +200,7 @@ export default function FeedScreen(props) {
                                         newsItem: item
                                     })}
                                     refreshFeed={() => refreshFeed()}
+                                    feed={true}
                                 />
                             </Animated.View>
                         )
@@ -255,6 +256,7 @@ export default function FeedScreen(props) {
                                     newsItem: item
                                 })}
                                 refreshFeed={() => refreshFeed()}
+                                feed={true}
                             />
                         </Animated.View>
                     )
@@ -269,6 +271,7 @@ export default function FeedScreen(props) {
                                     newsItem: item
                                 })}
                                 refreshFeed={() => refreshFeed()}
+                                feed={true}
                             />
                         </Animated.View>
                     )

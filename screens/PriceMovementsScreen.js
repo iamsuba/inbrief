@@ -59,7 +59,7 @@ export default function PriceMovementsScreen({ navigation }) {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView style={[styles.container, {backgroundColor: Theme.backgroundColor}]} contentContainerStyle={[styles.contentContainer, {backgroundColor: Theme.backgroundColor}]}>
       {renderPriceMovements()}
     </ScrollView>
   );

@@ -20,15 +20,43 @@ import AboutScreen from '../screens/AboutScreen'
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
+const headerStyle =  {
+  backgroundColor: Colors.tintColor,
+  shadowColor: 'transparent'
+}
+
+const headerTintColor = '#fff'
+
+const headerTitleStyle = {
+  fontSize: 22,
+  fontWeight: '400'
+}
+
 const HomeStack = () => {
   const Stack = createStackNavigator();
   return (
    <Stack.Navigator initialRouteName='HomeScreen'>
      <Stack.Screen name="Home" component={HomeScreen} options={{header: () => null}}/>
      <Stack.Screen name="HighlightsDetailed" component={HighlightsDetailedScreen} options={{header: () => null}}/>
-     <Stack.Screen name="PriceMovements" component={PriceMovementsScreen} options={{ title: 'Price Movements' }}/>
+     <Stack.Screen 
+      name="PriceMovements" 
+      component={PriceMovementsScreen} 
+      options={{ 
+        title: 'Price Movements', 
+        headerStyle: headerStyle,
+        headerTintColor: headerTintColor,
+        headerTitleStyle: headerTitleStyle 
+      }}/>
      <Stack.Screen name="PriceMovementsDetailed" component={PriceMovementsDetailedScreen} options={{header: () => null}}/>
-     <Stack.Screen name="OfficialUpdates" component={OfficialUpdatesScreen} options={{ title: 'Official Updates' }}/>
+     <Stack.Screen 
+      name="OfficialUpdates" 
+      component={OfficialUpdatesScreen} 
+      options={{ 
+        title: 'Official Updates',
+        headerStyle: headerStyle,
+        headerTintColor: headerTintColor,
+        headerTitleStyle: headerTitleStyle 
+      }}/>
      <Stack.Screen name="OfficialUpdatesDetailed" component={OfficialUpdatesDetailedScreen} options={{header: () => null}}/>
    </Stack.Navigator>
   )
@@ -78,7 +106,16 @@ export default function BottomTabNavigator({ navigation, route }) {
       ? route.state.routes[route.state.index].name
       : '';
   
-    if (routeName == 'HighlightsDetailed' || routeName == 'BookmarkDetailed' || routeName == 'About') {
+    if (
+        routeName == 'HighlightsDetailed' || 
+        routeName == 'BookmarkDetailed' || 
+        routeName == 'About' ||
+        routeName == 'PriceMovements' ||
+        routeName == 'PriceMovementsDetailed' ||
+        routeName == 'OfficialUpdates' ||
+        routeName == 'OfficialUpdatesDetailed'
+      ) 
+    {
       return false;
     }
   

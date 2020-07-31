@@ -98,7 +98,7 @@ export default function HomeScreen(props) {
           </View>
         </ImageBackground>
         <View style={styles.highlightsContainer}>
-          <Text style={styles.highlightsTitle}>Highlights</Text>
+          <Text style={[styles.highlightsTitle, {color: Theme.foregroundColor}]}>Highlights</Text>
           {renderHighlights()}
         </View>
       </ScrollView>

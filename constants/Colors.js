@@ -1,6 +1,7 @@
 const tintColor = '#1654F0';
 
 export default {
+  tintColor: tintColor,
   "light": {
     theme: 'light',
     tintColor: tintColor,
@@ -24,11 +25,11 @@ export default {
     tintColor: tintColor,
     tabIconDefault: '#555',
     tabIconSelected: tintColor,
-    tabBar: '#222',
+    tabBar: '#1c1c1c',
     shadow: '#000',
     icon: '#fff',
     backgroundColor: '#2c2c2c',
-    tileColor: '#222222',
+    tileColor: '#222',
     border: '#444',
     darkGrey: '#222',
     buttonText: '#fff',

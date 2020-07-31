@@ -15,7 +15,7 @@ export default function BookmarkDetailedScreen(props) {
             newsItem: newsItem,
             reloadBookmarks: true
         })}
-        bookmark={true}
+        feed={false}
     />
     </View>
   );

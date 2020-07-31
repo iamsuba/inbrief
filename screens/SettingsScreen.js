@@ -77,7 +77,7 @@ export default function SettingsScreen({ navigation }) {
           <ScrollView 
             style={styles.container} 
             contentContainerStyle={styles.contentContainer}>
-              <View style={[styles.settingsListContainer, {backgroundColor: Theme.backgroundColor}]}>
+              <View style={[styles.settingsListContainer, {backgroundColor: Theme.tileColor}]}>
                 <View style={[styles.settingsItemContainer, {borderBottomColor: Theme.border}]}>
                   <Text allowFontScaling={false} style={[styles.settingName, {color: Theme.foregroundColor}]}>Notifications</Text>
                   <Switch

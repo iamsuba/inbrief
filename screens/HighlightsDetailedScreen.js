@@ -12,7 +12,7 @@ export default function HighlightsDetailedScreen(props) {
       <NewsCard 
         newsItem={newsItem}
         onPress={() => props.navigation.goBack()}
-        bookmark={true}
+        feed={false}
     />
     </View>
   );
