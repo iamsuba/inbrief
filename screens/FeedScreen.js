@@ -96,7 +96,9 @@ export default function FeedScreen(props) {
         LatestNewsRef.once('value', async(snapshot) => {
             if(mounted) {
                 const readNewsStr = await AsyncStorage.getItem('@ReadNews')
-                readNewsList = (JSON.parse(readNewsStr))
+                if(readNewsStr !== null) {
+                    readNewsList = (JSON.parse(readNewsStr))
+                }
                 const newsFeedWithImages = await prepareNewsFeed(snapshot.val().reverse())
                 setNewsFeed(filterNewsFeed(newsFeedWithImages))
                 setLoadingComplete(true)

@@ -13,7 +13,6 @@ const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 
 import * as firebase from 'firebase'
-import getLocalTime from '../utilities/GetLocalTime';
 
 const firebaseconfig = {
     apiKey: "AIzaSyCbu1l26CLzY4FsThPOyr_XOMQGiIvzVyY",
@@ -111,7 +110,7 @@ export default function NewsCard(props) {
     if(props.feed) {
       return (
         <TouchableOpacity 
-          style={BookmarkStatus ? [styles.secondaryMenuItemSelected, {backgroundColor: Theme.tintColor}] : [styles.secondaryMenuItem, {backgroundColor: Theme.darkGrey}]}
+          style={[styles.secondaryMenuItem, {backgroundColor: Theme.darkGrey}]}
           onPress={() => refreshFeed()}>
           <Ionicons
             name={'md-refresh'}
