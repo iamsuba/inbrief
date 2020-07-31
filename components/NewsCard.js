@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '55%',
+    height: Layout.feedImageHeight,
     padding: 20,
     paddingTop: 50
   },
@@ -248,8 +248,7 @@ const styles = StyleSheet.create({
   newsContainer: {
     flex: 3,
     flexDirection: 'column',
-    justifyContent: 'flex-end',
-    maxWidth: 500,
+    justifyContent: 'flex-end'
   },
   contentContainer: {
     shadowOffset: { width: 0, height: 0 },
@@ -262,7 +261,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   newsTimestamp: {
-    fontSize: 12,
+    fontSize: Layout.newsTimestamp,
     fontWeight: '100',
     marginTop: 5
   },
