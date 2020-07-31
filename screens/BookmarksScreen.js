@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: Layout.width,
-    flex: 1
+    flex: 1,
+    height: 250
   },
   scrollContainer: {
     flex: 1

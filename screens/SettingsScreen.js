@@ -70,8 +70,6 @@ export default function SettingsScreen({ navigation }) {
     <View style={[styles.container, {backgroundColor: Theme.backgroundColor}]}>
       <ImageBackground
         style={styles.imageContainer}
-        resizeMethod='resize'
-        resizeMode='cover'
         source={require('./../assets/images/settingsbg.png')}>
           <Text allowFontScaling={false} style={[styles.pageTitle, {color: Theme.icon}]}>Settings</Text>
           <ScrollView 
@@ -149,7 +147,8 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: Layout.width,
-    flex: 1
+    flex: 1,
+    height: 250
   },
   scrollContainer: {
     flex: 1

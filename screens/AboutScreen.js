@@ -12,7 +12,7 @@ export default function AboutScreen({ navigation }) {
   const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView style={[styles.container, {backgroundColor: Theme.backgroundColor}]} contentContainerStyle={[styles.contentContainer, {backgroundColor: Theme.backgroundColor}]}>
       <Image 
         style={styles.logo}
         source={require('./../assets/images/logo.png')}

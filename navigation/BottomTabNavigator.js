@@ -36,7 +36,7 @@ const headerTitleStyle = {
 const HomeStack = () => {
   const Stack = createStackNavigator();
   return (
-   <Stack.Navigator initialRouteName='HomeScreen'>
+   <Stack.Navigator initialRouteName='HomeScreen' headerMode='screen'>
      <Stack.Screen name="Home" component={HomeScreen} options={{header: () => null}}/>
      <Stack.Screen name="HighlightsDetailed" component={HighlightsDetailedScreen} options={{header: () => null}}/>
      <Stack.Screen 
@@ -46,7 +46,8 @@ const HomeStack = () => {
         title: 'Price Movements', 
         headerStyle: headerStyle,
         headerTintColor: headerTintColor,
-        headerTitleStyle: headerTitleStyle 
+        headerTitleStyle: headerTitleStyle,
+        headerBackTitleVisible: false
       }}/>
      <Stack.Screen name="PriceMovementsDetailed" component={PriceMovementsDetailedScreen} options={{header: () => null}}/>
      <Stack.Screen 
@@ -56,7 +57,8 @@ const HomeStack = () => {
         title: 'Official Updates',
         headerStyle: headerStyle,
         headerTintColor: headerTintColor,
-        headerTitleStyle: headerTitleStyle 
+        headerTitleStyle: headerTitleStyle,
+        headerBackTitleVisible: false
       }}/>
      <Stack.Screen name="OfficialUpdatesDetailed" component={OfficialUpdatesDetailedScreen} options={{header: () => null}}/>
    </Stack.Navigator>
@@ -66,7 +68,7 @@ const HomeStack = () => {
 const CalendarStack = () => {
  const Stack = createStackNavigator();
  return (
-  <Stack.Navigator initialRouteName='CalendarScreen'>
+  <Stack.Navigator initialRouteName='CalendarScreen' headerMode='screen'>
     <Stack.Screen name="Calendar" component={CalendarScreen} options={{header: () => null}}/>
   </Stack.Navigator>
  )
@@ -75,7 +77,7 @@ const CalendarStack = () => {
 const BookmarksStack = () => {
  const Stack = createStackNavigator();
  return (
-  <Stack.Navigator initialRouteName='BookmarksScreen'>
+  <Stack.Navigator initialRouteName='BookmarksScreen' headerMode='screen'>
     <Stack.Screen name="Bookmarks" component={BookmarksScreen} options={{header: () => null}}/>
     <Stack.Screen name="BookmarkDetailed" component={BookmarkDetailedScreen} options={{header: () => null}}/>
   </Stack.Navigator>
@@ -85,7 +87,7 @@ const BookmarksStack = () => {
 const SettingsStack = () => {
  const Stack = createStackNavigator();
  return (
-  <Stack.Navigator initialRouteName='SettingsScreen'>
+  <Stack.Navigator initialRouteName='SettingsScreen' headerMode='screen'>
     <Stack.Screen name="Settings" component={SettingsScreen} options={{header: () => null}}/>
     <Stack.Screen name="About"
       component={AboutScreen}
@@ -93,7 +95,8 @@ const SettingsStack = () => {
         title: 'About',
         headerStyle: headerStyle,
         headerTintColor: headerTintColor,
-        headerTitleStyle: headerTitleStyle 
+        headerTitleStyle: headerTitleStyle,
+        headerBackTitleVisible: false
       }} />
     <Stack.Screen
       name="Feedback"
@@ -102,7 +105,8 @@ const SettingsStack = () => {
         title: 'Feedback',
         headerStyle: headerStyle,
         headerTintColor: headerTintColor,
-        headerTitleStyle: headerTitleStyle 
+        headerTitleStyle: headerTitleStyle,
+        headerBackTitleVisible: false
       }} />
   </Stack.Navigator>
  )
@@ -127,6 +131,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         routeName == 'HighlightsDetailed' || 
         routeName == 'BookmarkDetailed' || 
         routeName == 'About' ||
+        routeName == 'Feedback' ||
         routeName == 'PriceMovements' ||
         routeName == 'PriceMovementsDetailed' ||
         routeName == 'OfficialUpdates' ||
@@ -147,7 +152,10 @@ export default function BottomTabNavigator({ navigation, route }) {
           showLabel: false,
           style: {
             backgroundColor: Theme.tabBar,
-            borderTopColor: 'transparent'
+            borderTopColor: 'transparent',
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 0.1,
+            shadowRadius: 20,
           }
         }
       }>
