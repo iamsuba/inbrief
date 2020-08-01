@@ -256,6 +256,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 20,
     padding: 25,
+    maxWidth: 600
   },
   newsTitle: {
     fontSize: Layout.fontSize.newsTitle,
