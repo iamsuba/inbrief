@@ -45,7 +45,6 @@ export default function FeedScreen(props) {
 
     //Theme setup beings here
     const colorScheme = useColorScheme();
-    console.log('System Theme', useColorScheme())
     const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
     //Theme setup ends here
 

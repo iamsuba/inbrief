@@ -248,7 +248,8 @@ const styles = StyleSheet.create({
   newsContainer: {
     flex: 3,
     flexDirection: 'column',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    maxWidth: 700
   },
   contentContainer: {
     shadowOffset: { width: 0, height: 0 },

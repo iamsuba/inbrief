@@ -17,13 +17,13 @@ const fontSizeMobile = {
 
 const fontSizeTablet = {
     newsTitle: 40,
-    newsBody: 24,
-    newsBodyLineHeight: 36,
+    newsBody: 28,
+    newsBodyLineHeight: 40,
     newsTimeStamp: 16
 }
 
 const feedImageHeightMobile = isSmallDevice ? '55%' : '60%'
-const feedImageHeightTablet = '65%'
+const feedImageHeightTablet = '60%'
 
 export default {
   window: {
