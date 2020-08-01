@@ -248,15 +248,13 @@ const styles = StyleSheet.create({
   newsContainer: {
     flex: 3,
     flexDirection: 'column',
-    justifyContent: 'flex-end',
-    maxWidth: 700
+    justifyContent: 'flex-end'
   },
   contentContainer: {
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.05,
     shadowRadius: 20,
-    padding: 25,
-    maxWidth: 600
+    padding: 25
   },
   newsTitle: {
     fontSize: Layout.fontSize.newsTitle,
