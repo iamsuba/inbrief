@@ -11,13 +11,12 @@ import {
 
 import { Notifications } from 'expo'
 import * as Permissions from 'expo-permissions';
-//import { useColorScheme } from 'react-native-appearance';
+import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
 import NewsCard from '../components/NewsCard'
 import PrimaryButton from '../components/PrimaryButton';
 import AsyncStorage from '@react-native-community/async-storage';
 import { _ } from 'lodash'
-import useColorScheme from '../hooks/useColorScheme';
 import * as Device from 'expo-device';
 
 import * as firebase from 'firebase'
