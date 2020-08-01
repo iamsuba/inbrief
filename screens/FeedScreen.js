@@ -7,7 +7,8 @@ import {
   Dimensions,
   Animated,
   PanResponder,
-  Modal } from 'react-native';
+  Modal,
+  Platform } from 'react-native';
 
 import { Notifications } from 'expo'
 import * as Permissions from 'expo-permissions';
@@ -349,6 +350,15 @@ export default function FeedScreen(props) {
                 osName: Device.osName
             }
         }
+
+        if (Platform.OS === 'android') {
+            Notifications.createChannelAndroidAsync('default', {
+              name: 'default',
+              sound: true,
+              priority: 'max',
+              vibrate: [0, 250, 250, 250],
+            });
+          }
 
         firebase.auth().signInAnonymously().catch(function(error) {});
         firebase.auth().onAuthStateChanged(function(user) {
