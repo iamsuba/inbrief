@@ -23,7 +23,7 @@ const fontSizeTablet = {
 }
 
 const feedImageHeightMobile = isSmallDevice ? '55%' : '60%'
-const feedImageHeightTablet = '60%'
+const feedImageHeightTablet = '65%'
 
 export default {
   window: {
