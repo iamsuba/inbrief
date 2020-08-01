@@ -6,7 +6,7 @@ const height = Dimensions.get('window').height;
 //console.log(width, height, PixelRatio.getFontScale())
 
 const isSmallDevice = width < 400 ? true : false
-const isTablet = width > 800 ? true : false
+const isTablet = width > 700 ? true : false
 
 const fontSizeMobile = {
     newsTitle: isSmallDevice ? 18 : 22,
