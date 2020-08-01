@@ -3,9 +3,6 @@ import { Dimensions, PixelRatio } from 'react-native';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-//console.log(width, height, PixelRatio.getFontScale())
-
-console.log(height, width)
 
 const isSmallMobile = width < 400 ? true : false
 const isTablet = width > 700 ? true : false

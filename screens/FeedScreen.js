@@ -10,7 +10,8 @@ import {
   Modal,
   Platform } from 'react-native';
 
-import { Notifications } from 'expo'
+//import Notifications from 'expo'
+import * as Notifications from 'expo-notifications'
 import * as Permissions from 'expo-permissions';
 import { useColorScheme } from 'react-native-appearance';
 import Colors from './../constants/Colors'
@@ -41,6 +42,16 @@ const SCREEN_HEIGHT = Dimensions.get("window").height
 const SCREEN_WIDTH = Dimensions.get("window").width
 let readNewsList = []
 
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+
+const notifiedNewsItemId = '1596304279495'
+
 export default function FeedScreen(props) {
 
     //Theme setup beings here
@@ -68,6 +79,11 @@ export default function FeedScreen(props) {
     const [NewsFeed, setNewsFeed] = React.useState([])
     const [LoadingComplete, setLoadingComplete] = React.useState(false)
 
+    const [expoPushToken, setExpoPushToken] = React.useState('');
+    const [Notification, setNotification] = React.useState(false);
+    const notificationListener = React.useRef();
+    const responseListener = React.useRef();
+
     const checkIfRead = (newsId) => {
         const matchingList = _.filter(readNewsList, function(o) { return o == newsId })
         if(matchingList.length > 0) {
@@ -78,39 +94,75 @@ export default function FeedScreen(props) {
     }
 
     const prepareNewsFeed = (newsFeed) => {
-
-        return newsFeed.map((item, key) => {
-            if(checkIfRead(item.id)) {
-                item.read = true
-            }
+        return newsFeed.map((item) => {
             item.imageFile = {uri: item.image}
             return item
         })
     }
 
     const filterNewsFeed = (newsFeed) => {
-        return _.filter(newsFeed, function(o) { return o.read === undefined })
+        return _.filter(newsFeed, function(o) { return o.read == false })
+    }
+
+    const markReadNewsFeed = (newsFeed) => {
+        return newsFeed.map((item, key) => {
+            item.read = checkIfRead(item.id) ? true : false
+            return item
+        })
+    }
+
+    const updateNotificationToFeed = (newsFeed) => {
+        if(!Notification) {
+            //console.log('no notification')
+            return newsFeed
+        } else {
+            const newsFeedWithoutNotificationItem = _.filter(newsFeed, (o) => { return o.id !== Notification.id })
+            newsFeedWithoutNotificationItem.unshift(Notification)
+            //console.log(Notification)
+            setNotification(false)
+            return newsFeedWithoutNotificationItem
+        }
     }
 
     React.useEffect(updateNewsFeed = () => {
+
         let mounted = true
-        const LatestNewsRef = firebase.database().ref('LatestNews/')
-        LatestNewsRef.once('value', async(snapshot) => {
-            if(mounted) {
+
+        if(mounted) {
+            const LatestNewsRef = firebase.database().ref('LatestNews/')
+
+            LatestNewsRef.once('value', async(snapshot) => {
                 const readNewsStr = await AsyncStorage.getItem('@ReadNews')
                 if(readNewsStr !== null) {
                     readNewsList = (JSON.parse(readNewsStr))
                 }
-                const newsFeedWithImages = await prepareNewsFeed(snapshot.val().reverse())
-                setNewsFeed(filterNewsFeed(newsFeedWithImages))
+                const newsFeedMarkRead = await markReadNewsFeed(snapshot.val().reverse())
+                const newsFeedWithReadFilter = await filterNewsFeed(newsFeedMarkRead)
+                const newsFeedWithNotification = await updateNotificationToFeed(newsFeedWithReadFilter)
+                const newsFeedWithImages = await prepareNewsFeed(newsFeedWithNotification)
+                setNewsFeed(newsFeedWithImages)
                 setLoadingComplete(true)
+                registerForPushNotifications().then(token => setExpoPushToken(token))
                 checkVirgin()
-                registerForPushNotifications()
-            }
-        });
+                
+            });
+        }
 
         return () => {
             mounted = false
+        }
+    }, [])
+
+    React.useEffect(getNotificationItem = () => {
+        
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            setLoadingComplete(false)
+            setNotification(response.notification.request.content.data.body.newsItem)
+            updateNewsFeed()
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(responseListener);
         }
     }, [])
 
@@ -326,6 +378,7 @@ export default function FeedScreen(props) {
     //News feed preparation begins here
 
     //push notification setup begins here
+
     registerForPushNotifications = async() => {
         const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
         let finalStatus = existingStatus;
@@ -338,6 +391,7 @@ export default function FeedScreen(props) {
             return;
         }
         const token = await Notifications.getExpoPushTokenAsync();
+        //console.log('token', token )
 
         const userData = {
             expoToken: token,
@@ -352,10 +406,10 @@ export default function FeedScreen(props) {
         }
 
         if (Platform.OS === 'android') {
-            Notifications.createChannelAndroidAsync('default', {
+            Notifications.setNotificationChannelAsync('default', {
               name: 'default',
               sound: true,
-              priority: 'max',
+              importance: Notifications.AndroidImportance.MAX,
               vibrate: [0, 250, 250, 250],
             });
           }
@@ -371,6 +425,8 @@ export default function FeedScreen(props) {
               });
             }
           });
+
+        return token
 
     }
     //push notification setup ends here
