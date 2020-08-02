@@ -78,7 +78,7 @@ const BookmarksStack = () => {
  const Stack = createStackNavigator();
  return (
   <Stack.Navigator initialRouteName='BookmarksScreen' headerMode='screen'>
-    <Stack.Screen name="Bookmarks" component={BookmarksScreen} options={{header: () => null}}/>
+    <Stack.Screen name="Bookmarks" component={BookmarksScreen} options={{header: () => null}} initialParams={{ reloadBookmarks: true }}/>
     <Stack.Screen name="BookmarkDetailed" component={BookmarkDetailedScreen} options={{header: () => null}}/>
   </Stack.Navigator>
  )

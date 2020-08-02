@@ -20,21 +20,17 @@ export default function BookmarksScreen(props) {
   const [Bookmarks, setBookmarks] = React.useState([])
 
   const getBookmarks = async() => {
-    const BookmarksArr = []
     const bookmarks = await AsyncStorage.getItem('@Bookmarks')
-    if(bookmarks !== null) {
-      Object.entries(JSON.parse(bookmarks)).map(([key, value]) => {
-        BookmarksArr.push(value)
-      });
-    }
-    return BookmarksArr
+    return bookmarks
   }
 
-  React.useEffect(() => {  
+  React.useEffect(() => {
     getBookmarks().then(response => {
-      setBookmarks(response)
+      if(response !== null) {
+        setBookmarks(Object.values(JSON.parse(response)))
+      }
     })
-  }, [props.route.params])
+  })
 
   const getLocalTimestamp = (timestamp) => {
     const Timestamp = new Date(timestamp)
