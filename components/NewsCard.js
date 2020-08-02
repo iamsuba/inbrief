@@ -139,8 +139,8 @@ const SourceLogoContainer = SourceLogo !== undefined ? <Image style={styles.sour
                 onPress={() => props.onPress()}>
                 <Ionicons
                   name={NavIcon}
-                  size={30}
-                  style={{ textAlign: 'center', marginTop: 3 }}
+                  size={24}
+                  style={{ textAlign: 'center', marginTop: 6 }}
                   color={Theme.icon}
                 />
               </TouchableOpacity>
@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.1,
     shadowRadius: 20,
+    borderRadius: 8
   },
   secondaryMenuItem: {
     height: 36,

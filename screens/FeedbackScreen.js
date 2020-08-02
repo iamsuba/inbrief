@@ -30,12 +30,14 @@ export default function FeedbackScreen({ navigation }) {
   const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
 
   const [FeedbackText, setFeedbackText] = React.useState('')
+  const [EmailAddress, setEmailAddress] = React.useState('')
 
   const submitFeedback = () => {
     if(FeedbackText.length > 0) {
       const timestamp = new Date().getTime()
       const feedbackData = {
         feedback: FeedbackText.toString(),
+        email: EmailAddress,
         device: {
           brand: Device.brand,
           manufacturer: Device.manufacturer,
@@ -67,6 +69,16 @@ export default function FeedbackScreen({ navigation }) {
           value={FeedbackText}
           placeholder="enter your feedback here"
           placeholderTextColor={Theme.grey} />
+      </View>
+      <View style={[styles.textInputContainer, {backgroundColor: Theme.tileColor}]}>
+        <TextInput 
+          style={[styles.textInput, {color: Theme.foregroundColor}]}
+          style={styles.emailFied}
+          placeholder="email (optional)"
+          placeholderTextColor={Theme.grey}
+          value={EmailAddress}
+          onChangeText={(value) => setEmailAddress(value)}
+          />
       </View>
       <View style={styles.buttonContainer}>
         <PrimaryButton buttonText='Submit' onPress={() => submitFeedback()} />
@@ -106,9 +118,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: '100%',
-    height: 200,
+    height: 100,
     fontSize: 22,
-    fontWeight: '300'
+    fontWeight: '300',
+    marginBottom: 5
   },
   pageTitle: {
     fontSize: 18,
