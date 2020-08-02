@@ -25,7 +25,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseconfig)
 }
 
-export default function CalendarScreen(props) {
+export default function CalendarScreen({ navigation }) {
 
   const colorScheme = useColorScheme();
   const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
@@ -34,10 +34,18 @@ export default function CalendarScreen(props) {
   const [IsLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(updateNewsFeed = () => {
-    firebase.database().ref('Calendar/').once('value', async(snapshot) => {
+    //console.log('Calendar mounted')
+    const unsubscribe = navigation.addListener('focus', () => {
+      firebase.database().ref('Calendar/').once('value', async(snapshot) => {
           setEvents(Object.values(snapshot.val()))
           setIsLoading(false)
       });
+    })
+
+    return () => {
+      //console.log('Calendar unmounted')
+      unsubscribe
+    }
   }, [])
 
   const getDate = (schedule) => {

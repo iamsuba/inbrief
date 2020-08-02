@@ -29,10 +29,18 @@ export default function OfficialUpdatesScreen({ navigation }) {
   const [OfficialUpdatesFeed, setOfficialUpdatesFeed] = React.useState([])
 
   React.useEffect(updateNewsFeed = () => {
-    firebase.database().ref('OfficialUpdates/').once('value', async(snapshot) => {
+    //console.log('Official Updates mounted')
+    const unsubscribe = navigation.addListener('focus', () => {
+      firebase.database().ref('OfficialUpdates/').once('value', async(snapshot) => {
           const officialUpdatesWithImages = await prepareOfficialUpdates(snapshot.val().reverse())
           setOfficialUpdatesFeed(officialUpdatesWithImages)
       });
+    })
+    
+    return () => {
+      //console.log('Official Updates Unmounted')
+      unsubscribe
+    }
   }, [])
 
   const prepareOfficialUpdates = (officialUpdates) => {

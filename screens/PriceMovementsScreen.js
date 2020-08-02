@@ -29,10 +29,18 @@ export default function PriceMovementsScreen({ navigation }) {
   const [PriceMovementsFeed, setPriceMovementsFeed] = React.useState([])
 
   React.useEffect(updateNewsFeed = () => {
-    firebase.database().ref('PriceMovements/').once('value', async(snapshot) => {
+    //console.log('Price Movements mounted')
+    const unsubscribe = navigation.addListener('focus', () => {
+      firebase.database().ref('PriceMovements/').once('value', async(snapshot) => {
           const priceMovementsWithImages = await preparePriceMovements(snapshot.val().reverse())
           setPriceMovementsFeed(priceMovementsWithImages)
       });
+    })
+
+    return () => {
+      //console.log('Price Movements Unmounted')
+      unsubscribe
+    }
   }, [])
 
   const preparePriceMovements = (priceMovements) => {

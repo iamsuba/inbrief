@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const SCREEN_HEIGHT = Dimensions.get("window").height
 
-export default function BookmarksScreen(props) {
+export default function BookmarksScreen({ navigation }) {
 
   const colorScheme = useColorScheme();
   const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
@@ -25,12 +25,20 @@ export default function BookmarksScreen(props) {
   }
 
   React.useEffect(() => {
-    getBookmarks().then(response => {
-      if(response !== null) {
-        setBookmarks(Object.values(JSON.parse(response)))
-      }
+    //console.log('Bookmarks mounted')
+    const unsubscribe = navigation.addListener('focus', () => {
+      getBookmarks().then(response => {
+        if(response !== null) {
+          setBookmarks(Object.values(JSON.parse(response)))
+        }
+      })
     })
-  })
+
+    return () => {
+      //console.log('Bookmarks unmounted')
+      unsubscribe
+    }
+  }, [navigation])
 
   const getLocalTimestamp = (timestamp) => {
     const Timestamp = new Date(timestamp)
@@ -44,7 +52,7 @@ export default function BookmarksScreen(props) {
           <TouchableOpacity
             style={[styles.newsItemContainer, {backgroundColor: Theme.tileColor, shadowColor: Theme.shadow}]} 
             key={newsItem.id} 
-            onPress={() => props.navigation.navigate('BookmarkDetailed', {
+            onPress={() => navigation.navigate('BookmarkDetailed', {
               newsItem: newsItem
             })}>
             <Text allowFontScaling={false} style={[styles.newsTitle, {color: Theme.foregroundColor}]}>{newsItem.title}</Text>

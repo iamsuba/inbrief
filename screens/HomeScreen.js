@@ -23,7 +23,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseconfig)
 }
 
-export default function HomeScreen(props) {
+export default function HomeScreen({ navigation }) {
 
   const colorScheme = useColorScheme();
   const Theme = (colorScheme === 'dark') ? Colors.dark : Colors.light
@@ -31,14 +31,18 @@ export default function HomeScreen(props) {
   const [HighlightsFeed, setHighlightsFeed] = React.useState([])
 
   React.useEffect(updateNewsFeed = () => {
-    let mounted = true
-    firebase.database().ref('Highlights/').once('value', async(snapshot) => {
+
+    //console.log('Homescreen mounted')
+    const unsubscribe = navigation.addListener('focus', () => {
+      firebase.database().ref('Highlights/').once('value', async(snapshot) => {
           const highlightsWithImages = await prepareHighlights(snapshot.val().reverse())
-          if(mounted) { setHighlightsFeed(highlightsWithImages) }
+          setHighlightsFeed(highlightsWithImages)
       });
+    })
 
     return () => {
-      mounted = false
+      //console.log('HomeScreen unmounted')
+      unsubscribe
     }
   }, [])
 
@@ -56,7 +60,7 @@ export default function HomeScreen(props) {
         <TouchableOpacity 
           style={[styles.newsItemContainer, {borderBottomColor: Theme.border}]}
           key={item.id}
-          onPress={() => props.navigation.navigate('HighlightsDetailed', {
+          onPress={() => navigation.navigate('HighlightsDetailed', {
             newsItem: item
           })}>
           <Text style={[styles.newsItemTitle, {color: Theme.foregroundColor}]}>{item.title}</Text>
@@ -78,7 +82,7 @@ export default function HomeScreen(props) {
           <Image style={styles.logo} source={require('./../assets/images/homelogo.png')}/>
           <TouchableOpacity 
             style={[styles.wideTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow}]}
-            onPress={() => props.navigation.push('Feed')}>
+            onPress={() => navigation.push('Feed')}>
             <Text style={[styles.tileTitle, {color: Theme.icon}]}>Go to News Feed</Text>
             <Ionicons
               name='md-arrow-forward'
@@ -90,13 +94,13 @@ export default function HomeScreen(props) {
           <View style={styles.newsCategoriesContainer}>
             <TouchableOpacity 
               style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginRight: 7.5}]}
-              onPress={() => props.navigation.navigate('PriceMovements')}>
+              onPress={() => navigation.navigate('PriceMovements')}>
               <Image style={styles.newsCategoryIcon} source={require('./../assets/images/pricemovements.png')}/>
               <Text style={[styles.tileTitle, {color: Theme.icon}]}>Price{'\n'}Movements</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={[styles.squareTileContainer, {backgroundColor: Theme.cardTile, shadowColor: Theme.shadow, marginLeft: 7.5}]}
-              onPress={() => props.navigation.navigate('OfficialUpdates')}>
+              onPress={() => navigation.navigate('OfficialUpdates')}>
               <Image style={styles.newsCategoryIcon} source={require('./../assets/images/officialupdates.png')}/>
               <Text style={[styles.tileTitle, {color: Theme.icon}]}>Official{'\n'}Updates</Text>
             </TouchableOpacity>

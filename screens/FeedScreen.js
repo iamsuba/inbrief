@@ -53,7 +53,7 @@ Notifications.setNotificationHandler({
 
 const notifiedNewsItemId = '1596304279495'
 
-export default function FeedScreen(props) {
+export default function FeedScreen({ navigation }) {
 
     //Theme setup beings here
     const colorScheme = useColorScheme();
@@ -82,7 +82,6 @@ export default function FeedScreen(props) {
 
     const [expoPushToken, setExpoPushToken] = React.useState('');
     const [Notification, setNotification] = React.useState(false);
-    const notificationListener = React.useRef();
     const responseListener = React.useRef();
 
     const checkIfRead = (newsId) => {
@@ -134,31 +133,27 @@ export default function FeedScreen(props) {
 
     React.useEffect(updateNewsFeed = () => {
 
-        let mounted = true
+        //console.log('Feedscreen mounted')
 
-        if(mounted) {
-            const LatestNewsRef = firebase.database().ref('LatestNews/')
-
-            LatestNewsRef.once('value', async(snapshot) => {
-                const readNewsStr = await AsyncStorage.getItem('@ReadNews')
-                if(readNewsStr !== null) {
-                    readNewsList = (JSON.parse(readNewsStr))
-                }
-                const newsFeedMarkRead = await markReadNewsFeed(snapshot.val().reverse())
-                const newsFeedWithReadFilter = await filterNewsFeed(newsFeedMarkRead)
-                const newsFeedWithNotification = await updateNotificationToFeed(newsFeedWithReadFilter)
-                const newsFeedWithImages = await prepareNewsFeed(newsFeedWithNotification)
-                await cacheImages(newsFeedWithImages)
-                setNewsFeed(newsFeedWithImages)
-                setLoadingComplete(true)
-                registerForPushNotifications().then(token => setExpoPushToken(token))
-                checkVirgin()
-                
-            });
-        }
+        const unsubscribe = firebase.database().ref('LatestNews/').once('value', async(snapshot) => {
+            const readNewsStr = await AsyncStorage.getItem('@ReadNews')
+            if(readNewsStr !== null) {
+                readNewsList = (JSON.parse(readNewsStr))
+            }
+            const newsFeedMarkRead = await markReadNewsFeed(snapshot.val().reverse())
+            const newsFeedWithReadFilter = await filterNewsFeed(newsFeedMarkRead)
+            const newsFeedWithNotification = await updateNotificationToFeed(newsFeedWithReadFilter)
+            const newsFeedWithImages = await prepareNewsFeed(newsFeedWithNotification)
+            await cacheImages(newsFeedWithImages)
+            setNewsFeed(newsFeedWithImages)
+            setLoadingComplete(true)
+            registerForPushNotifications().then(token => setExpoPushToken(token))
+            checkVirgin()
+        });
 
         return () => {
-            mounted = false
+            //console.log('Feedscreen unmounted')
+            unsubscribe
         }
     }, [])
 
@@ -300,7 +295,7 @@ export default function FeedScreen(props) {
                         >
                             <NewsCard 
                                 newsItem={item}
-                                onPress={() => props.navigation.navigate('Root', {
+                                onPress={() => navigation.navigate('Root', {
                                     newsItem: item
                                 })}
                                 refreshFeed={() => refreshFeed()}
@@ -355,7 +350,7 @@ export default function FeedScreen(props) {
                             </Modal>
                             <NewsCard 
                                 newsItem={item}
-                                onPress={() => props.navigation.navigate('Root', {
+                                onPress={() => navigation.navigate('Root', {
                                     newsItem: item
                                 })}
                                 refreshFeed={() => refreshFeed()}
@@ -370,7 +365,7 @@ export default function FeedScreen(props) {
                         <Animated.View key={item.id}>
                             <NewsCard 
                                 newsItem={item}
-                                onPress={() => props.navigation.navigate('Root', {
+                                onPress={() => navigation.navigate('Root', {
                                     newsItem: item
                                 })}
                                 refreshFeed={() => refreshFeed()}
