@@ -11,6 +11,7 @@ import {
   Platform } from 'react-native';
 
 //import Notifications from 'expo'
+import { Asset } from 'expo-asset'
 import * as Notifications from 'expo-notifications'
 import * as Permissions from 'expo-permissions';
 import { useColorScheme } from 'react-native-appearance';
@@ -93,9 +94,16 @@ export default function FeedScreen(props) {
         }
     }
 
+
+    const cacheImages = (newsFeed) => {
+        return newsFeed.map(item => {
+            return Image.prefetch(item.image)
+        })
+    }
+
     const prepareNewsFeed = (newsFeed) => {
         return newsFeed.map((item) => {
-            item.imageFile = {uri: item.image}
+            item.imageFile = {uri: item.image}     
             return item
         })
     }
@@ -140,6 +148,7 @@ export default function FeedScreen(props) {
                 const newsFeedWithReadFilter = await filterNewsFeed(newsFeedMarkRead)
                 const newsFeedWithNotification = await updateNotificationToFeed(newsFeedWithReadFilter)
                 const newsFeedWithImages = await prepareNewsFeed(newsFeedWithNotification)
+                await cacheImages(newsFeedWithImages)
                 setNewsFeed(newsFeedWithImages)
                 setLoadingComplete(true)
                 registerForPushNotifications().then(token => setExpoPushToken(token))
