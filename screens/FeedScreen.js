@@ -194,13 +194,13 @@ export default function FeedScreen({ navigation }) {
         },
         onPanResponderRelease: (evt, gestureState) => {
 
-            if (currentIndex > 0 && gestureState.dy > 50 && gestureState.vy > 0.7) {
+            if (currentIndex > 0 && gestureState.dy > 10 && gestureState.vy > 0.1) {
                 
                 //console.log('Successful swipe down release')
 
                 Animated.timing(swipedCardPosition, {
                     toValue: ({ x: 0, y: 0 }),
-                    duration: 400,
+                    duration: 800,
                     useNativeDriver: false
                 }).start(() => {
 
@@ -209,13 +209,13 @@ export default function FeedScreen({ navigation }) {
 
                 })
             }
-            else if (-gestureState.dy > 50 && -gestureState.vy > 0.7) {
+            else if (-gestureState.dy > 10 && -gestureState.vy > 0.1) {
 
                 //console.log('Successful swipe up release')
 
                 Animated.timing(position, {
                     toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
-                    duration: 400,
+                    duration: 800,
                     useNativeDriver: false
                 }).start(async() => {
 
